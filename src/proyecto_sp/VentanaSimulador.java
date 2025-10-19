@@ -16,6 +16,7 @@ public class VentanaSimulador extends javax.swing.JFrame implements Runnable {
     private Cola colaTerminados;
     private Cola colaBloqueados;
     private int cicloGlobal;
+    private int ciclosOcupado;
     private PCB procesoEnCpu;
     private Planificador planificador;
     
@@ -28,6 +29,7 @@ public class VentanaSimulador extends javax.swing.JFrame implements Runnable {
     this.colaTerminados = new Cola();
     this.colaBloqueados = new Cola();
     this.cicloGlobal = 0;
+    this.ciclosOcupado = 0;
     this.procesoEnCpu = null;
     this.planificador = new Planificador();
     // -------------------------
@@ -399,24 +401,21 @@ public void run() {
         gestionarColaBloqueados();
         String algoritmo = (String) cmbAlgoritmo.getSelectedItem();
 
-        // <-- INICIO: NUEVO BLOQUE DE APROPIACIÓN POR PRIORIDAD -->
-        // Comprueba si un proceso en la cola de listos tiene mayor prioridad que el que se está ejecutando.
+        // Bloque de apropiación por prioridad (no cambia)
         if (algoritmo.equals("Prioridad Apropiativo") && procesoEnCpu != null && !colaListos.estaVacia()) {
             PCB masPrioritarioEnCola = planificador.verProcesoMasPrioritario(colaListos);
             if (masPrioritarioEnCola.getProcesoInfo().getPrioridad() < procesoEnCpu.getProcesoInfo().getPrioridad()) {
-                // Si es así, se interrumpe al proceso actual y se libera la CPU.
                 procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
                 colaListos.encolar(procesoEnCpu);
                 procesoEnCpu = null;
             }
         }
-        // <-- FIN: NUEVO BLOQUE DE APROPIACIÓN -->
 
+        // Lógica de selección de proceso (no cambia)
         if (procesoEnCpu == null) {
             procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmo);
             if (procesoEnCpu != null) {
                 procesoEnCpu.setEstado(PCB.EstadoProceso.EJECUCION);
-                // <-- CORREGIDO: El quantum solo se asigna para Round Robin -->
                 if (algoritmo.equals("Round Robin")) {
                     procesoEnCpu.setQuantumRestante(QUANTUM); 
                 }
@@ -425,14 +424,16 @@ public void run() {
 
         cicloGlobal++;
 
+        // --- INICIO DE LA MODIFICACIÓN ---
         if (procesoEnCpu != null) {
             
-            // <-- CORREGIDO: El quantum solo se descuenta para Round Robin -->
+            ciclosOcupado++; // <-- ¡ESTA ES LA LÍNEA QUE SE AÑADIÓ!
+
+            // El resto de la lógica no cambia
             if (algoritmo.equals("Round Robin")) {
                 procesoEnCpu.setQuantumRestante(procesoEnCpu.getQuantumRestante() - 1);
             }
             
-            // El resto de la lógica de ejecución no cambia
             if (procesoEnCpu.getProcesoInfo().esIoBound() && 
                 procesoEnCpu.getProgramCounter() == procesoEnCpu.getProcesoInfo().getInstruccionBloqueo()) {
                 
@@ -458,6 +459,7 @@ public void run() {
                 procesoEnCpu.setProgramCounter(procesoEnCpu.getProgramCounter() + 1);
             }
         }
+        // --- FIN DE LA MODIFICACIÓN ---
 
         SwingUtilities.invokeLater(this::actualizarGUI);
         try { 
@@ -467,6 +469,7 @@ public void run() {
         }
     }
     
+    // El código de finalización no cambia
     System.out.println("--- Simulación Finalizada ---");
     calcularYMostrarMetricas();
     SwingUtilities.invokeLater(() -> {
@@ -526,39 +529,45 @@ private void calcularYMostrarMetricas() {
 
     StringBuilder reporte = new StringBuilder();
     reporte.append("--- REPORTE DE RENDIMIENTO ---\n");
-
+    
     int totalRetorno = 0;
     int totalEspera = 0;
     int numProcesos = 0;
 
     Nodo actual = colaTerminados.getFrente();
     while(actual != null) {
+        // ... (tu código existente para calcular retorno y espera) ...
+        // Esto no cambia
         PCB pcb = actual.getPcb();
-
-        // Calcular métricas para este PCB
         int retorno = pcb.getTiempoDeFinalizacion() - pcb.getTiempoDeLlegada();
         pcb.setTiempoDeRetorno(retorno);
-
         int espera = retorno - pcb.getProcesoInfo().getNumeroInstrucciones();
         pcb.setTiempoDeEspera(espera);
-
         totalRetorno += retorno;
         totalEspera += espera;
         numProcesos++;
-
         reporte.append("ID: ").append(pcb.getId())
                .append(" | T. Retorno: ").append(retorno)
                .append(" | T. Espera: ").append(espera).append("\n");
-
         actual = actual.getSiguiente();
     }
 
+    // --- INICIO DE LAS NUEVAS MÉTRICAS ---
     double promedioRetorno = (double) totalRetorno / numProcesos;
     double promedioEspera = (double) totalEspera / numProcesos;
+    
+    // Throughput: Procesos completados por unidad de tiempo
+    double throughput = (double) numProcesos / cicloGlobal;
+    
+    // Utilización de CPU: Porcentaje de tiempo que la CPU estuvo ocupada
+    double utilizacionCPU = ((double) ciclosOcupado / cicloGlobal) * 100.0;
 
     reporte.append("---------------------------------\n");
     reporte.append(String.format("Promedio de T. de Retorno: %.2f\n", promedioRetorno));
     reporte.append(String.format("Promedio de T. de Espera: %.2f\n", promedioEspera));
+    reporte.append(String.format("Throughput: %.3f procesos/ciclo\n", throughput));
+    reporte.append(String.format("Utilización de CPU: %.2f%%\n", utilizacionCPU));
+    // --- FIN DE LAS NUEVAS MÉTRICAS ---
 
     txtMetricas.setText(reporte.toString());
     }
