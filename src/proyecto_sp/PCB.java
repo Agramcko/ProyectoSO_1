@@ -18,6 +18,10 @@ public class PCB {
     private Proceso procesoInfo; // Referencia a la información del proceso
     private int tiempoRestanteBloqueo;
     private int quantumRestante;
+    private int tiempoDeLlegada;
+    private int tiempoDeFinalizacion;
+    private int tiempoDeRetorno;
+    private int tiempoDeEspera;
 
     // Enum para los estados del proceso
     public enum EstadoProceso {
@@ -35,6 +39,38 @@ public class PCB {
     }
 
     // Getters y Setters
+    public int getTiempoDeLlegada() {
+    return tiempoDeLlegada;
+    }
+
+    public void setTiempoDeLlegada(int tiempoDeLlegada) {
+    this.tiempoDeLlegada = tiempoDeLlegada;
+    }
+
+    public int getTiempoDeFinalizacion() {
+    return tiempoDeFinalizacion;
+    }
+
+    public void setTiempoDeFinalizacion(int tiempoDeFinalizacion) {
+    this.tiempoDeFinalizacion = tiempoDeFinalizacion;
+    }
+
+    public int getTiempoDeRetorno() {
+    return tiempoDeRetorno;
+    }
+
+    public void setTiempoDeRetorno(int tiempoDeRetorno) {
+    this.tiempoDeRetorno = tiempoDeRetorno;
+    }
+
+    public int getTiempoDeEspera() {
+    return tiempoDeEspera;
+    }
+
+    public void setTiempoDeEspera(int tiempoDeEspera) {
+    this.tiempoDeEspera = tiempoDeEspera;
+    }
+    
     public int getQuantumRestante() {
         return quantumRestante;
     }
