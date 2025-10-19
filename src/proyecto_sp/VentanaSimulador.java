@@ -4,6 +4,12 @@
  */
 package proyecto_sp;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+import java.awt.BorderLayout;
 import javax.swing.SwingUtilities;
 /**
  * @author Alessandro Gramcko
@@ -19,6 +25,8 @@ public class VentanaSimulador extends javax.swing.JFrame implements Runnable {
     private int ciclosOcupado;
     private PCB procesoEnCpu;
     private Planificador planificador;
+    private XYSeries seriesUtilizacionCPU;
+    private JFreeChart grafico;
     
     
     public VentanaSimulador() {
@@ -32,6 +40,7 @@ public class VentanaSimulador extends javax.swing.JFrame implements Runnable {
     this.ciclosOcupado = 0;
     this.procesoEnCpu = null;
     this.planificador = new Planificador();
+    inicializarGrafico();
     // -------------------------
 
     // Ahora el resto de tu código funcionará correctamente
@@ -113,6 +122,7 @@ private void actualizarGUI() {
         txtMetricas = new javax.swing.JTextArea();
         jLabel12 = new javax.swing.JLabel();
         spnPrioridad = new javax.swing.JSpinner();
+        panelGrafico = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -182,6 +192,17 @@ private void actualizarGUI() {
 
         spnPrioridad.setModel(new javax.swing.SpinnerNumberModel(10, null, null, 1));
 
+        javax.swing.GroupLayout panelGraficoLayout = new javax.swing.GroupLayout(panelGrafico);
+        panelGrafico.setLayout(panelGraficoLayout);
+        panelGraficoLayout.setHorizontalGroup(
+            panelGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 457, Short.MAX_VALUE)
+        );
+        panelGraficoLayout.setVerticalGroup(
+            panelGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 297, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -220,11 +241,6 @@ private void actualizarGUI() {
                                 .addGap(37, 37, 37))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(chkIoBound)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spnInstrucciones, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jScrollPane4)
@@ -249,16 +265,25 @@ private void actualizarGUI() {
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                             .addComponent(lblCicloActual, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(chkIoBound)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(spnPrioridad))
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnCrearProceso, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spnInstruccionIO, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 99, Short.MAX_VALUE))))
+                                        .addComponent(spnInstrucciones, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(spnPrioridad))
+                                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(btnCrearProceso, javax.swing.GroupLayout.Alignment.LEADING))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(spnInstruccionIO, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(132, 132, 132)
+                                .addComponent(panelGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 25, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -278,28 +303,11 @@ private void actualizarGUI() {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
                         .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(txtNombreProceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
-                            .addComponent(spnInstrucciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(chkIoBound)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel10)
-                            .addComponent(spnInstruccionIO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(7, 7, 7)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel12)
-                            .addComponent(spnPrioridad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnCrearProceso)
-                        .addGap(156, 156, 156))
+                            .addComponent(txtNombreProceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
@@ -317,7 +325,28 @@ private void actualizarGUI() {
                             .addComponent(btnIniciar)
                             .addComponent(jLabel9)
                             .addComponent(cmbAlgoritmo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8)
+                            .addComponent(spnInstrucciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(chkIoBound)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel10)
+                            .addComponent(spnInstruccionIO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(7, 7, 7)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel12)
+                            .addComponent(spnPrioridad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnCrearProceso)
+                        .addGap(156, 156, 156))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(panelGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
 
         pack();
@@ -384,6 +413,7 @@ private void actualizarGUI() {
     private javax.swing.JLabel lblCicloActual;
     private javax.swing.JLabel lblProcesoCPU;
     private javax.swing.JLabel lblProgramCounter;
+    private javax.swing.JPanel panelGrafico;
     private javax.swing.JSpinner spnInstruccionIO;
     private javax.swing.JSpinner spnInstrucciones;
     private javax.swing.JSpinner spnPrioridad;
@@ -424,12 +454,8 @@ public void run() {
 
         cicloGlobal++;
 
-        // --- INICIO DE LA MODIFICACIÓN ---
         if (procesoEnCpu != null) {
-            
-            ciclosOcupado++; // <-- ¡ESTA ES LA LÍNEA QUE SE AÑADIÓ!
-
-            // El resto de la lógica no cambia
+            ciclosOcupado++; 
             if (algoritmo.equals("Round Robin")) {
                 procesoEnCpu.setQuantumRestante(procesoEnCpu.getQuantumRestante() - 1);
             }
@@ -459,9 +485,15 @@ public void run() {
                 procesoEnCpu.setProgramCounter(procesoEnCpu.getProgramCounter() + 1);
             }
         }
+
+        // --- INICIO DE LA MODIFICACIÓN ---
+        // Se actualizan la GUI y el gráfico en cada ciclo
+        SwingUtilities.invokeLater(() -> {
+            actualizarGUI();
+            actualizarGrafico(); // <-- ESTA ES LA LÍNEA QUE SE AÑADIÓ
+        });
         // --- FIN DE LA MODIFICACIÓN ---
 
-        SwingUtilities.invokeLater(this::actualizarGUI);
         try { 
             Thread.sleep(500); 
         } catch (InterruptedException e) { 
@@ -571,4 +603,34 @@ private void calcularYMostrarMetricas() {
 
     txtMetricas.setText(reporte.toString());
     }
+
+private void inicializarGrafico() {
+    // 1. Crear el conjunto de datos
+    this.seriesUtilizacionCPU = new XYSeries("Utilización de CPU");
+    XYSeriesCollection dataset = new XYSeriesCollection(this.seriesUtilizacionCPU);
+
+    // 2. Crear el gráfico
+    this.grafico = ChartFactory.createXYLineChart(
+        "Rendimiento del Sistema", // Título del gráfico
+        "Ciclo",                   // Etiqueta del eje X
+        "Utilización de CPU (%)",  // Etiqueta del eje Y
+        dataset                    // Los datos
+    );
+
+    // 3. Crear el panel del gráfico y añadirlo a nuestro JPanel
+    ChartPanel chartPanel = new ChartPanel(grafico);
+    panelGrafico.setLayout(new java.awt.BorderLayout());
+    panelGrafico.add(chartPanel, BorderLayout.CENTER);
+    panelGrafico.validate();
+    }
+
+private void actualizarGrafico() {
+    if (cicloGlobal > 0) {
+        // Calculamos la utilización de CPU actual
+        double utilizacionActual = ((double) ciclosOcupado / cicloGlobal) * 100.0;
+        
+        // Añadimos el nuevo punto de datos (ciclo, utilización) a la serie
+        this.seriesUtilizacionCPU.add(cicloGlobal, utilizacionActual);
+    }
+   }
 }
