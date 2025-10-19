@@ -29,6 +29,23 @@ public class Planificador {
         }
     }
     
+    public PCB verProcesoMasCortoRestante(Cola colaListos) {
+    if (colaListos.estaVacia()) {
+        return null;
+    }
+
+    Nodo iterador = colaListos.getFrente();
+    PCB procesoMasCorto = iterador.getPcb();
+
+    while (iterador != null) {
+        if (iterador.getPcb().getTiempoEjecucionRestante() < procesoMasCorto.getTiempoEjecucionRestante()) {
+            procesoMasCorto = iterador.getPcb();
+        }
+        iterador = iterador.getSiguiente();
+    }
+    return procesoMasCorto;
+}
+    
     // --- MÉTODO NUEVO para "espiar" la prioridad más alta ---
     public PCB verProcesoMasPrioritario(Cola colaListos) {
         if (colaListos.estaVacia()) {

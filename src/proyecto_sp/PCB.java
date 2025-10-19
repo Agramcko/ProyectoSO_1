@@ -22,6 +22,7 @@ public class PCB {
     private int tiempoDeFinalizacion;
     private int tiempoDeRetorno;
     private int tiempoDeEspera;
+    private int tiempoEjecucionRestante;
 
     // Enum para los estados del proceso
     public enum EstadoProceso {
@@ -31,6 +32,7 @@ public class PCB {
     public PCB(Proceso procesoInfo) {
         this.id = ++contadorId;
         this.procesoInfo = procesoInfo;
+        this.tiempoEjecucionRestante = procesoInfo.getNumeroInstrucciones();
         this.estado = EstadoProceso.NUEVO;
         this.programCounter = 0;
         this.memoryAddressRegister = 0;
@@ -39,6 +41,14 @@ public class PCB {
     }
 
     // Getters y Setters
+    public int getTiempoEjecucionRestante() {
+        return tiempoEjecucionRestante;
+    }
+
+    public void setTiempoEjecucionRestante(int tiempoEjecucionRestante) {
+        this.tiempoEjecucionRestante = tiempoEjecucionRestante;
+    }
+    
     public int getTiempoDeLlegada() {
     return tiempoDeLlegada;
     }

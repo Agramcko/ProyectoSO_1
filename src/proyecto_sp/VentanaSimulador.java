@@ -203,7 +203,7 @@ private void actualizarGUI() {
 
         jLabel9.setText("Algoritmo:");
 
-        cmbAlgoritmo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FCFS", "SJF No Apropiativo", "Round Robin", "Prioridad No Apropiativo", "Prioridad Apropiativo" }));
+        cmbAlgoritmo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FCFS", "SJF No Apropiativo", "Round Robin", "Prioridad No Apropiativo", "Prioridad Apropiativo", "SRT (Shortest Remaining Time)" }));
 
         chkIoBound.setText("Es I/O-Bound");
 
@@ -510,17 +510,28 @@ public void run() {
         gestionarColaSuspendidos();
         String algoritmo = (String) cmbAlgoritmo.getSelectedItem();
 
-        // Bloque de apropiación por prioridad (no cambia)
-        if (algoritmo.equals("Prioridad Apropiativo") && procesoEnCpu != null && !colaListos.estaVacia()) {
-            PCB masPrioritarioEnCola = planificador.verProcesoMasPrioritario(colaListos);
-            if (masPrioritarioEnCola.getProcesoInfo().getPrioridad() < procesoEnCpu.getProcesoInfo().getPrioridad()) {
-                procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
-                colaListos.encolar(procesoEnCpu);
-                procesoEnCpu = null;
+        // --- INICIO: LÓGICA DE APROPIACIÓN ACTUALIZADA ---
+        if (procesoEnCpu != null && !colaListos.estaVacia()) {
+            if (algoritmo.equals("Prioridad Apropiativo")) {
+                PCB masPrioritario = planificador.verProcesoMasPrioritario(colaListos);
+                if (masPrioritario.getProcesoInfo().getPrioridad() < procesoEnCpu.getProcesoInfo().getPrioridad()) {
+                    // Interrumpir por Prioridad
+                    procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
+                    colaListos.encolar(procesoEnCpu);
+                    procesoEnCpu = null;
+                }
+            } else if (algoritmo.equals("SRT (Shortest Remaining Time)")) {
+                PCB masCorto = planificador.verProcesoMasCortoRestante(colaListos);
+                if (masCorto.getTiempoEjecucionRestante() < procesoEnCpu.getTiempoEjecucionRestante()) {
+                    // Interrumpir por Tiempo Restante (SRT)
+                    procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
+                    colaListos.encolar(procesoEnCpu);
+                    procesoEnCpu = null;
+                }
             }
         }
-
-        // Lógica de selección de proceso (no cambia)
+        // --- FIN: LÓGICA DE APROPIACIÓN ---
+        
         if (procesoEnCpu == null) {
             procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmo);
             if (procesoEnCpu != null) {
@@ -535,6 +546,8 @@ public void run() {
 
         if (procesoEnCpu != null) {
             ciclosOcupado++; 
+            procesoEnCpu.setTiempoEjecucionRestante(procesoEnCpu.getTiempoEjecucionRestante() - 1); // <-- NUEVO: Descontamos tiempo restante
+
             if (algoritmo.equals("Round Robin")) {
                 procesoEnCpu.setQuantumRestante(procesoEnCpu.getQuantumRestante() - 1);
             }
@@ -572,25 +585,21 @@ public void run() {
             actualizarGrafico();
         });
 
-        // --- INICIO DE LA MODIFICACIÓN ---
-        // Ahora la pausa lee el valor del JSpinner
         try { 
             int velocidad = (int) spnVelocidad.getValue();
             Thread.sleep(velocidad); 
         } catch (InterruptedException e) { 
             Thread.currentThread().interrupt(); 
         }
-        // --- FIN DE LA MODIFICACIÓN ---
     }
     
-    // El código de finalización no cambia
     System.out.println("--- Simulación Finalizada ---");
     calcularYMostrarMetricas();
     SwingUtilities.invokeLater(() -> {
         btnIniciar.setEnabled(true);
         cmbAlgoritmo.setEnabled(true);
     });
-} // <--- FIN DEL MÉTODO run()
+}// <--- FIN DEL MÉTODO run()
 
 
 
