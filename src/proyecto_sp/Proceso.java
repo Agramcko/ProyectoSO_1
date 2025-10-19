@@ -12,22 +12,35 @@ package proyecto_sp;
 public class Proceso {
     private String nombre;
     private int numeroInstrucciones;
-    // Otros atributos como tipo (CPU/IO-bound), etc.
-    private boolean esIoBound; 
-    private int instruccionBloqueo; 
-    
-    public Proceso(String nombre, int numeroInstrucciones, boolean esIoBound, int instruccionBloqueo) {
+    private boolean esIoBound;
+    private int instruccionBloqueo;
+    private int prioridad;
+
+    // 1. Este es tu nuevo constructor "maestro". Hace todo el trabajo.
+    public Proceso(String nombre, int numeroInstrucciones, boolean esIoBound, int instruccionBloqueo, int prioridad) {
         this.nombre = nombre;
         this.numeroInstrucciones = numeroInstrucciones;
         this.esIoBound = esIoBound;
         this.instruccionBloqueo = instruccionBloqueo;
+        this.prioridad = prioridad;
     }
-    
+
+    // 2. Este es el constructor que usabas para procesos con E/S.
+    //    Ahora llama al constructor maestro, pasando una prioridad por defecto de 10.
+    public Proceso(String nombre, int numeroInstrucciones, boolean esIoBound, int instruccionBloqueo) {
+        this(nombre, numeroInstrucciones, esIoBound, instruccionBloqueo, 10); // Llama al constructor de arriba
+    }
+
+    // 3. Este es tu constructor original y más simple.
+    //    Ahora también llama al maestro, pasando valores por defecto para E/S y prioridad.
     public Proceso(String nombre, int numeroInstrucciones) {
-        this(nombre, numeroInstrucciones, false, -1); // Un proceso normal no es I/O bound
+        this(nombre, numeroInstrucciones, false, -1, 10); // Llama al constructor de arriba
     }
 
     // --- Añade los Getters para las nuevas variables ---
+    public int getPrioridad() {
+        return prioridad;
+    }
     public boolean esIoBound() {
         return esIoBound;
     }
