@@ -416,6 +416,7 @@ private void actualizarGUI() {
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
         btnIniciar.setEnabled(false);
+        Logger.iniciar();
         Thread hiloSimulacion = new Thread(this);
         hiloSimulacion.start();
     }//GEN-LAST:event_btnIniciarActionPerformed
@@ -510,12 +511,12 @@ public void run() {
         gestionarColaSuspendidos();
         String algoritmo = (String) cmbAlgoritmo.getSelectedItem();
 
-        // --- INICIO: LÓGICA DE APROPIACIÓN ACTUALIZADA ---
+        // --- LÓGICA DE APROPIACIÓN ---
         if (procesoEnCpu != null && !colaListos.estaVacia()) {
             if (algoritmo.equals("Prioridad Apropiativo")) {
                 PCB masPrioritario = planificador.verProcesoMasPrioritario(colaListos);
                 if (masPrioritario.getProcesoInfo().getPrioridad() < procesoEnCpu.getProcesoInfo().getPrioridad()) {
-                    // Interrumpir por Prioridad
+                    Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " interrumpido por Proceso ID " + masPrioritario.getId() + " (Prioridad).");
                     procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
                     colaListos.encolar(procesoEnCpu);
                     procesoEnCpu = null;
@@ -523,18 +524,18 @@ public void run() {
             } else if (algoritmo.equals("SRT (Shortest Remaining Time)")) {
                 PCB masCorto = planificador.verProcesoMasCortoRestante(colaListos);
                 if (masCorto.getTiempoEjecucionRestante() < procesoEnCpu.getTiempoEjecucionRestante()) {
-                    // Interrumpir por Tiempo Restante (SRT)
+                    Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " interrumpido por Proceso ID " + masCorto.getId() + " (SRT).");
                     procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
                     colaListos.encolar(procesoEnCpu);
                     procesoEnCpu = null;
                 }
             }
         }
-        // --- FIN: LÓGICA DE APROPIACIÓN ---
         
         if (procesoEnCpu == null) {
             procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmo);
             if (procesoEnCpu != null) {
+                Logger.log("Ciclo " + cicloGlobal + ": Planificador selecciona Proceso ID " + procesoEnCpu.getId() + " (" + algoritmo + ").");
                 procesoEnCpu.setEstado(PCB.EstadoProceso.EJECUCION);
                 if (algoritmo.equals("Round Robin")) {
                     procesoEnCpu.setQuantumRestante(QUANTUM); 
@@ -546,7 +547,7 @@ public void run() {
 
         if (procesoEnCpu != null) {
             ciclosOcupado++; 
-            procesoEnCpu.setTiempoEjecucionRestante(procesoEnCpu.getTiempoEjecucionRestante() - 1); // <-- NUEVO: Descontamos tiempo restante
+            procesoEnCpu.setTiempoEjecucionRestante(procesoEnCpu.getTiempoEjecucionRestante() - 1);
 
             if (algoritmo.equals("Round Robin")) {
                 procesoEnCpu.setQuantumRestante(procesoEnCpu.getQuantumRestante() - 1);
@@ -555,6 +556,7 @@ public void run() {
             if (procesoEnCpu.getProcesoInfo().esIoBound() && 
                 procesoEnCpu.getProgramCounter() == procesoEnCpu.getProcesoInfo().getInstruccionBloqueo()) {
                 
+                Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " se bloquea por E/S.");
                 procesoEnCpu.setEstado(PCB.EstadoProceso.BLOQUEADO);
                 procesoEnCpu.setTiempoRestanteBloqueo(10);
                 colaBloqueados.encolar(procesoEnCpu);
@@ -562,14 +564,15 @@ public void run() {
                 procesoEnCpu = null;
 
             } else if (procesoEnCpu.getProgramCounter() >= procesoEnCpu.getProcesoInfo().getNumeroInstrucciones()) {
+                Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " ha terminado.");
                 procesoEnCpu.setEstado(PCB.EstadoProceso.TERMINADO);
                 procesoEnCpu.setTiempoDeFinalizacion(cicloGlobal);
                 memoriaEnUso -= procesoEnCpu.getProcesoInfo().getTamañoEnMemoria(); 
-                System.out.println("Memoria liberada: " + procesoEnCpu.getProcesoInfo().getTamañoEnMemoria() + " MB. Uso actual: " + memoriaEnUso + " MB.");
                 colaTerminados.encolar(procesoEnCpu);
                 procesoEnCpu = null;
                 
             } else if (algoritmo.equals("Round Robin") && procesoEnCpu.getQuantumRestante() <= 0) {
+                Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " fin de quantum (Round Robin).");
                 procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
                 colaListos.encolar(procesoEnCpu);
                 procesoEnCpu.setProgramCounter(procesoEnCpu.getProgramCounter() + 1);
@@ -595,6 +598,7 @@ public void run() {
     
     System.out.println("--- Simulación Finalizada ---");
     calcularYMostrarMetricas();
+    Logger.cerrar();
     SwingUtilities.invokeLater(() -> {
         btnIniciar.setEnabled(true);
         cmbAlgoritmo.setEnabled(true);
