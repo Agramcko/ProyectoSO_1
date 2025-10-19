@@ -12,6 +12,11 @@ import org.jfree.data.xy.XYSeriesCollection;
 import java.awt.BorderLayout;
 import javax.swing.SwingUtilities;
 import javax.swing.JOptionPane;
+import org.json.JSONObject;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 /**
  * @author Alessandro Gramcko
  * @author massimo Gramcko
@@ -33,6 +38,7 @@ public class VentanaSimulador extends javax.swing.JFrame implements Runnable {
     private JFreeChart grafico;
     
     
+    
     public VentanaSimulador() {
     initComponents();
     
@@ -46,6 +52,14 @@ public class VentanaSimulador extends javax.swing.JFrame implements Runnable {
     this.procesoEnCpu = null;
     this.planificador = new Planificador();
     inicializarGrafico();
+    cargarConfiguracion();
+   
+    addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+            guardarConfiguracion();
+        }
+    });
     // -------------------------
 
     // Ahora el resto de tu código funcionará correctamente
@@ -736,4 +750,39 @@ private void gestionarColaSuspendidos() {
         }
     }
     }
+
+private void guardarConfiguracion() {
+    // Creamos un objeto JSON
+    JSONObject config = new JSONObject();
+
+    // Ponemos el valor actual del spinner en el objeto JSON
+    config.put("velocidadSimulacion", (int) spnVelocidad.getValue());
+
+    // Usamos un try-with-resources para escribir el archivo y asegurarnos de que se cierre
+    try (FileWriter file = new FileWriter("config.json")) {
+        file.write(config.toString(4)); // El '4' es para que se guarde con formato legible
+        System.out.println("Configuración guardada en config.json");
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
+
+private void cargarConfiguracion() {
+    try {
+        // Leemos el contenido del archivo a un string
+        String contenido = new String(Files.readAllBytes(Paths.get("config.json")));
+
+        // Convertimos el string a un objeto JSON
+        JSONObject config = new JSONObject(contenido);
+
+        // Obtenemos el valor guardado y lo ponemos en el spinner
+        int velocidadGuardada = config.getInt("velocidadSimulacion");
+        spnVelocidad.setValue(velocidadGuardada);
+        System.out.println("Configuración cargada desde config.json");
+
+    } catch (IOException e) {
+        // Si el archivo no existe, no es un error. Simplemente usamos los valores por defecto.
+        System.out.println("No se encontró config.json. Usando valores por defecto.");
+    }
+}
 }
