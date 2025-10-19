@@ -11,12 +11,14 @@ import javax.swing.SwingUtilities;
  */
 public class VentanaSimulador extends javax.swing.JFrame implements Runnable {
 
+    private static final int QUANTUM = 4;
     private Cola colaListos;
     private Cola colaTerminados;
     private Cola colaBloqueados;
     private int cicloGlobal;
     private PCB procesoEnCpu;
     private Planificador planificador;
+    
     
     public VentanaSimulador() {
     initComponents();
@@ -157,7 +159,7 @@ private void actualizarGUI() {
 
         jLabel9.setText("Algoritmo:");
 
-        cmbAlgoritmo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FCFS", "SJF No Apropiativo" }));
+        cmbAlgoritmo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FCFS", "SJF No Apropiativo", "Round Robin" }));
 
         chkIoBound.setText("Es I/O-Bound");
 
@@ -351,58 +353,59 @@ private void actualizarGUI() {
     private javax.swing.JTextArea txtTerminados;
     // End of variables declaration//GEN-END:variables
 
- @Override
+@Override
 public void run() {
-    // El bucle principal no cambia
     while (procesoEnCpu != null || !colaListos.estaVacia() || !colaBloqueados.estaVacia()) {
 
-        // 1. Gestionar procesos que salen de bloqueo (no cambia)
         gestionarColaBloqueados();
 
-        // 2. Asignar proceso a la CPU si está libre (no cambia)
+        // Guardamos el algoritmo seleccionado para usarlo después
+        String algoritmo = (String) cmbAlgoritmo.getSelectedItem(); // <-- MOVIMOS ESTA LÍNEA AQUÍ
+
         if (procesoEnCpu == null) {
-            String algoritmo = (String) cmbAlgoritmo.getSelectedItem();
             procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmo);
             if (procesoEnCpu != null) {
                 procesoEnCpu.setEstado(PCB.EstadoProceso.EJECUCION);
+                procesoEnCpu.setQuantumRestante(QUANTUM); // <-- NUEVO: Reiniciamos el quantum del proceso
             }
         }
 
-        // 3. Ejecutar ciclo (no cambia)
         cicloGlobal++;
 
-        // --- INICIO DE LA LÓGICA CORREGIDA ---
-        // Este es el bloque que hemos arreglado
         if (procesoEnCpu != null) {
             
-            // Primero, verificamos si el proceso debe bloquearse en ESTE ciclo.
+            // <-- NUEVO: Decrementamos el quantum restante en cada ciclo
+            procesoEnCpu.setQuantumRestante(procesoEnCpu.getQuantumRestante() - 1);
+            
+            // 1. Verificamos si el proceso se bloquea por E/S
             if (procesoEnCpu.getProcesoInfo().esIoBound() && 
                 procesoEnCpu.getProgramCounter() == procesoEnCpu.getProcesoInfo().getInstruccionBloqueo()) {
                 
                 procesoEnCpu.setEstado(PCB.EstadoProceso.BLOQUEADO);
                 procesoEnCpu.setTiempoRestanteBloqueo(10);
                 colaBloqueados.encolar(procesoEnCpu);
-                
-                // IMPORTANTE: Incrementamos el PC ANTES de que deje la CPU
-                // para que no se quede atascado en la misma instrucción.
                 procesoEnCpu.setProgramCounter(procesoEnCpu.getProgramCounter() + 1);
-                
-                procesoEnCpu = null; // Liberar la CPU
+                procesoEnCpu = null;
 
-            // Si no se bloquea, verificamos si el proceso ha terminado.
+            // 2. Si no, verificamos si el proceso ha terminado
             } else if (procesoEnCpu.getProgramCounter() >= procesoEnCpu.getProcesoInfo().getNumeroInstrucciones()) {
                 procesoEnCpu.setEstado(PCB.EstadoProceso.TERMINADO);
                 colaTerminados.encolar(procesoEnCpu);
                 procesoEnCpu = null;
 
-            // Si no se bloquea ni termina, simplemente ejecuta una instrucción normal.
+            // 3. <-- NUEVO: Si no, verificamos si se le acabó el quantum (solo para Round Robin)
+            } else if (algoritmo.equals("Round Robin") && procesoEnCpu.getQuantumRestante() <= 0) {
+                procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
+                colaListos.encolar(procesoEnCpu); // Se va al final de la cola de listos
+                procesoEnCpu.setProgramCounter(procesoEnCpu.getProgramCounter() + 1);
+                procesoEnCpu = null; // Libera la CPU para el siguiente
+
+            // 4. Si nada de lo anterior ocurre, es un ciclo normal
             } else {
                 procesoEnCpu.setProgramCounter(procesoEnCpu.getProgramCounter() + 1);
             }
         }
-        // --- FIN DE LA LÓGICA CORREGIDA ---
 
-        // Actualizar la GUI y pausar (no cambia)
         SwingUtilities.invokeLater(this::actualizarGUI);
         try { 
             Thread.sleep(500); 
@@ -411,7 +414,6 @@ public void run() {
         }
     }
     
-    // Código final de la simulación (no cambia)
     System.out.println("--- Simulación Finalizada ---");
     SwingUtilities.invokeLater(() -> {
         btnIniciar.setEnabled(true);
