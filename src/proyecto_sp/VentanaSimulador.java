@@ -164,7 +164,7 @@ private void actualizarGUI() {
 
         jLabel9.setText("Algoritmo:");
 
-        cmbAlgoritmo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FCFS", "SJF No Apropiativo", "Round Robin", "Prioridad No Apropiativo" }));
+        cmbAlgoritmo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FCFS", "SJF No Apropiativo", "Round Robin", "Prioridad No Apropiativo", "Prioridad Apropiativo" }));
 
         chkIoBound.setText("Es I/O-Bound");
 
@@ -397,15 +397,29 @@ public void run() {
     while (procesoEnCpu != null || !colaListos.estaVacia() || !colaBloqueados.estaVacia()) {
 
         gestionarColaBloqueados();
+        String algoritmo = (String) cmbAlgoritmo.getSelectedItem();
 
-        // Guardamos el algoritmo seleccionado para usarlo después
-        String algoritmo = (String) cmbAlgoritmo.getSelectedItem(); // <-- MOVIMOS ESTA LÍNEA AQUÍ
+        // <-- INICIO: NUEVO BLOQUE DE APROPIACIÓN POR PRIORIDAD -->
+        // Comprueba si un proceso en la cola de listos tiene mayor prioridad que el que se está ejecutando.
+        if (algoritmo.equals("Prioridad Apropiativo") && procesoEnCpu != null && !colaListos.estaVacia()) {
+            PCB masPrioritarioEnCola = planificador.verProcesoMasPrioritario(colaListos);
+            if (masPrioritarioEnCola.getProcesoInfo().getPrioridad() < procesoEnCpu.getProcesoInfo().getPrioridad()) {
+                // Si es así, se interrumpe al proceso actual y se libera la CPU.
+                procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
+                colaListos.encolar(procesoEnCpu);
+                procesoEnCpu = null;
+            }
+        }
+        // <-- FIN: NUEVO BLOQUE DE APROPIACIÓN -->
 
         if (procesoEnCpu == null) {
             procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmo);
             if (procesoEnCpu != null) {
                 procesoEnCpu.setEstado(PCB.EstadoProceso.EJECUCION);
-                procesoEnCpu.setQuantumRestante(QUANTUM); // <-- NUEVO: Reiniciamos el quantum del proceso
+                // <-- CORREGIDO: El quantum solo se asigna para Round Robin -->
+                if (algoritmo.equals("Round Robin")) {
+                    procesoEnCpu.setQuantumRestante(QUANTUM); 
+                }
             }
         }
 
@@ -413,10 +427,12 @@ public void run() {
 
         if (procesoEnCpu != null) {
             
-            // <-- NUEVO: Decrementamos el quantum restante en cada ciclo
-            procesoEnCpu.setQuantumRestante(procesoEnCpu.getQuantumRestante() - 1);
+            // <-- CORREGIDO: El quantum solo se descuenta para Round Robin -->
+            if (algoritmo.equals("Round Robin")) {
+                procesoEnCpu.setQuantumRestante(procesoEnCpu.getQuantumRestante() - 1);
+            }
             
-            // 1. Verificamos si el proceso se bloquea por E/S
+            // El resto de la lógica de ejecución no cambia
             if (procesoEnCpu.getProcesoInfo().esIoBound() && 
                 procesoEnCpu.getProgramCounter() == procesoEnCpu.getProcesoInfo().getInstruccionBloqueo()) {
                 
@@ -426,21 +442,18 @@ public void run() {
                 procesoEnCpu.setProgramCounter(procesoEnCpu.getProgramCounter() + 1);
                 procesoEnCpu = null;
 
-            // 2. Si no, verificamos si el proceso ha terminado
             } else if (procesoEnCpu.getProgramCounter() >= procesoEnCpu.getProcesoInfo().getNumeroInstrucciones()) {
                 procesoEnCpu.setEstado(PCB.EstadoProceso.TERMINADO);
                 procesoEnCpu.setTiempoDeFinalizacion(cicloGlobal);
                 colaTerminados.encolar(procesoEnCpu);
                 procesoEnCpu = null;
 
-            // 3. <-- NUEVO: Si no, verificamos si se le acabó el quantum (solo para Round Robin)
             } else if (algoritmo.equals("Round Robin") && procesoEnCpu.getQuantumRestante() <= 0) {
                 procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
-                colaListos.encolar(procesoEnCpu); // Se va al final de la cola de listos
+                colaListos.encolar(procesoEnCpu);
                 procesoEnCpu.setProgramCounter(procesoEnCpu.getProgramCounter() + 1);
-                procesoEnCpu = null; // Libera la CPU para el siguiente
+                procesoEnCpu = null;
 
-            // 4. Si nada de lo anterior ocurre, es un ciclo normal
             } else {
                 procesoEnCpu.setProgramCounter(procesoEnCpu.getProgramCounter() + 1);
             }

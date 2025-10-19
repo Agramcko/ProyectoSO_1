@@ -28,6 +28,24 @@ public class Planificador {
                 return colaListos.desencolar();
         }
     }
+    
+    // --- MÉTODO NUEVO para "espiar" la prioridad más alta ---
+    public PCB verProcesoMasPrioritario(Cola colaListos) {
+        if (colaListos.estaVacia()) {
+            return null;
+        }
+        
+        Nodo iterador = colaListos.getFrente();
+        PCB procesoMasPrioritario = iterador.getPcb();
+
+        while (iterador != null) {
+            if (iterador.getPcb().getProcesoInfo().getPrioridad() < procesoMasPrioritario.getProcesoInfo().getPrioridad()) {
+                procesoMasPrioritario = iterador.getPcb();
+            }
+            iterador = iterador.getSiguiente();
+        }
+        return procesoMasPrioritario;
+    }
 
     // --- MÉTODO COMPLETAMENTE NUEVO ---
     // Busca en la cola el proceso con el número de prioridad más bajo (más prioritario).
