@@ -15,6 +15,7 @@ public class VentanaSimulador extends javax.swing.JFrame implements Runnable {
     private Cola colaTerminados;
     private int cicloGlobal;
     private PCB procesoEnCpu;
+    private Planificador planificador;
     
     public VentanaSimulador() {
     initComponents();
@@ -24,6 +25,7 @@ public class VentanaSimulador extends javax.swing.JFrame implements Runnable {
     this.colaTerminados = new Cola();
     this.cicloGlobal = 0;
     this.procesoEnCpu = null;
+    this.planificador = new Planificador();
     // -------------------------
 
     // Ahora el resto de tu código funcionará correctamente
@@ -97,6 +99,8 @@ private void actualizarGUI() {
         jLabel8 = new javax.swing.JLabel();
         spnInstrucciones = new javax.swing.JSpinner();
         btnCrearProceso = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        cmbAlgoritmo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -148,6 +152,10 @@ private void actualizarGUI() {
             }
         });
 
+        jLabel9.setText("Algoritmo:");
+
+        cmbAlgoritmo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FCFS", "SJF No Apropiativo" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -180,10 +188,6 @@ private void actualizarGUI() {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblCicloActual, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(lblProgramCounter, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -191,15 +195,26 @@ private void actualizarGUI() {
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lblProcesoCPU, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnIniciar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(btnIniciar)
+                                        .addGap(104, 104, 104)
+                                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblCicloActual, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cmbAlgoritmo, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(spnInstrucciones, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(spnInstrucciones, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -233,7 +248,10 @@ private void actualizarGUI() {
                     .addComponent(jLabel6)
                     .addComponent(lblCicloActual))
                 .addGap(26, 26, 26)
-                .addComponent(btnIniciar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnIniciar)
+                    .addComponent(jLabel9)
+                    .addComponent(cmbAlgoritmo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(57, 57, 57)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -293,6 +311,7 @@ private void actualizarGUI() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearProceso;
     private javax.swing.JButton btnIniciar;
+    private javax.swing.JComboBox<String> cmbAlgoritmo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -301,6 +320,7 @@ private void actualizarGUI() {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -318,11 +338,17 @@ private void actualizarGUI() {
 public void run() {
     while (procesoEnCpu != null || !colaListos.estaVacia()) {
         if (procesoEnCpu == null) {
-            procesoEnCpu = colaListos.desencolar();
-            if (procesoEnCpu != null) {
-                procesoEnCpu.setEstado(PCB.EstadoProceso.EJECUCION);
-            }
-        }
+    // 1. Leemos el algoritmo seleccionado por el usuario en el JComboBox.
+    String algoritmoSeleccionado = (String) cmbAlgoritmo.getSelectedItem();
+
+    // 2. Le pedimos al planificador que elija el siguiente proceso según el algoritmo.
+    procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmoSeleccionado);
+    
+    // El resto del código es igual.
+    if (procesoEnCpu != null) {
+        procesoEnCpu.setEstado(PCB.EstadoProceso.EJECUCION);
+    }
+}
 
         cicloGlobal++;
 

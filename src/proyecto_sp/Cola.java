@@ -63,4 +63,17 @@ public class Cola {
         sb.append("]");
         return sb.toString();
     }
+    
+    public Nodo getFrente() {
+    return this.frente;
+}
+
+public void setFrente(Nodo frente) {
+    this.frente = frente;
+}
+
+public void setFin(Nodo fin) {
+    this.fin = fin;
+    
+    }
 }
