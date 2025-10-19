@@ -13,6 +13,7 @@ public class VentanaSimulador extends javax.swing.JFrame implements Runnable {
 
     private Cola colaListos;
     private Cola colaTerminados;
+    private Cola colaBloqueados;
     private int cicloGlobal;
     private PCB procesoEnCpu;
     private Planificador planificador;
@@ -23,6 +24,7 @@ public class VentanaSimulador extends javax.swing.JFrame implements Runnable {
     // --- AÑADE ESTAS LÍNEAS ---
     this.colaListos = new Cola();
     this.colaTerminados = new Cola();
+    this.colaBloqueados = new Cola();
     this.cicloGlobal = 0;
     this.procesoEnCpu = null;
     this.planificador = new Planificador();
@@ -63,10 +65,8 @@ private void actualizarGUI() {
     // Actualiza el JTextArea de la cola de listos
     txtColaListos.setText(colaListos.toString());
     txtTerminados.setText(colaTerminados.toString());
-
-    // Aquí en el futuro actualizarás las otras colas (bloqueados y terminados)
-    // txtColaBloqueados.setText(...);
-    // txtTerminados.setText(...);
+    txtColaBloqueados.setText(colaBloqueados.toString());
+    
 }
 
     /**
@@ -101,6 +101,9 @@ private void actualizarGUI() {
         btnCrearProceso = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         cmbAlgoritmo = new javax.swing.JComboBox<>();
+        chkIoBound = new javax.swing.JCheckBox();
+        jLabel10 = new javax.swing.JLabel();
+        spnInstruccionIO = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -155,6 +158,10 @@ private void actualizarGUI() {
         jLabel9.setText("Algoritmo:");
 
         cmbAlgoritmo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FCFS", "SJF No Apropiativo" }));
+
+        chkIoBound.setText("Es I/O-Bound");
+
+        jLabel10.setText("Instrucción de E/S:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -211,15 +218,21 @@ private void actualizarGUI() {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(chkIoBound)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtNombreProceso, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(spnInstrucciones, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnCrearProceso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNombreProceso, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnCrearProceso))
+                        .addComponent(spnInstruccionIO, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -260,9 +273,15 @@ private void actualizarGUI() {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(spnInstrucciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(chkIoBound)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(spnInstruccionIO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(11, 11, 11)
                 .addComponent(btnCrearProceso)
-                .addContainerGap(195, Short.MAX_VALUE))
+                .addContainerGap(137, Short.MAX_VALUE))
         );
 
         pack();
@@ -275,32 +294,27 @@ private void actualizarGUI() {
     }//GEN-LAST:event_btnIniciarActionPerformed
 
     private void btnCrearProcesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearProcesoActionPerformed
-        // 1. Obtener los datos de la GUI
-    String nombre = txtNombreProceso.getText();
+        String nombre = txtNombreProceso.getText();
     int instrucciones = (int) spnInstrucciones.getValue();
+    boolean esIO = chkIoBound.isSelected();
+    int instruccionIO = (int) spnInstruccionIO.getValue();
 
-    // 2. Validar que los datos no estén vacíos
-    if (nombre.trim().isEmpty() || instrucciones <= 0) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Por favor, ingrese un nombre válido y un número de instrucciones mayor a cero.", "Error de Entrada", javax.swing.JOptionPane.ERROR_MESSAGE);
+    if (nombre.trim().isEmpty() || instrucciones <= 0 || (esIO && (instruccionIO <= 0 || instruccionIO > instrucciones))) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Datos inválidos. La instrucción de E/S debe ser mayor que 0 y menor que el total de instrucciones.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
         return; 
     }
 
-    // 3. Crear el nuevo proceso y su PCB
-    Proceso nuevoProceso = new Proceso(nombre, instrucciones);
+    Proceso nuevoProceso = new Proceso(nombre, instrucciones, esIO, instruccionIO);
     PCB nuevoPcb = new PCB(nuevoProceso);
     nuevoPcb.setEstado(PCB.EstadoProceso.LISTO);
-
-    // 4. Añadir el nuevo PCB a la cola de listos
     colaListos.encolar(nuevoPcb);
 
-    // 5. Limpiar los campos de la GUI para el siguiente proceso
+    // Limpiar campos y actualizar GUI
     txtNombreProceso.setText("");
     spnInstrucciones.setValue(0);
-
-    // 6. Actualizar la GUI para que el nuevo proceso aparezca inmediatamente
+    chkIoBound.setSelected(false);
+    spnInstruccionIO.setValue(0);
     actualizarGUI();
-    
-    System.out.println("Proceso '" + nombre + "' creado y añadido a la cola de listos.");
     }//GEN-LAST:event_btnCrearProcesoActionPerformed
 
     /**
@@ -311,8 +325,10 @@ private void actualizarGUI() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearProceso;
     private javax.swing.JButton btnIniciar;
+    private javax.swing.JCheckBox chkIoBound;
     private javax.swing.JComboBox<String> cmbAlgoritmo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -327,6 +343,7 @@ private void actualizarGUI() {
     private javax.swing.JLabel lblCicloActual;
     private javax.swing.JLabel lblProcesoCPU;
     private javax.swing.JLabel lblProgramCounter;
+    private javax.swing.JSpinner spnInstruccionIO;
     private javax.swing.JSpinner spnInstrucciones;
     private javax.swing.JTextArea txtColaBloqueados;
     private javax.swing.JTextArea txtColaListos;
@@ -334,43 +351,116 @@ private void actualizarGUI() {
     private javax.swing.JTextArea txtTerminados;
     // End of variables declaration//GEN-END:variables
 
-   @Override
+ @Override
 public void run() {
-    while (procesoEnCpu != null || !colaListos.estaVacia()) {
+    // El bucle principal no cambia
+    while (procesoEnCpu != null || !colaListos.estaVacia() || !colaBloqueados.estaVacia()) {
+
+        // 1. Gestionar procesos que salen de bloqueo (no cambia)
+        gestionarColaBloqueados();
+
+        // 2. Asignar proceso a la CPU si está libre (no cambia)
         if (procesoEnCpu == null) {
-    // 1. Leemos el algoritmo seleccionado por el usuario en el JComboBox.
-    String algoritmoSeleccionado = (String) cmbAlgoritmo.getSelectedItem();
-
-    // 2. Le pedimos al planificador que elija el siguiente proceso según el algoritmo.
-    procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmoSeleccionado);
-    
-    // El resto del código es igual.
-    if (procesoEnCpu != null) {
-        procesoEnCpu.setEstado(PCB.EstadoProceso.EJECUCION);
-    }
-}
-
-        cicloGlobal++;
-
-        if (procesoEnCpu != null) {
-            procesoEnCpu.setProgramCounter(procesoEnCpu.getProgramCounter() + 1);
-            procesoEnCpu.setMemoryAddressRegister(procesoEnCpu.getProgramCounter());
-
-            if (procesoEnCpu.getProgramCounter() >= procesoEnCpu.getProcesoInfo().getNumeroInstrucciones()) {
-                procesoEnCpu.setEstado(PCB.EstadoProceso.TERMINADO);
-                colaTerminados.encolar(procesoEnCpu);
-                procesoEnCpu = null;
+            String algoritmo = (String) cmbAlgoritmo.getSelectedItem();
+            procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmo);
+            if (procesoEnCpu != null) {
+                procesoEnCpu.setEstado(PCB.EstadoProceso.EJECUCION);
             }
         }
 
-        SwingUtilities.invokeLater(this::actualizarGUI);
+        // 3. Ejecutar ciclo (no cambia)
+        cicloGlobal++;
 
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+        // --- INICIO DE LA LÓGICA CORREGIDA ---
+        // Este es el bloque que hemos arreglado
+        if (procesoEnCpu != null) {
+            
+            // Primero, verificamos si el proceso debe bloquearse en ESTE ciclo.
+            if (procesoEnCpu.getProcesoInfo().esIoBound() && 
+                procesoEnCpu.getProgramCounter() == procesoEnCpu.getProcesoInfo().getInstruccionBloqueo()) {
+                
+                procesoEnCpu.setEstado(PCB.EstadoProceso.BLOQUEADO);
+                procesoEnCpu.setTiempoRestanteBloqueo(10);
+                colaBloqueados.encolar(procesoEnCpu);
+                
+                // IMPORTANTE: Incrementamos el PC ANTES de que deje la CPU
+                // para que no se quede atascado en la misma instrucción.
+                procesoEnCpu.setProgramCounter(procesoEnCpu.getProgramCounter() + 1);
+                
+                procesoEnCpu = null; // Liberar la CPU
+
+            // Si no se bloquea, verificamos si el proceso ha terminado.
+            } else if (procesoEnCpu.getProgramCounter() >= procesoEnCpu.getProcesoInfo().getNumeroInstrucciones()) {
+                procesoEnCpu.setEstado(PCB.EstadoProceso.TERMINADO);
+                colaTerminados.encolar(procesoEnCpu);
+                procesoEnCpu = null;
+
+            // Si no se bloquea ni termina, simplemente ejecuta una instrucción normal.
+            } else {
+                procesoEnCpu.setProgramCounter(procesoEnCpu.getProgramCounter() + 1);
+            }
+        }
+        // --- FIN DE LA LÓGICA CORREGIDA ---
+
+        // Actualizar la GUI y pausar (no cambia)
+        SwingUtilities.invokeLater(this::actualizarGUI);
+        try { 
+            Thread.sleep(500); 
+        } catch (InterruptedException e) { 
+            Thread.currentThread().interrupt(); 
         }
     }
+    
+    // Código final de la simulación (no cambia)
     System.out.println("--- Simulación Finalizada ---");
-}
+    SwingUtilities.invokeLater(() -> {
+        btnIniciar.setEnabled(true);
+        cmbAlgoritmo.setEnabled(true);
+    });
+} // <--- FIN DEL MÉTODO run()
+
+
+
+
+private void gestionarColaBloqueados() {
+    if (colaBloqueados.estaVacia()) {
+        return; // No hay nada que hacer si la cola está vacía
+    }
+
+    Nodo actual = colaBloqueados.getFrente();
+    Nodo anterior = null;
+    while (actual != null) {
+        PCB pcb = actual.getPcb();
+        // Restamos un ciclo al tiempo de bloqueo
+        pcb.setTiempoRestanteBloqueo(pcb.getTiempoRestanteBloqueo() - 1);
+        
+        Nodo siguiente = actual.getSiguiente(); // Guardamos el siguiente nodo antes de hacer cambios
+
+        if (pcb.getTiempoRestanteBloqueo() <= 0) {
+            // ¡Tiempo de bloqueo terminado! El proceso vuelve a la cola de listos.
+            pcb.setEstado(PCB.EstadoProceso.LISTO);
+            colaListos.encolar(pcb);
+            
+            // Lo quitamos de la cola de bloqueados
+            if (anterior == null) {
+                // Era el primer elemento de la cola
+                colaBloqueados.setFrente(siguiente);
+                if (colaBloqueados.getFrente() == null) { // La cola quedó vacía
+                    colaBloqueados.setFin(null);
+                }
+            } else {
+                // Estaba en medio o al final
+                anterior.setSiguiente(siguiente);
+                if (siguiente == null) { // Era el último
+                    colaBloqueados.setFin(anterior);
+                }
+            }
+        } else {
+            // Si todavía no ha terminado de esperar, 'anterior' avanza.
+            anterior = actual;
+        }
+        // Avanzamos al siguiente nodo de la lista original.
+        actual = siguiente;
+    }
+   }
 }

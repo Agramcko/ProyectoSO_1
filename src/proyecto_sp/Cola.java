@@ -48,21 +48,27 @@ public class Cola {
     }
     
     // Método para imprimir el contenido de la cola (útil para depurar)
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        Nodo actual = frente;
-        while (actual != null) {
-            sb.append("ID:").append(actual.getPcb().getId());
-            if (actual.getSiguiente() != null) {
-                sb.append(", ");
-            }
-            actual = actual.getSiguiente();
-        }
-        sb.append("]");
-        return sb.toString();
+  @Override
+public String toString() {
+    if (estaVacia()) {
+        return "[]";
     }
+    
+    StringBuilder sb = new StringBuilder();
+    sb.append("[");
+    
+    Nodo actual = this.frente;
+    while (actual != null) {
+        sb.append("ID:").append(actual.getPcb().getId());
+        if (actual.getSiguiente() != null) {
+            sb.append(", ");
+        }
+        actual = actual.getSiguiente();
+    }
+    
+    sb.append("]");
+    return sb.toString();
+}
     
     public Nodo getFrente() {
     return this.frente;

@@ -16,6 +16,7 @@ public class PCB {
     private int programCounter;
     private int memoryAddressRegister;
     private Proceso procesoInfo; // Referencia a la información del proceso
+    private int tiempoRestanteBloqueo;
 
     // Enum para los estados del proceso
     public enum EstadoProceso {
@@ -28,9 +29,18 @@ public class PCB {
         this.estado = EstadoProceso.NUEVO;
         this.programCounter = 0;
         this.memoryAddressRegister = 0;
+        this.tiempoRestanteBloqueo = 0;
     }
 
     // Getters y Setters
+    public int getTiempoRestanteBloqueo() {
+        return tiempoRestanteBloqueo;
+    }
+
+    public void setTiempoRestanteBloqueo(int tiempoRestanteBloqueo) {
+        this.tiempoRestanteBloqueo = tiempoRestanteBloqueo;
+    }
+    
     public int getId() {
         return id;
     }
