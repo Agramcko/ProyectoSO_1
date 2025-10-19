@@ -11,6 +11,7 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import java.awt.BorderLayout;
 import javax.swing.SwingUtilities;
+import javax.swing.JOptionPane;
 /**
  * @author Alessandro Gramcko
  * @author massimo Gramcko
@@ -18,11 +19,14 @@ import javax.swing.SwingUtilities;
 public class VentanaSimulador extends javax.swing.JFrame implements Runnable {
 
     private static final int QUANTUM = 4;
+    private static final int MEMORIA_TOTAL_MB = 2048; // Simula 2GB de RAM
     private Cola colaListos;
     private Cola colaTerminados;
     private Cola colaBloqueados;
+    private Cola colaListosSuspendidos;
     private int cicloGlobal;
     private int ciclosOcupado;
+    private int memoriaEnUso;
     private PCB procesoEnCpu;
     private Planificador planificador;
     private XYSeries seriesUtilizacionCPU;
@@ -36,6 +40,7 @@ public class VentanaSimulador extends javax.swing.JFrame implements Runnable {
     this.colaListos = new Cola();
     this.colaTerminados = new Cola();
     this.colaBloqueados = new Cola();
+    this.colaListosSuspendidos = new Cola();
     this.cicloGlobal = 0;
     this.ciclosOcupado = 0;
     this.procesoEnCpu = null;
@@ -79,6 +84,7 @@ private void actualizarGUI() {
     txtColaListos.setText(colaListos.toString());
     txtTerminados.setText(colaTerminados.toString());
     txtColaBloqueados.setText(colaBloqueados.toString());
+    txtColaListosSuspendidos.setText(colaListosSuspendidos.toString());
     
 }
 
@@ -123,6 +129,11 @@ private void actualizarGUI() {
         jLabel12 = new javax.swing.JLabel();
         spnPrioridad = new javax.swing.JSpinner();
         panelGrafico = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        spnTamaño = new javax.swing.JSpinner();
+        jLabel14 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        txtColaListosSuspendidos = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -203,42 +214,46 @@ private void actualizarGUI() {
             .addGap(0, 297, Short.MAX_VALUE)
         );
 
+        jLabel13.setText("Tamaño (MB):");
+
+        spnTamaño.setModel(new javax.swing.SpinnerNumberModel(100, null, null, 1));
+
+        jLabel14.setText("Cola de Listos-Suspendidos");
+
+        txtColaListosSuspendidos.setColumns(20);
+        txtColaListosSuspendidos.setRows(5);
+        jScrollPane5.setViewportView(txtColaListosSuspendidos);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(64, 64, 64)
-                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(55, 55, 55)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 71, Short.MAX_VALUE)
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34))
+                            .addGroup(layout.createSequentialGroup()
                                 .addGap(51, 51, 51)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(134, 134, 134)
+                                .addComponent(jLabel14)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                                .addGap(93, 93, 93)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(77, 77, 77))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(53, 53, 53))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmbAlgoritmo, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37))))
+                                .addGap(24, 24, 24))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -263,7 +278,11 @@ private void actualizarGUI() {
                                         .addGroup(layout.createSequentialGroup()
                                             .addComponent(jLabel6)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(lblCicloActual, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                            .addComponent(lblCicloActual, javax.swing.GroupLayout.PREFERRED_SIZE, 221, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(cmbAlgoritmo, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(chkIoBound)
@@ -280,30 +299,42 @@ private void actualizarGUI() {
                                             .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                             .addComponent(btnCrearProceso, javax.swing.GroupLayout.Alignment.LEADING))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(spnInstruccionIO, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(spnInstruccionIO, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(spnTamaño, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(132, 132, 132)
                                 .addComponent(panelGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 25, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(64, 64, 64)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(54, 54, 54)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel2)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 174, Short.MAX_VALUE)
                         .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
@@ -320,11 +351,12 @@ private void actualizarGUI() {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(lblCicloActual))
-                        .addGap(26, 26, 26)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnIniciar)
                             .addComponent(jLabel9)
                             .addComponent(cmbAlgoritmo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20)
+                        .addComponent(btnIniciar)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -342,11 +374,13 @@ private void actualizarGUI() {
                             .addComponent(jLabel12)
                             .addComponent(spnPrioridad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnCrearProceso)
-                        .addGap(156, 156, 156))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(panelGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(spnTamaño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(13, 13, 13)
+                        .addComponent(btnCrearProceso))
+                    .addComponent(panelGrafico, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         pack();
@@ -359,28 +393,37 @@ private void actualizarGUI() {
     }//GEN-LAST:event_btnIniciarActionPerformed
 
     private void btnCrearProcesoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearProcesoActionPerformed
-        String nombre = txtNombreProceso.getText();
+       String nombre = txtNombreProceso.getText();
     int instrucciones = (int) spnInstrucciones.getValue();
     boolean esIO = chkIoBound.isSelected();
     int instruccionIO = (int) spnInstruccionIO.getValue();
     int prioridad = (int) spnPrioridad.getValue();
+    int tamaño = (int) spnTamaño.getValue(); // Leemos el nuevo campo
 
-    if (nombre.trim().isEmpty() || instrucciones <= 0 || (esIO && (instruccionIO <= 0 || instruccionIO > instrucciones))) {
-        javax.swing.JOptionPane.showMessageDialog(this, "Datos inválidos. La instrucción de E/S debe ser mayor que 0 y menor que el total de instrucciones.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
-        return; 
+    if (nombre.isEmpty() || instrucciones <= 0 || tamaño <= 0) {
+        JOptionPane.showMessageDialog(this, "Por favor, complete los campos válidamente.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
     }
 
-    Proceso nuevoProceso = new Proceso(nombre, instrucciones, esIO, instruccionIO, prioridad);
+    Proceso nuevoProceso = new Proceso(nombre, instrucciones, esIO, instruccionIO, prioridad, tamaño);
     PCB nuevoPcb = new PCB(nuevoProceso);
     nuevoPcb.setTiempoDeLlegada(cicloGlobal);
-    nuevoPcb.setEstado(PCB.EstadoProceso.LISTO);
-    colaListos.encolar(nuevoPcb);
 
-    // Limpiar campos y actualizar GUI
-    txtNombreProceso.setText("");
-    spnInstrucciones.setValue(0);
-    chkIoBound.setSelected(false);
-    spnInstruccionIO.setValue(0);
+    // --- LÓGICA DE GESTIÓN DE MEMORIA ---
+    if ((memoriaEnUso + tamaño) <= MEMORIA_TOTAL_MB) {
+        // Hay espacio en la memoria
+        memoriaEnUso += tamaño;
+        nuevoPcb.setEstado(PCB.EstadoProceso.LISTO);
+        colaListos.encolar(nuevoPcb);
+        System.out.println("Proceso " + nuevoPcb.getId() + " admitido en memoria.");
+    } else {
+        // No hay espacio, va a la cola de suspendidos
+        nuevoPcb.setEstado(PCB.EstadoProceso.LISTO_SUSPENDIDO); // (Necesitaremos añadir este estado)
+        colaListosSuspendidos.encolar(nuevoPcb);
+        System.out.println("Proceso " + nuevoPcb.getId() + " enviado a suspendidos por falta de memoria.");
+    }
+    
+    limpiarCamposCreacion();
     actualizarGUI();
     }//GEN-LAST:event_btnCrearProcesoActionPerformed
 
@@ -398,6 +441,8 @@ private void actualizarGUI() {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -410,6 +455,7 @@ private void actualizarGUI() {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JLabel lblCicloActual;
     private javax.swing.JLabel lblProcesoCPU;
     private javax.swing.JLabel lblProgramCounter;
@@ -417,8 +463,10 @@ private void actualizarGUI() {
     private javax.swing.JSpinner spnInstruccionIO;
     private javax.swing.JSpinner spnInstrucciones;
     private javax.swing.JSpinner spnPrioridad;
+    private javax.swing.JSpinner spnTamaño;
     private javax.swing.JTextArea txtColaBloqueados;
     private javax.swing.JTextArea txtColaListos;
+    private javax.swing.JTextArea txtColaListosSuspendidos;
     private javax.swing.JTextArea txtMetricas;
     private javax.swing.JTextField txtNombreProceso;
     private javax.swing.JTextArea txtTerminados;
@@ -426,9 +474,10 @@ private void actualizarGUI() {
 
 @Override
 public void run() {
-    while (procesoEnCpu != null || !colaListos.estaVacia() || !colaBloqueados.estaVacia()) {
+    while (procesoEnCpu != null || !colaListos.estaVacia() || !colaBloqueados.estaVacia() || !colaListosSuspendidos.estaVacia()) {
 
         gestionarColaBloqueados();
+        gestionarColaSuspendidos();
         String algoritmo = (String) cmbAlgoritmo.getSelectedItem();
 
         // Bloque de apropiación por prioridad (no cambia)
@@ -472,8 +521,11 @@ public void run() {
             } else if (procesoEnCpu.getProgramCounter() >= procesoEnCpu.getProcesoInfo().getNumeroInstrucciones()) {
                 procesoEnCpu.setEstado(PCB.EstadoProceso.TERMINADO);
                 procesoEnCpu.setTiempoDeFinalizacion(cicloGlobal);
+                memoriaEnUso -= procesoEnCpu.getProcesoInfo().getTamañoEnMemoria(); 
+                System.out.println("Memoria liberada: " + procesoEnCpu.getProcesoInfo().getTamañoEnMemoria() + " MB. Uso actual: " + memoriaEnUso + " MB.");
                 colaTerminados.encolar(procesoEnCpu);
                 procesoEnCpu = null;
+                
 
             } else if (algoritmo.equals("Round Robin") && procesoEnCpu.getQuantumRestante() <= 0) {
                 procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
@@ -633,4 +685,39 @@ private void actualizarGrafico() {
         this.seriesUtilizacionCPU.add(cicloGlobal, utilizacionActual);
     }
    }
+
+private void limpiarCamposCreacion() {
+    // Resetea los campos del formulario a sus valores por defecto
+    txtNombreProceso.setText("");
+    spnInstrucciones.setValue(0);
+    chkIoBound.setSelected(false);
+    spnInstruccionIO.setValue(0);
+    spnPrioridad.setValue(10);
+    spnTamaño.setValue(100);
+    
+    }
+
+private void gestionarColaSuspendidos() {
+    // Revisa si hay procesos esperando y si la cola no está vacía
+    if (!colaListosSuspendidos.estaVacia()) {
+        // "Espiamos" al primer proceso en la cola sin sacarlo todavía
+        PCB procesoInteresado = colaListosSuspendidos.verFrente();
+        
+        // Verificamos si hay suficiente memoria para él
+        if ((memoriaEnUso + procesoInteresado.getProcesoInfo().getTamañoEnMemoria()) <= MEMORIA_TOTAL_MB) {
+            
+            // ¡Sí cabe! Lo sacamos de suspendidos
+            PCB procesoAdmitido = colaListosSuspendidos.desencolar();
+            
+            // Actualizamos su estado y la memoria en uso
+            procesoAdmitido.setEstado(PCB.EstadoProceso.LISTO);
+            memoriaEnUso += procesoAdmitido.getProcesoInfo().getTamañoEnMemoria();
+            
+            // Lo enviamos a la cola de listos para que pueda competir por la CPU
+            colaListos.encolar(procesoAdmitido);
+            
+            System.out.println("Proceso " + procesoAdmitido.getId() + " movido de suspendido a listo. Uso de memoria: " + memoriaEnUso + " MB.");
+        }
+    }
+    }
 }

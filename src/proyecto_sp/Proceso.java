@@ -15,45 +15,36 @@ public class Proceso {
     private boolean esIoBound;
     private int instruccionBloqueo;
     private int prioridad;
+    private int tamañoEnMemoria;
 
-    // 1. Este es tu nuevo constructor "maestro". Hace todo el trabajo.
-    public Proceso(String nombre, int numeroInstrucciones, boolean esIoBound, int instruccionBloqueo, int prioridad) {
+    // 1. Constructor "maestro" que incluye todos los parámetros.
+    public Proceso(String nombre, int numeroInstrucciones, boolean esIoBound, int instruccionBloqueo, int prioridad, int tamañoEnMemoria) {
         this.nombre = nombre;
         this.numeroInstrucciones = numeroInstrucciones;
         this.esIoBound = esIoBound;
         this.instruccionBloqueo = instruccionBloqueo;
         this.prioridad = prioridad;
+        this.tamañoEnMemoria = tamañoEnMemoria;
     }
 
-    // 2. Este es el constructor que usabas para procesos con E/S.
-    //    Ahora llama al constructor maestro, pasando una prioridad por defecto de 10.
+    // 2. Constructores antiguos que llaman al "maestro" con valores por defecto.
+    public Proceso(String nombre, int numeroInstrucciones, boolean esIoBound, int instruccionBloqueo, int prioridad) {
+        this(nombre, numeroInstrucciones, esIoBound, instruccionBloqueo, prioridad, 100); 
+    }
+    
     public Proceso(String nombre, int numeroInstrucciones, boolean esIoBound, int instruccionBloqueo) {
-        this(nombre, numeroInstrucciones, esIoBound, instruccionBloqueo, 10); // Llama al constructor de arriba
+        this(nombre, numeroInstrucciones, esIoBound, instruccionBloqueo, 10, 100);
     }
 
-    // 3. Este es tu constructor original y más simple.
-    //    Ahora también llama al maestro, pasando valores por defecto para E/S y prioridad.
     public Proceso(String nombre, int numeroInstrucciones) {
-        this(nombre, numeroInstrucciones, false, -1, 10); // Llama al constructor de arriba
+        this(nombre, numeroInstrucciones, false, -1, 10, 100);
     }
 
-    // --- Añade los Getters para las nuevas variables ---
-    public int getPrioridad() {
-        return prioridad;
-    }
-    public boolean esIoBound() {
-        return esIoBound;
-    }
-
-    public int getInstruccionBloqueo() {
-        return instruccionBloqueo;
-    }
-    // Getters
-    public String getNombre() {
-        return nombre;
-    }
-
-    public int getNumeroInstrucciones() {
-        return numeroInstrucciones;
-    }
+    // --- Getters ---
+    public String getNombre() { return nombre; }
+    public int getNumeroInstrucciones() { return numeroInstrucciones; }
+    public boolean esIoBound() { return esIoBound; }
+    public int getInstruccionBloqueo() { return instruccionBloqueo; }
+    public int getPrioridad() { return prioridad; }
+    public int getTamañoEnMemoria() { return tamañoEnMemoria; }
 }

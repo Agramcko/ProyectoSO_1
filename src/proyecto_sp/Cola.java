@@ -47,6 +47,14 @@ public class Cola {
         return frente == null;
     }
     
+    // En tu clase Cola.java
+    public PCB verFrente() {
+    if (estaVacia()) {
+        return null;
+    }
+    return frente.getPcb();
+}
+    
     // Método para imprimir el contenido de la cola (útil para depurar)
   @Override
 public String toString() {

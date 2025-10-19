@@ -25,7 +25,7 @@ public class PCB {
 
     // Enum para los estados del proceso
     public enum EstadoProceso {
-        NUEVO, LISTO, EJECUCION, BLOQUEADO, TERMINADO
+        NUEVO, LISTO, EJECUCION, BLOQUEADO, TERMINADO, LISTO_SUSPENDIDO
     }
 
     public PCB(Proceso procesoInfo) {
