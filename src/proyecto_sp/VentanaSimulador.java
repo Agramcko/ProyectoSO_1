@@ -17,6 +17,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.concurrent.Semaphore;
 /**
  * @author Alessandro Gramcko
  * @author massimo Gramcko
@@ -37,6 +38,7 @@ public class VentanaSimulador extends javax.swing.JFrame implements Runnable {
     private Planificador planificador;
     private XYSeries seriesUtilizacionCPU;
     private JFreeChart grafico;
+    private final Semaphore mutex = new Semaphore(1); // Semáforo con 1 permiso (mutex)
     
     
     
@@ -548,83 +550,94 @@ private void actualizarGUI() {
 @Override
 public void run() {
     while (procesoEnCpu != null || !colaListos.estaVacia() || !colaBloqueados.estaVacia() || !colaListosSuspendidos.estaVacia()) {
+        try {
+            // --- INICIO DE LA SECCIÓN CRÍTICA ---
+            mutex.acquire(); // Pide permiso para acceder a las colas
 
-        gestionarColaBloqueados();
-        gestionarColaSuspendidos();
-        String algoritmo = (String) cmbAlgoritmo.getSelectedItem();
+            gestionarColaBloqueados();
+            gestionarColaSuspendidos();
+            String algoritmo = (String) cmbAlgoritmo.getSelectedItem();
 
-        // --- LÓGICA DE APROPIACIÓN ---
-        if (procesoEnCpu != null && !colaListos.estaVacia()) {
-            if (algoritmo.equals("Prioridad Apropiativo")) {
-                PCB masPrioritario = planificador.verProcesoMasPrioritario(colaListos);
-                if (masPrioritario.getProcesoInfo().getPrioridad() < procesoEnCpu.getProcesoInfo().getPrioridad()) {
-                    Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " interrumpido por Proceso ID " + masPrioritario.getId() + " (Prioridad).");
-                    procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
-                    colaListos.encolar(procesoEnCpu);
-                    procesoEnCpu = null;
+            // --- LÓGICA DE APROPIACIÓN ---
+            if (procesoEnCpu != null && !colaListos.estaVacia()) {
+                if (algoritmo.equals("Prioridad Apropiativo")) {
+                    PCB masPrioritario = planificador.verProcesoMasPrioritario(colaListos);
+                    if (masPrioritario.getProcesoInfo().getPrioridad() < procesoEnCpu.getProcesoInfo().getPrioridad()) {
+                        Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " interrumpido por Proceso ID " + masPrioritario.getId() + " (Prioridad).");
+                        procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
+                        colaListos.encolar(procesoEnCpu);
+                        procesoEnCpu = null;
+                    }
+                } else if (algoritmo.equals("SRT (Shortest Remaining Time)")) {
+                    PCB masCorto = planificador.verProcesoMasCortoRestante(colaListos);
+                    if (masCorto.getTiempoEjecucionRestante() < procesoEnCpu.getTiempoEjecucionRestante()) {
+                        Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " interrumpido por Proceso ID " + masCorto.getId() + " (SRT).");
+                        procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
+                        colaListos.encolar(procesoEnCpu);
+                        procesoEnCpu = null;
+                    }
                 }
-            } else if (algoritmo.equals("SRT (Shortest Remaining Time)")) {
-                PCB masCorto = planificador.verProcesoMasCortoRestante(colaListos);
-                if (masCorto.getTiempoEjecucionRestante() < procesoEnCpu.getTiempoEjecucionRestante()) {
-                    Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " interrumpido por Proceso ID " + masCorto.getId() + " (SRT).");
-                    procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
-                    colaListos.encolar(procesoEnCpu);
-                    procesoEnCpu = null;
-                }
-            }
-        }
-        
-        if (procesoEnCpu == null) {
-            procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmo);
-            if (procesoEnCpu != null) {
-                Logger.log("Ciclo " + cicloGlobal + ": Planificador selecciona Proceso ID " + procesoEnCpu.getId() + " (" + algoritmo + ").");
-                procesoEnCpu.setEstado(PCB.EstadoProceso.EJECUCION);
-                if (algoritmo.equals("Round Robin")) {
-                    procesoEnCpu.setQuantumRestante(QUANTUM); 
-                }
-            }
-        }
-
-        cicloGlobal++;
-
-        if (procesoEnCpu != null) {
-            ciclosOcupado++; 
-            procesoEnCpu.setTiempoEjecucionRestante(procesoEnCpu.getTiempoEjecucionRestante() - 1);
-
-            if (algoritmo.equals("Round Robin")) {
-                procesoEnCpu.setQuantumRestante(procesoEnCpu.getQuantumRestante() - 1);
             }
             
-            if (procesoEnCpu.getProcesoInfo().esIoBound() && 
-                procesoEnCpu.getProgramCounter() == procesoEnCpu.getProcesoInfo().getInstruccionBloqueo()) {
-                
-                Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " se bloquea por E/S.");
-                procesoEnCpu.setEstado(PCB.EstadoProceso.BLOQUEADO);
-                procesoEnCpu.setTiempoRestanteBloqueo(10);
-                colaBloqueados.encolar(procesoEnCpu);
-                procesoEnCpu.setProgramCounter(procesoEnCpu.getProgramCounter() + 1);
-                procesoEnCpu = null;
-
-            } else if (procesoEnCpu.getProgramCounter() >= procesoEnCpu.getProcesoInfo().getNumeroInstrucciones()) {
-                Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " ha terminado.");
-                procesoEnCpu.setEstado(PCB.EstadoProceso.TERMINADO);
-                procesoEnCpu.setTiempoDeFinalizacion(cicloGlobal);
-                memoriaEnUso -= procesoEnCpu.getProcesoInfo().getTamañoEnMemoria(); 
-                colaTerminados.encolar(procesoEnCpu);
-                procesoEnCpu = null;
-                
-            } else if (algoritmo.equals("Round Robin") && procesoEnCpu.getQuantumRestante() <= 0) {
-                Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " fin de quantum (Round Robin).");
-                procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
-                colaListos.encolar(procesoEnCpu);
-                procesoEnCpu.setProgramCounter(procesoEnCpu.getProgramCounter() + 1);
-                procesoEnCpu = null;
-
-            } else {
-                procesoEnCpu.setProgramCounter(procesoEnCpu.getProgramCounter() + 1);
+            if (procesoEnCpu == null) {
+                procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmo);
+                if (procesoEnCpu != null) {
+                    Logger.log("Ciclo " + cicloGlobal + ": Planificador selecciona Proceso ID " + procesoEnCpu.getId() + " (" + algoritmo + ").");
+                    procesoEnCpu.setEstado(PCB.EstadoProceso.EJECUCION);
+                    if (algoritmo.equals("Round Robin")) {
+                        procesoEnCpu.setQuantumRestante(QUANTUM); 
+                    }
+                }
             }
+
+            cicloGlobal++;
+
+            if (procesoEnCpu != null) {
+                ciclosOcupado++; 
+                procesoEnCpu.setTiempoEjecucionRestante(procesoEnCpu.getTiempoEjecucionRestante() - 1);
+
+                if (algoritmo.equals("Round Robin")) {
+                    procesoEnCpu.setQuantumRestante(procesoEnCpu.getQuantumRestante() - 1);
+                }
+                
+                if (procesoEnCpu.getProcesoInfo().esIoBound() && 
+                    procesoEnCpu.getProgramCounter() == procesoEnCpu.getProcesoInfo().getInstruccionBloqueo()) {
+                    
+                    Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " se bloquea por E/S.");
+                    procesoEnCpu.setEstado(PCB.EstadoProceso.BLOQUEADO);
+                    procesoEnCpu.setTiempoRestanteBloqueo(10);
+                    colaBloqueados.encolar(procesoEnCpu);
+                    procesoEnCpu.setProgramCounter(procesoEnCpu.getProgramCounter() + 1);
+                    procesoEnCpu = null;
+
+                } else if (procesoEnCpu.getProgramCounter() >= procesoEnCpu.getProcesoInfo().getNumeroInstrucciones()) {
+                    Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " ha terminado.");
+                    procesoEnCpu.setEstado(PCB.EstadoProceso.TERMINADO);
+                    procesoEnCpu.setTiempoDeFinalizacion(cicloGlobal);
+                    memoriaEnUso -= procesoEnCpu.getProcesoInfo().getTamañoEnMemoria(); 
+                    colaTerminados.encolar(procesoEnCpu);
+                    procesoEnCpu = null;
+                    
+                } else if (algoritmo.equals("Round Robin") && procesoEnCpu.getQuantumRestante() <= 0) {
+                    Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " fin de quantum (Round Robin).");
+                    procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
+                    colaListos.encolar(procesoEnCpu);
+                    procesoEnCpu.setProgramCounter(procesoEnCpu.getProgramCounter() + 1);
+                    procesoEnCpu = null;
+
+                } else {
+                    procesoEnCpu.setProgramCounter(procesoEnCpu.getProgramCounter() + 1);
+                }
+            }
+
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } finally {
+            // --- FIN DE LA SECCIÓN CRÍTICA ---
+            mutex.release(); // Libera el permiso, SIEMPRE
         }
 
+        // La actualización de la GUI y la pausa quedan fuera de la sección crítica
         SwingUtilities.invokeLater(() -> {
             actualizarGUI();
             actualizarGrafico();
@@ -638,6 +651,7 @@ public void run() {
         }
     }
     
+    // El código de finalización no cambia
     System.out.println("--- Simulación Finalizada ---");
     calcularYMostrarMetricas();
     Logger.cerrar();
