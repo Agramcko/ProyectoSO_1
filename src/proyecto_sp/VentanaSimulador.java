@@ -39,6 +39,7 @@ public class VentanaSimulador extends javax.swing.JFrame implements Runnable {
     private XYSeries seriesUtilizacionCPU;
     private JFreeChart grafico;
     private final Semaphore mutex = new Semaphore(1); // Semáforo con 1 permiso (mutex)
+    private volatile boolean simulacionPausada = false;
     
     
     
@@ -165,6 +166,7 @@ private void actualizarGUI() {
         txtColaBloqueadosSuspendidos = new javax.swing.JTextArea();
         lblMAR = new javax.swing.JLabel();
         lblModoEjecucion = new javax.swing.JLabel();
+        btnPausa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -269,6 +271,14 @@ private void actualizarGUI() {
 
         lblModoEjecucion.setText("Modo: Kernel");
 
+        btnPausa.setText("Pausar");
+        btnPausa.setEnabled(false);
+        btnPausa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPausaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -306,17 +316,20 @@ private void actualizarGUI() {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(lblProcesoCPU, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(lblProcesoCPU, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(29, 29, 29)
+                                                .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(spnVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(cmbAlgoritmo, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(btnIniciar)
-                                        .addGap(51, 51, 51)
-                                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(spnVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(40, 40, 40)
+                                        .addComponent(btnPausa))
                                     .addComponent(lblMAR, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -324,7 +337,7 @@ private void actualizarGUI() {
                                             .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))
                                         .addGap(18, 18, 18)
                                         .addComponent(lblProgramCounter, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE))))
+                                .addGap(0, 334, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(chkIoBound)
@@ -391,10 +404,10 @@ private void actualizarGUI() {
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel11)
-                .addGap(12, 12, 12)
+                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 245, Short.MAX_VALUE)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
                         .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
@@ -402,7 +415,10 @@ private void actualizarGUI() {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(lblProcesoCPU))
+                            .addComponent(lblProcesoCPU)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel15)
+                                .addComponent(spnVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
@@ -422,8 +438,7 @@ private void actualizarGUI() {
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnIniciar)
-                            .addComponent(jLabel15)
-                            .addComponent(spnVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnPausa))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -455,6 +470,7 @@ private void actualizarGUI() {
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
         btnIniciar.setEnabled(false);
+        btnPausa.setEnabled(true);
         Logger.iniciar();
         Thread hiloSimulacion = new Thread(this);
         hiloSimulacion.start();
@@ -495,6 +511,18 @@ private void actualizarGUI() {
     actualizarGUI();
     }//GEN-LAST:event_btnCrearProcesoActionPerformed
 
+    private void btnPausaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPausaActionPerformed
+        simulacionPausada = !simulacionPausada; // Invierte el estado de la pausa
+
+    if (simulacionPausada) {
+        btnPausa.setText("Continuar");
+        Logger.log("--- SIMULACIÓN PAUSADA ---");
+    } else {
+        btnPausa.setText("Pausar");
+        Logger.log("--- SIMULACIÓN REANUDADA ---");
+    }
+    }//GEN-LAST:event_btnPausaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -503,6 +531,7 @@ private void actualizarGUI() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearProceso;
     private javax.swing.JButton btnIniciar;
+    private javax.swing.JButton btnPausa;
     private javax.swing.JCheckBox chkIoBound;
     private javax.swing.JComboBox<String> cmbAlgoritmo;
     private javax.swing.JLabel jLabel1;
@@ -550,15 +579,26 @@ private void actualizarGUI() {
 @Override
 public void run() {
     while (procesoEnCpu != null || !colaListos.estaVacia() || !colaBloqueados.estaVacia() || !colaListosSuspendidos.estaVacia()) {
+
+        // --- INICIO: LÓGICA DE PAUSA ---
+        while (simulacionPausada) {
+            try {
+                // Espera pasiva para no consumir CPU mientras está en pausa
+                Thread.sleep(100); 
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        // --- FIN: LÓGICA DE PAUSA ---
+
         try {
-            // --- INICIO DE LA SECCIÓN CRÍTICA ---
             mutex.acquire(); // Pide permiso para acceder a las colas
 
+            String algoritmo = (String) cmbAlgoritmo.getSelectedItem();
             gestionarColaBloqueados();
             gestionarColaSuspendidos();
-            String algoritmo = (String) cmbAlgoritmo.getSelectedItem();
-
-            // --- LÓGICA DE APROPIACIÓN ---
+            
+            // --- LÓGICA DE APROPIACIÓN (No cambia) ---
             if (procesoEnCpu != null && !colaListos.estaVacia()) {
                 if (algoritmo.equals("Prioridad Apropiativo")) {
                     PCB masPrioritario = planificador.verProcesoMasPrioritario(colaListos);
@@ -633,11 +673,9 @@ public void run() {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         } finally {
-            // --- FIN DE LA SECCIÓN CRÍTICA ---
             mutex.release(); // Libera el permiso, SIEMPRE
         }
 
-        // La actualización de la GUI y la pausa quedan fuera de la sección crítica
         SwingUtilities.invokeLater(() -> {
             actualizarGUI();
             actualizarGrafico();
@@ -651,12 +689,14 @@ public void run() {
         }
     }
     
-    // El código de finalización no cambia
+    // --- CÓDIGO DE FINALIZACIÓN ACTUALIZADO ---
     System.out.println("--- Simulación Finalizada ---");
     calcularYMostrarMetricas();
     Logger.cerrar();
     SwingUtilities.invokeLater(() -> {
         btnIniciar.setEnabled(true);
+        btnPausa.setEnabled(false); // Deshabilita el botón de pausa
+        btnPausa.setText("Pausar");   // Resetea el texto
     });
 }// <--- FIN DEL MÉTODO run()
 
