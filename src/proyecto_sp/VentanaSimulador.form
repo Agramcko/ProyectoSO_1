@@ -64,12 +64,6 @@
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel5" min="-2" pref="111" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="lblProgramCounter" min="-2" pref="190" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="lblMAR" alignment="0" min="-2" pref="37" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel9" min="-2" pref="67" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="cmbAlgoritmo" min="-2" pref="124" max="-2" attributes="0"/>
@@ -80,6 +74,15 @@
                                       <Component id="jLabel15" min="-2" pref="92" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="spnVelocidad" min="-2" pref="57" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Component id="lblMAR" alignment="0" min="-2" pref="51" max="-2" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                          <Component id="lblModoEjecucion" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jLabel5" alignment="0" pref="111" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="lblProgramCounter" min="-2" pref="190" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -192,7 +195,9 @@
                           <Component id="jLabel5" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblProgramCounter" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="lblModoEjecucion" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                       <Component id="lblMAR" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -515,6 +520,11 @@
     <Component class="javax.swing.JLabel" name="lblMAR">
       <Properties>
         <Property name="text" type="java.lang.String" value="MAR: -"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lblModoEjecucion">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Modo: Kernel"/>
       </Properties>
     </Component>
   </SubComponents>

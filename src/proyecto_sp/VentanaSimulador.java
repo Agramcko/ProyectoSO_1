@@ -87,15 +87,19 @@ private void actualizarGUI() {
     // Actualiza el ciclo actual
     lblCicloActual.setText(String.valueOf(cicloGlobal));
 
-    // Actualiza la información del proceso en CPU
+    // Actualiza la información del proceso en CPU y el modo de ejecución
     if (procesoEnCpu != null) {
+        // Modo Usuario: Un proceso está en la CPU
+        lblModoEjecucion.setText("Modo: Usuario"); // <-- LÍNEA AÑADIDA
         lblProcesoCPU.setText(procesoEnCpu.getProcesoInfo().getNombre() + " (ID: " + procesoEnCpu.getId() + ")");
         lblProgramCounter.setText(String.valueOf(procesoEnCpu.getProgramCounter()));
-        lblMAR.setText(String.valueOf(procesoEnCpu.getProgramCounter())); // <-- LÍNEA AÑADIDA
+        lblMAR.setText(String.valueOf(procesoEnCpu.getProgramCounter()));
     } else {
+        // Modo Kernel: La CPU está libre, el SO está decidiendo qué hacer
+        lblModoEjecucion.setText("Modo: Kernel"); // <-- LÍNEA AÑADIDA
         lblProcesoCPU.setText("N/A");
         lblProgramCounter.setText("0");
-        lblMAR.setText("-"); // <-- LÍNEA AÑADIDA
+        lblMAR.setText("-");
     }
 
     // Actualiza el JTextArea de las colas (esto no cambia)
@@ -158,6 +162,7 @@ private void actualizarGUI() {
         jScrollPane6 = new javax.swing.JScrollPane();
         txtColaBloqueadosSuspendidos = new javax.swing.JTextArea();
         lblMAR = new javax.swing.JLabel();
+        lblModoEjecucion = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -260,6 +265,8 @@ private void actualizarGUI() {
 
         lblMAR.setText("MAR: -");
 
+        lblModoEjecucion.setText("Modo: Kernel");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -299,11 +306,6 @@ private void actualizarGUI() {
                                             .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(lblProcesoCPU, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(lblProgramCounter, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(lblMAR, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(cmbAlgoritmo, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -312,7 +314,14 @@ private void actualizarGUI() {
                                         .addGap(51, 51, 51)
                                         .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(spnVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(spnVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblMAR, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(lblModoEjecucion, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lblProgramCounter, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -396,7 +405,9 @@ private void actualizarGUI() {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(lblProgramCounter))
-                        .addGap(44, 44, 44)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblModoEjecucion)
+                        .addGap(15, 15, 15)
                         .addComponent(lblMAR)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -516,6 +527,7 @@ private void actualizarGUI() {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JLabel lblCicloActual;
     private javax.swing.JLabel lblMAR;
+    private javax.swing.JLabel lblModoEjecucion;
     private javax.swing.JLabel lblProcesoCPU;
     private javax.swing.JLabel lblProgramCounter;
     private javax.swing.JPanel panelGrafico;
