@@ -1,2 +1,8 @@
+# Ignorar archivos generados por la simulación
+log.txt
+config.json
+
+# Ignorar carpetas de NetBeans
 /nbproject/private/
 /build/
+/dist/
