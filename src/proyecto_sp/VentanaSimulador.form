@@ -106,10 +106,9 @@
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="jLabel12" min="-2" pref="59" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="spnPrioridad" max="32767" attributes="0"/>
+                                      <Component id="spnPrioridad" pref="43" max="32767" attributes="0"/>
                                   </Group>
                                   <Component id="jLabel10" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="btnCrearProceso" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="spnInstruccionIO" min="-2" pref="44" max="-2" attributes="0"/>
@@ -118,6 +117,10 @@
                               <Component id="jLabel13" min="-2" pref="83" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="spnTamaño" min="-2" pref="60" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="btnCrearProceso" alignment="0" max="32767" attributes="0"/>
+                              <Component id="btnCargarArchivo" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace min="-2" pref="132" max="-2" attributes="0"/>
@@ -193,10 +196,8 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblProcesoCPU" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" alignment="3" groupAlignment="3" attributes="0">
-                              <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="spnVelocidad" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="spnVelocidad" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -250,6 +251,8 @@
                       </Group>
                       <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                       <Component id="btnCrearProceso" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnCargarArchivo" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="panelGrafico" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -541,6 +544,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPausaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnCargarArchivo">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cargar Archivo"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCargarArchivoActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -1,8 +1,34 @@
-[22:34:33.414] --- INICIO DE LA SIMULACIÓN ---
-[22:34:33.436] Ciclo 0: Planificador selecciona Proceso ID 1 (FCFS).
-[22:34:37.091] --- SIMULACIÓN PAUSADA ---
-[22:34:49.470] --- SIMULACIÓN REANUDADA ---
-[22:34:55.640] Ciclo 21: Proceso ID 1 ha terminado.
-[22:34:56.154] Ciclo 21: Planificador selecciona Proceso ID 2 (FCFS).
-[22:35:06.309] Ciclo 42: Proceso ID 2 ha terminado.
-[22:35:06.856] --- FIN DE LA SIMULACIÓN ---
+[23:11:57.086] --- INICIO DE LA SIMULACIÓN ---
+[23:11:57.108] Ciclo 0: Planificador selecciona Proceso ID 1 (FCFS).
+[23:12:05.106] --- SIMULACIÓN PAUSADA ---
+[23:12:14.805] --- SIMULACIÓN REANUDADA ---
+[23:12:18.971] Ciclo 20: Proceso ID 1 interrumpido por Proceso ID 3 (SRT).
+[23:12:18.971] Ciclo 20: Planificador selecciona Proceso ID 2 (SRT (Shortest Remaining Time)).
+[23:12:19.975] Ciclo 21: Proceso ID 2 interrumpido por Proceso ID 3 (SRT).
+[23:12:19.975] Ciclo 21: Planificador selecciona Proceso ID 3 (SRT (Shortest Remaining Time)).
+[23:12:35.117] Ciclo 37: Proceso ID 3 ha terminado.
+[23:12:36.121] Ciclo 37: Planificador selecciona Proceso ID 4 (SRT (Shortest Remaining Time)).
+[23:12:46.210] Ciclo 48: Proceso ID 4 se bloquea por E/S.
+[23:12:47.221] Ciclo 48: Planificador selecciona Proceso ID 5 (SRT (Shortest Remaining Time)).
+[23:12:48.222] Ciclo 49: Proceso ID 5 interrumpido por Proceso ID 2 (SRT).
+[23:12:48.222] Ciclo 49: Planificador selecciona Proceso ID 1 (SRT (Shortest Remaining Time)).
+[23:12:56.284] Ciclo 57: Proceso ID 4 fin de bloqueo. Va a Listos.
+[23:12:56.285] Ciclo 57: Proceso ID 1 interrumpido por Proceso ID 4 (SRT).
+[23:12:56.285] Ciclo 57: Planificador selecciona Proceso ID 2 (SRT (Shortest Remaining Time)).
+[23:12:57.302] Ciclo 58: Proceso ID 2 interrumpido por Proceso ID 4 (SRT).
+[23:12:57.303] Ciclo 58: Planificador selecciona Proceso ID 5 (SRT (Shortest Remaining Time)).
+[23:12:58.304] Ciclo 59: Proceso ID 5 interrumpido por Proceso ID 4 (SRT).
+[23:12:58.308] Ciclo 59: Planificador selecciona Proceso ID 4 (SRT (Shortest Remaining Time)).
+[23:13:07.388] Ciclo 69: Proceso ID 4 ha terminado.
+[23:13:08.400] Ciclo 69: Planificador selecciona Proceso ID 1 (SRT (Shortest Remaining Time)).
+[23:13:25.561] Ciclo 87: Proceso ID 1 ha terminado.
+[23:13:26.567] Ciclo 87: Planificador selecciona Proceso ID 2 (SRT (Shortest Remaining Time)).
+[23:13:32.609] Ciclo 94: Proceso ID 2 se bloquea por E/S.
+[23:13:33.623] Ciclo 94: Planificador selecciona Proceso ID 5 (SRT (Shortest Remaining Time)).
+[23:13:42.716] Ciclo 103: Proceso ID 2 fin de bloqueo. Va a Listos.
+[23:13:42.717] Ciclo 103: Proceso ID 5 interrumpido por Proceso ID 2 (SRT).
+[23:13:42.718] Ciclo 103: Planificador selecciona Proceso ID 2 (SRT (Shortest Remaining Time)).
+[23:13:58.851] Ciclo 120: Proceso ID 2 ha terminado.
+[23:13:59.865] Ciclo 120: Planificador selecciona Proceso ID 5 (SRT (Shortest Remaining Time)).
+[23:14:19.018] Ciclo 140: Proceso ID 5 ha terminado.
+[23:14:20.056] --- FIN DE LA SIMULACIÓN ---

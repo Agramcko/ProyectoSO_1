@@ -1,0 +1,5 @@
+CPU-Intensivo,45,false,0,10,300
+IO-Intensivo,25,true,8,5,150
+CPU-Corto,15,false,0,8,100
+IO-Prioritario,20,true,10,2,180
+CPU-Medio,30,false,0,10,220

@@ -18,6 +18,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.concurrent.Semaphore;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import javax.swing.JFileChooser;
 /**
  * @author Alessandro Gramcko
  * @author massimo Gramcko
@@ -167,6 +171,7 @@ private void actualizarGUI() {
         lblMAR = new javax.swing.JLabel();
         lblModoEjecucion = new javax.swing.JLabel();
         btnPausa = new javax.swing.JButton();
+        btnCargarArchivo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -279,6 +284,13 @@ private void actualizarGUI() {
             }
         });
 
+        btnCargarArchivo.setText("Cargar Archivo");
+        btnCargarArchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarArchivoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -350,15 +362,17 @@ private void actualizarGUI() {
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                         .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(spnPrioridad))
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnCrearProceso, javax.swing.GroupLayout.Alignment.LEADING))
+                                        .addComponent(spnPrioridad, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE))
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(spnInstruccionIO, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(spnTamaño, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(spnTamaño, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(btnCrearProceso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnCargarArchivo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(132, 132, 132)
                         .addComponent(panelGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
             .addGroup(layout.createSequentialGroup()
@@ -416,9 +430,8 @@ private void actualizarGUI() {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
                             .addComponent(lblProcesoCPU)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel15)
-                                .addComponent(spnVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel15)
+                            .addComponent(spnVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
@@ -460,7 +473,9 @@ private void actualizarGUI() {
                             .addComponent(jLabel13)
                             .addComponent(spnTamaño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(13, 13, 13)
-                        .addComponent(btnCrearProceso))
+                        .addComponent(btnCrearProceso)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnCargarArchivo))
                     .addComponent(panelGrafico, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -482,7 +497,7 @@ private void actualizarGUI() {
     boolean esIO = chkIoBound.isSelected();
     int instruccionIO = (int) spnInstruccionIO.getValue();
     int prioridad = (int) spnPrioridad.getValue();
-    int tamaño = (int) spnTamaño.getValue(); // Leemos el nuevo campo
+    int tamaño = (int) spnTamaño.getValue();
 
     if (nombre.isEmpty() || instrucciones <= 0 || tamaño <= 0) {
         JOptionPane.showMessageDialog(this, "Por favor, complete los campos válidamente.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -490,22 +505,10 @@ private void actualizarGUI() {
     }
 
     Proceso nuevoProceso = new Proceso(nombre, instrucciones, esIO, instruccionIO, prioridad, tamaño);
-    PCB nuevoPcb = new PCB(nuevoProceso);
-    nuevoPcb.setTiempoDeLlegada(cicloGlobal);
-
-    // --- LÓGICA DE GESTIÓN DE MEMORIA ---
-    if ((memoriaEnUso + tamaño) <= MEMORIA_TOTAL_MB) {
-        // Hay espacio en la memoria
-        memoriaEnUso += tamaño;
-        nuevoPcb.setEstado(PCB.EstadoProceso.LISTO);
-        colaListos.encolar(nuevoPcb);
-        System.out.println("Proceso " + nuevoPcb.getId() + " admitido en memoria.");
-    } else {
-        // No hay espacio, va a la cola de suspendidos
-        nuevoPcb.setEstado(PCB.EstadoProceso.LISTO_SUSPENDIDO); // (Necesitaremos añadir este estado)
-        colaListosSuspendidos.encolar(nuevoPcb);
-        System.out.println("Proceso " + nuevoPcb.getId() + " enviado a suspendidos por falta de memoria.");
-    }
+    
+    // --- LÓGICA SIMPLIFICADA ---
+    // Ahora solo llamamos al método que tiene la lógica de gestión de memoria.
+    crearYAnadirPCB(nuevoProceso); 
     
     limpiarCamposCreacion();
     actualizarGUI();
@@ -523,12 +526,56 @@ private void actualizarGUI() {
     }
     }//GEN-LAST:event_btnPausaActionPerformed
 
+    private void btnCargarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarArchivoActionPerformed
+    JFileChooser fileChooser = new JFileChooser();
+    fileChooser.setCurrentDirectory(new File(".")); // Abre en la carpeta del proyecto
+    int resultado = fileChooser.showOpenDialog(this);
+
+    if (resultado == JFileChooser.APPROVE_OPTION) {
+        // Aquí es donde se define la variable 'archivo' que faltaba
+        File archivo = fileChooser.getSelectedFile();
+
+        // Ahora, el bloque 'try' funcionará porque 'archivo' ya existe
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] datos = linea.split(",");
+
+                String nombre = datos[0];
+                int instrucciones = Integer.parseInt(datos[1]);
+                boolean esIoBound = Boolean.parseBoolean(datos[2]);
+                int instruccionBloqueo = Integer.parseInt(datos[3]);
+                int prioridad = Integer.parseInt(datos[4]);
+                int tamaño = Integer.parseInt(datos[5]);
+
+                Proceso nuevoProceso = new Proceso(
+                    nombre,
+                    instrucciones,
+                    esIoBound,
+                    instruccionBloqueo,
+                    prioridad,
+                    tamaño
+                );
+
+                crearYAnadirPCB(nuevoProceso);
+            }
+            Logger.log("Procesos cargados desde el archivo: " + archivo.getName());
+            actualizarGUI();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al leer el archivo. Verifique que el formato CSV sea correcto.", "Error de Archivo", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    }//GEN-LAST:event_btnCargarArchivoActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCargarArchivo;
     private javax.swing.JButton btnCrearProceso;
     private javax.swing.JButton btnIniciar;
     private javax.swing.JButton btnPausa;
@@ -890,6 +937,59 @@ private void cargarConfiguracion() {
     } catch (IOException e) {
         // Si el archivo no existe, no es un error. Simplemente usamos los valores por defecto.
         System.out.println("No se encontró config.json. Usando valores por defecto.");
+    }
+}
+
+private void cargarProcesosDesdeArchivo(File archivo) {
+    try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+        String linea;
+        while ((linea = br.readLine()) != null) {
+            String[] datos = linea.split(",");
+
+            // Asumimos que el CSV tiene 6 columnas en el orden correcto
+            String nombre = datos[0];
+            int instrucciones = Integer.parseInt(datos[1]);
+            boolean esIoBound = Boolean.parseBoolean(datos[2]);
+            int instruccionBloqueo = Integer.parseInt(datos[3]);
+            int prioridad = Integer.parseInt(datos[4]);
+            int tamaño = Integer.parseInt(datos[5]);
+
+            Proceso nuevoProceso = new Proceso(
+                nombre,
+                instrucciones,
+                esIoBound,
+                instruccionBloqueo,
+                prioridad,
+                tamaño
+            );
+
+            // Reutilizamos la lógica que ya tenías para añadir un proceso
+            crearYAnadirPCB(nuevoProceso);
+        }
+        Logger.log("Procesos cargados desde el archivo: " + archivo.getName());
+        actualizarGUI(); // Actualizamos la GUI para ver los nuevos procesos
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        // Opcional: Mostrar un mensaje de error al usuario
+    }
+   }
+private void crearYAnadirPCB(Proceso nuevoProceso) {
+    PCB nuevoPcb = new PCB(nuevoProceso);
+    nuevoPcb.setTiempoDeLlegada(cicloGlobal);
+
+    // --- LÓGICA DE GESTIÓN DE MEMORIA (La misma que ya tenías) ---
+    if ((memoriaEnUso + nuevoProceso.getTamañoEnMemoria()) <= MEMORIA_TOTAL_MB) {
+        // Hay espacio en la memoria
+        memoriaEnUso += nuevoProceso.getTamañoEnMemoria();
+        nuevoPcb.setEstado(PCB.EstadoProceso.LISTO);
+        colaListos.encolar(nuevoPcb);
+        System.out.println("Proceso " + nuevoPcb.getId() + " admitido en memoria.");
+    } else {
+        // No hay espacio, va a la cola de suspendidos
+        nuevoPcb.setEstado(PCB.EstadoProceso.LISTO_SUSPENDIDO);
+        colaListosSuspendidos.encolar(nuevoPcb);
+        System.out.println("Proceso " + nuevoPcb.getId() + " enviado a suspendidos por falta de memoria.");
     }
 }
 }
