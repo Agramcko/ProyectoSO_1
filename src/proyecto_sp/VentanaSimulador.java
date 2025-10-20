@@ -22,6 +22,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import javax.swing.JFileChooser;
+import java.util.Random;
 /**
  * @author Alessandro Gramcko
  * @author massimo Gramcko
@@ -44,6 +45,7 @@ public class VentanaSimulador extends javax.swing.JFrame implements Runnable {
     private JFreeChart grafico;
     private final Semaphore mutex = new Semaphore(1); // Semáforo con 1 permiso (mutex)
     private volatile boolean simulacionPausada = false;
+    private final Random random = new Random();
     
     
     
@@ -172,6 +174,7 @@ private void actualizarGUI() {
         lblModoEjecucion = new javax.swing.JLabel();
         btnPausa = new javax.swing.JButton();
         btnCargarArchivo = new javax.swing.JButton();
+        btnCrearRandom = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -291,6 +294,13 @@ private void actualizarGUI() {
             }
         });
 
+        btnCrearRandom.setText("Crear 20 Random");
+        btnCrearRandom.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearRandomActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -364,9 +374,12 @@ private void actualizarGUI() {
                                 .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(spnTamaño, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(btnCrearProceso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnCargarArchivo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(btnCrearProceso, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnCargarArchivo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(35, 35, 35)
+                                .addComponent(btnCrearRandom)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -448,7 +461,9 @@ private void actualizarGUI() {
                             .addComponent(jLabel13)
                             .addComponent(spnTamaño, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(13, 13, 13)
-                        .addComponent(btnCrearProceso)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnCrearProceso)
+                            .addComponent(btnCrearRandom))
                         .addGap(18, 18, 18)
                         .addComponent(btnCargarArchivo)
                         .addGap(78, 78, 78))
@@ -573,6 +588,41 @@ private void actualizarGUI() {
     }
     }//GEN-LAST:event_btnCargarArchivoActionPerformed
 
+    private void btnCrearRandomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearRandomActionPerformed
+        for (int i = 1; i <= 20; i++) {
+        // Generamos los datos aleatorios para el proceso
+        String nombre = "Proceso-Rand-" + i;
+        int instrucciones = random.nextInt(51) + 10; // Entre 10 y 60 instrucciones
+        boolean esIoBound = random.nextBoolean();
+        
+        int instruccionBloqueo = 0;
+        if (esIoBound) {
+            // Si es I/O, el bloqueo ocurre antes de la última instrucción
+            instruccionBloqueo = random.nextInt(instrucciones - 1) + 1;
+        }
+        
+        int prioridad = random.nextInt(10) + 1; // Prioridad entre 1 y 10
+        int tamaño = random.nextInt(251) + 50; // Tamaño entre 50 y 300 MB
+
+        // Creamos el objeto Proceso con los datos aleatorios
+        Proceso procesoAleatorio = new Proceso(
+            nombre,
+            instrucciones,
+            esIoBound,
+            instruccionBloqueo,
+            prioridad,
+            tamaño
+        );
+
+        // Reutilizamos el método que ya tienes para añadir el proceso al sistema
+        crearYAnadirPCB(procesoAleatorio);
+    }
+
+    // Actualizamos la GUI una sola vez al final para ver todos los nuevos procesos
+    actualizarGUI();
+    Logger.log("--- 20 procesos aleatorios han sido creados ---");
+    }//GEN-LAST:event_btnCrearRandomActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -581,6 +631,7 @@ private void actualizarGUI() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCargarArchivo;
     private javax.swing.JButton btnCrearProceso;
+    private javax.swing.JButton btnCrearRandom;
     private javax.swing.JButton btnIniciar;
     private javax.swing.JButton btnPausa;
     private javax.swing.JCheckBox chkIoBound;
