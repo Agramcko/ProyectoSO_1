@@ -1,8 +1,17 @@
-[19:56:18.350] --- INICIO DE LA SIMULACIÓN ---
-[19:56:18.374] Ciclo 0: Planificador selecciona Proceso ID 1 (FCFS).
-[19:56:26.021] Ciclo 16: Proceso ID 1 ha terminado.
-[19:56:26.531] Ciclo 16: Planificador selecciona Proceso ID 2 (FCFS).
-[19:56:29.085] Ciclo 22: Proceso ID 2 se bloquea por E/S.
-[19:56:34.218] Ciclo 31: Planificador selecciona Proceso ID 2 (FCFS).
-[19:56:36.273] Ciclo 36: Proceso ID 2 ha terminado.
-[19:56:36.802] --- FIN DE LA SIMULACIÓN ---
+[20:35:01.563] --- INICIO DE LA SIMULACIÓN ---
+[20:35:01.585] Ciclo 0: Planificador selecciona Proceso ID 1 (FCFS).
+[20:35:04.120] Ciclo 6: Proceso ID 1 se bloquea por E/S.
+[20:35:04.629] Ciclo 6: Swapping. Proceso ID 1 movido a Bloqueado-Suspendido para liberar memoria.
+[20:35:05.143] Ciclo 7: Proceso ID 2 admitido a memoria. Uso: 1200MB.
+[20:35:05.143] Ciclo 7: Planificador selecciona Proceso ID 2 (FCFS).
+[20:35:07.699] Ciclo 13: Proceso ID 2 se bloquea por E/S.
+[20:35:09.225] Ciclo 15: Proceso ID 1 fin de bloqueo (suspendido). Va a Listos-Suspendido.
+[20:35:09.225] Ciclo 15: Swapping. Proceso ID 2 movido a Bloqueado-Suspendido para liberar memoria.
+[20:35:09.736] Ciclo 16: Proceso ID 1 admitido a memoria. Uso: 1200MB.
+[20:35:09.738] Ciclo 16: Planificador selecciona Proceso ID 1 (FCFS).
+[20:35:12.788] Ciclo 22: Proceso ID 2 fin de bloqueo (suspendido). Va a Listos-Suspendido.
+[20:35:14.329] Ciclo 26: Proceso ID 1 ha terminado.
+[20:35:14.843] Ciclo 26: Proceso ID 2 admitido a memoria. Uso: 1200MB.
+[20:35:14.843] Ciclo 26: Planificador selecciona Proceso ID 2 (FCFS).
+[20:35:19.402] Ciclo 36: Proceso ID 2 ha terminado.
+[20:35:19.921] --- FIN DE LA SIMULACIÓN ---
