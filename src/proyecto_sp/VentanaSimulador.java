@@ -657,7 +657,6 @@ public void run() {
     Logger.cerrar();
     SwingUtilities.invokeLater(() -> {
         btnIniciar.setEnabled(true);
-        cmbAlgoritmo.setEnabled(true);
     });
 }// <--- FIN DEL MÉTODO run()
 

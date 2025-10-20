@@ -1,4 +1,8 @@
-[21:17:02.003] --- INICIO DE LA SIMULACIÓN ---
-[21:17:02.025] Ciclo 0: Planificador selecciona Proceso ID 1 (FCFS).
-[21:17:07.095] Ciclo 11: Proceso ID 1 ha terminado.
-[21:17:07.622] --- FIN DE LA SIMULACIÓN ---
+[22:23:01.407] --- INICIO DE LA SIMULACIÓN ---
+[22:23:01.436] Ciclo 0: Planificador selecciona Proceso ID 1 (FCFS).
+[22:23:05.000] Ciclo 7: Proceso ID 1 interrumpido por Proceso ID 2 (SRT).
+[22:23:05.000] Ciclo 7: Planificador selecciona Proceso ID 2 (SRT (Shortest Remaining Time)).
+[22:23:10.094] Ciclo 18: Proceso ID 2 ha terminado.
+[22:23:10.604] Ciclo 18: Planificador selecciona Proceso ID 1 (SRT (Shortest Remaining Time)).
+[22:23:27.484] Ciclo 52: Proceso ID 1 ha terminado.
+[22:23:28.025] --- FIN DE LA SIMULACIÓN ---
