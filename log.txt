@@ -1,11 +1,26 @@
-[20:27:23.804] --- INICIO DE LA SIMULACIÓN ---
-[20:27:23.827] Ciclo 0: Planificador selecciona Proceso ID 1 (FCFS).
-[20:27:24.924] Ciclo 11: Proceso ID 1 ha terminado.
-[20:27:25.034] Ciclo 11: Planificador selecciona Proceso ID 2 (FCFS).
-[20:27:28.303] Ciclo 42: Proceso ID 2 ha terminado.
-[20:27:28.413] Ciclo 42: Planificador selecciona Proceso ID 3 (FCFS).
-[20:27:28.959] Ciclo 48: Proceso ID 3 se bloquea por E/S.
-[20:27:30.054] Ciclo 57: Proceso ID 3 fin de bloqueo. Va a Listos.
-[20:27:30.055] Ciclo 57: Planificador selecciona Proceso ID 3 (FCFS).
-[20:27:31.041] Ciclo 67: Proceso ID 3 ha terminado.
-[20:27:31.163] --- FIN DE LA SIMULACIÓN ---
+[21:27:02.674] --- INICIO DE LA SIMULACIÓN ---
+[21:27:02.695] Ciclo 0: Planificador selecciona Proceso ID 1 (SRT (Shortest Remaining Time)).
+[21:27:02.714] Ciclo 0: Proceso ID 1 interrumpido por Proceso ID 2 (SRT).
+[21:27:05.263] Ciclo 11: Proceso ID 2 se bloquea por E/S.
+[21:27:05.519] Ciclo 11: Planificador selecciona Proceso ID 1 (SRT (Shortest Remaining Time)).
+[21:27:07.819] Ciclo 20: Proceso ID 2 fin de bloqueo. Va a Listos.
+[21:27:07.819] Ciclo 20: Proceso ID 1 interrumpido por Proceso ID 2 (SRT).
+[21:27:11.401] Ciclo 35: Proceso ID 2 ha terminado.
+[21:27:11.657] Ciclo 35: Proceso ID 3 admitido a memoria. Uso: 430MB.
+[21:27:11.657] Ciclo 35: Planificador selecciona Proceso ID 1 (SRT (Shortest Remaining Time)).
+[21:27:11.657] Ciclo 35: Proceso ID 1 interrumpido por Proceso ID 3 (SRT).
+[21:27:13.702] Ciclo 44: Proceso ID 3 ha terminado.
+[21:27:13.957] Ciclo 44: Proceso ID 4 admitido a memoria. Uso: 500MB.
+[21:27:13.957] Ciclo 44: Planificador selecciona Proceso ID 1 (SRT (Shortest Remaining Time)).
+[21:27:13.957] Ciclo 44: Proceso ID 1 interrumpido por Proceso ID 4 (SRT).
+[21:27:17.033] Ciclo 57: Proceso ID 4 se bloquea por E/S.
+[21:27:17.288] Ciclo 57: Planificador selecciona Proceso ID 1 (SRT (Shortest Remaining Time)).
+[21:27:19.596] Ciclo 66: Proceso ID 4 fin de bloqueo. Va a Listos.
+[21:27:19.596] Ciclo 66: Proceso ID 1 interrumpido por Proceso ID 4 (SRT).
+[21:27:23.952] Ciclo 84: Proceso ID 4 ha terminado.
+[21:27:24.209] Ciclo 84: Planificador selecciona Proceso ID 1 (SRT (Shortest Remaining Time)).
+[21:27:34.973] Ciclo 127: Proceso ID 1 ha terminado.
+[21:27:35.228] Ciclo 127: Proceso ID 5 admitido a memoria. Uso: 300MB.
+[21:27:35.228] Ciclo 127: Planificador selecciona Proceso ID 5 (SRT (Shortest Remaining Time)).
+[21:27:49.334] Ciclo 183: Proceso ID 5 ha terminado.
+[21:27:49.596] --- FIN DE LA SIMULACIÓN ---

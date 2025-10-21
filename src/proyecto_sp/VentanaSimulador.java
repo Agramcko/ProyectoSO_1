@@ -30,7 +30,7 @@ import java.util.Random;
 public class VentanaSimulador extends javax.swing.JFrame implements Runnable {
 
     private static final int QUANTUM = 4;
-    private static final int MEMORIA_TOTAL_MB = 2048; // Simula 2GB de RAM
+    private static final int MEMORIA_TOTAL_MB = 500; 
     private Cola colaListos;
     private Cola colaTerminados;
     private Cola colaBloqueados;
@@ -310,6 +310,7 @@ private void actualizarGUI() {
 
         jLabel4.setText("Proceso en CPU:");
 
+        lblProcesoCPU.setBackground(new java.awt.Color(255, 255, 255));
         lblProcesoCPU.setText("N/A");
 
         jLabel5.setText("Program Counter:");
@@ -807,45 +808,27 @@ private void actualizarGUI() {
 public void run() {
     while (procesoEnCpu != null || !colaListos.estaVacia() || !colaBloqueados.estaVacia() || !colaListosSuspendidos.estaVacia()) {
 
-        // --- INICIO: LÓGICA DE PAUSA ---
+        // --- LÓGICA DE PAUSA (No cambia) ---
         while (simulacionPausada) {
             try {
-                // Espera pasiva para no consumir CPU mientras está en pausa
                 Thread.sleep(100); 
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
         }
-        // --- FIN: LÓGICA DE PAUSA ---
 
         try {
-            mutex.acquire(); // Pide permiso para acceder a las colas
+            mutex.acquire();
 
             String algoritmo = (String) cmbAlgoritmo.getSelectedItem();
             gestionarColaBloqueados();
             gestionarColaSuspendidos();
             
-            // --- LÓGICA DE APROPIACIÓN (No cambia) ---
-            if (procesoEnCpu != null && !colaListos.estaVacia()) {
-                if (algoritmo.equals("Prioridad Apropiativo")) {
-                    PCB masPrioritario = planificador.verProcesoMasPrioritario(colaListos);
-                    if (masPrioritario.getProcesoInfo().getPrioridad() < procesoEnCpu.getProcesoInfo().getPrioridad()) {
-                        Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " interrumpido por Proceso ID " + masPrioritario.getId() + " (Prioridad).");
-                        procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
-                        colaListos.encolar(procesoEnCpu);
-                        procesoEnCpu = null;
-                    }
-                } else if (algoritmo.equals("SRT (Shortest Remaining Time)")) {
-                    PCB masCorto = planificador.verProcesoMasCortoRestante(colaListos);
-                    if (masCorto.getTiempoEjecucionRestante() < procesoEnCpu.getTiempoEjecucionRestante()) {
-                        Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " interrumpido por Proceso ID " + masCorto.getId() + " (SRT).");
-                        procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
-                        colaListos.encolar(procesoEnCpu);
-                        procesoEnCpu = null;
-                    }
-                }
-            }
-            
+            // =================================================================
+            // --- INICIO: LÓGICA DE PLANIFICACIÓN CORREGIDA ---
+            // =================================================================
+
+            // 1. Si la CPU está libre, la llenamos con el mejor candidato.
             if (procesoEnCpu == null) {
                 procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmo);
                 if (procesoEnCpu != null) {
@@ -857,8 +840,36 @@ public void run() {
                 }
             }
 
+            // 2. AHORA, con la CPU potencialmente ocupada, revisamos si hay que interrumpir.
+            if (procesoEnCpu != null && !colaListos.estaVacia()) {
+                if (algoritmo.equals("Prioridad Apropiativo")) {
+                    PCB masPrioritario = planificador.verProcesoMasPrioritario(colaListos);
+                    if (masPrioritario.getProcesoInfo().getPrioridad() < procesoEnCpu.getProcesoInfo().getPrioridad()) {
+                        Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " interrumpido por Proceso ID " + masPrioritario.getId() + " (Prioridad).");
+                        procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
+                        colaListos.encolar(procesoEnCpu);
+                        // Volvemos a seleccionar para asegurarnos de que el más prioritario entre a la CPU
+                        procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmo);
+                    }
+                } else if (algoritmo.equals("SRT (Shortest Remaining Time)")) {
+                    PCB masCorto = planificador.verProcesoMasCortoRestante(colaListos);
+                    if (masCorto.getTiempoEjecucionRestante() < procesoEnCpu.getTiempoEjecucionRestante()) {
+                        Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " interrumpido por Proceso ID " + masCorto.getId() + " (SRT).");
+                        procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
+                        colaListos.encolar(procesoEnCpu);
+                        // Volvemos a seleccionar
+                        procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmo);
+                    }
+                }
+            }
+            
+            // =================================================================
+            // --- FIN: LÓGICA DE PLANIFICACIÓN CORREGIDA ---
+            // =================================================================
+            
             cicloGlobal++;
 
+            // --- LÓGICA DE EJECUCIÓN DEL CICLO (No cambia) ---
             if (procesoEnCpu != null) {
                 ciclosOcupado++; 
                 procesoEnCpu.setTiempoEjecucionRestante(procesoEnCpu.getTiempoEjecucionRestante() - 1);
@@ -900,7 +911,7 @@ public void run() {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         } finally {
-            mutex.release(); // Libera el permiso, SIEMPRE
+            mutex.release();
         }
 
         SwingUtilities.invokeLater(() -> {
@@ -916,14 +927,14 @@ public void run() {
         }
     }
     
-    // --- CÓDIGO DE FINALIZACIÓN ACTUALIZADO ---
+    // --- CÓDIGO DE FINALIZACIÓN (No cambia) ---
     System.out.println("--- Simulación Finalizada ---");
     calcularYMostrarMetricas();
     Logger.cerrar();
     SwingUtilities.invokeLater(() -> {
         btnIniciar.setEnabled(true);
-        btnPausa.setEnabled(false); // Deshabilita el botón de pausa
-        btnPausa.setText("Pausar");   // Resetea el texto
+        btnPausa.setEnabled(false);
+        btnPausa.setText("Pausar");
     });
 }// <--- FIN DEL MÉTODO run()
 
