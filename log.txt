@@ -1,6 +1,11 @@
-[20:08:45.821] --- INICIO DE LA SIMULACIÓN ---
-[20:08:45.846] Ciclo 0: Planificador selecciona Proceso ID 1 (FCFS).
-[20:08:46.365] Ciclo 2: Proceso ID 1 se bloquea por E/S.
-[20:08:46.872] Ciclo 2: Planificador selecciona Proceso ID 2 (FCFS).
-[20:08:51.449] Ciclo 11: Proceso ID 1 fin de bloqueo. Va a Listos.
-[20:08:55.261] --- SIMULACIÓN PAUSADA ---
+[20:27:23.804] --- INICIO DE LA SIMULACIÓN ---
+[20:27:23.827] Ciclo 0: Planificador selecciona Proceso ID 1 (FCFS).
+[20:27:24.924] Ciclo 11: Proceso ID 1 ha terminado.
+[20:27:25.034] Ciclo 11: Planificador selecciona Proceso ID 2 (FCFS).
+[20:27:28.303] Ciclo 42: Proceso ID 2 ha terminado.
+[20:27:28.413] Ciclo 42: Planificador selecciona Proceso ID 3 (FCFS).
+[20:27:28.959] Ciclo 48: Proceso ID 3 se bloquea por E/S.
+[20:27:30.054] Ciclo 57: Proceso ID 3 fin de bloqueo. Va a Listos.
+[20:27:30.055] Ciclo 57: Planificador selecciona Proceso ID 3 (FCFS).
+[20:27:31.041] Ciclo 67: Proceso ID 3 ha terminado.
+[20:27:31.163] --- FIN DE LA SIMULACIÓN ---
