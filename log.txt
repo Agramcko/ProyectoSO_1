@@ -1,26 +1,86 @@
-[21:27:02.674] --- INICIO DE LA SIMULACIÓN ---
-[21:27:02.695] Ciclo 0: Planificador selecciona Proceso ID 1 (SRT (Shortest Remaining Time)).
-[21:27:02.714] Ciclo 0: Proceso ID 1 interrumpido por Proceso ID 2 (SRT).
-[21:27:05.263] Ciclo 11: Proceso ID 2 se bloquea por E/S.
-[21:27:05.519] Ciclo 11: Planificador selecciona Proceso ID 1 (SRT (Shortest Remaining Time)).
-[21:27:07.819] Ciclo 20: Proceso ID 2 fin de bloqueo. Va a Listos.
-[21:27:07.819] Ciclo 20: Proceso ID 1 interrumpido por Proceso ID 2 (SRT).
-[21:27:11.401] Ciclo 35: Proceso ID 2 ha terminado.
-[21:27:11.657] Ciclo 35: Proceso ID 3 admitido a memoria. Uso: 430MB.
-[21:27:11.657] Ciclo 35: Planificador selecciona Proceso ID 1 (SRT (Shortest Remaining Time)).
-[21:27:11.657] Ciclo 35: Proceso ID 1 interrumpido por Proceso ID 3 (SRT).
-[21:27:13.702] Ciclo 44: Proceso ID 3 ha terminado.
-[21:27:13.957] Ciclo 44: Proceso ID 4 admitido a memoria. Uso: 500MB.
-[21:27:13.957] Ciclo 44: Planificador selecciona Proceso ID 1 (SRT (Shortest Remaining Time)).
-[21:27:13.957] Ciclo 44: Proceso ID 1 interrumpido por Proceso ID 4 (SRT).
-[21:27:17.033] Ciclo 57: Proceso ID 4 se bloquea por E/S.
-[21:27:17.288] Ciclo 57: Planificador selecciona Proceso ID 1 (SRT (Shortest Remaining Time)).
-[21:27:19.596] Ciclo 66: Proceso ID 4 fin de bloqueo. Va a Listos.
-[21:27:19.596] Ciclo 66: Proceso ID 1 interrumpido por Proceso ID 4 (SRT).
-[21:27:23.952] Ciclo 84: Proceso ID 4 ha terminado.
-[21:27:24.209] Ciclo 84: Planificador selecciona Proceso ID 1 (SRT (Shortest Remaining Time)).
-[21:27:34.973] Ciclo 127: Proceso ID 1 ha terminado.
-[21:27:35.228] Ciclo 127: Proceso ID 5 admitido a memoria. Uso: 300MB.
-[21:27:35.228] Ciclo 127: Planificador selecciona Proceso ID 5 (SRT (Shortest Remaining Time)).
-[21:27:49.334] Ciclo 183: Proceso ID 5 ha terminado.
-[21:27:49.596] --- FIN DE LA SIMULACIÓN ---
+[22:03:23.096] --- INICIO DE LA SIMULACIÓN ---
+[22:03:23.131] Ciclo 0: Planificador selecciona Proceso ID 1 (FCFS).
+[22:03:25.005] Ciclo 18: Proceso ID 1 se bloquea por E/S.
+[22:03:25.114] Ciclo 18: Planificador selecciona Proceso ID 2 (FCFS).
+[22:03:26.115] Ciclo 27: Proceso ID 1 fin de bloqueo. Va a Listos.
+[22:03:28.102] Ciclo 46: Proceso ID 2 ha terminado.
+[22:03:28.216] Ciclo 46: Planificador selecciona Proceso ID 3 (FCFS).
+[22:03:29.429] Ciclo 58: Proceso ID 3 ha terminado.
+[22:03:29.543] Ciclo 58: Proceso ID 4 admitido a memoria. Uso: 345MB.
+[22:03:29.543] Ciclo 58: Planificador selecciona Proceso ID 5 (FCFS).
+[22:03:31.417] Ciclo 76: Proceso ID 5 ha terminado.
+[22:03:31.526] Ciclo 76: Proceso ID 6 admitido a memoria. Uso: 495MB.
+[22:03:31.528] Ciclo 76: Planificador selecciona Proceso ID 1 (FCFS).
+[22:03:31.755] Ciclo 79: Proceso ID 1 ha terminado.
+[22:03:31.866] Ciclo 79: Planificador selecciona Proceso ID 4 (FCFS).
+[22:03:32.640] Ciclo 87: Proceso ID 4 se bloquea por E/S.
+[22:03:32.748] Ciclo 87: Planificador selecciona Proceso ID 6 (FCFS).
+[22:03:33.722] Ciclo 96: Proceso ID 4 fin de bloqueo. Va a Listos.
+[22:03:36.581] Ciclo 123: Proceso ID 6 ha terminado.
+[22:03:36.693] Ciclo 123: Proceso ID 7 admitido a memoria. Uso: 335MB.
+[22:03:36.700] Ciclo 123: Planificador selecciona Proceso ID 4 (FCFS).
+[22:03:42.087] Ciclo 173: Proceso ID 4 ha terminado.
+[22:03:42.199] Ciclo 173: Proceso ID 8 admitido a memoria. Uso: 447MB.
+[22:03:42.199] Ciclo 173: Planificador selecciona Proceso ID 7 (FCFS).
+[22:03:43.755] Ciclo 188: Proceso ID 7 ha terminado.
+[22:03:43.864] Ciclo 188: Planificador selecciona Proceso ID 8 (FCFS).
+[22:03:47.708] Ciclo 224: Proceso ID 8 se bloquea por E/S.
+[22:03:47.820] Ciclo 224: Swapping. Proceso ID 8 movido a Bloqueado-Suspendido para liberar memoria.
+[22:03:47.929] Ciclo 225: Proceso ID 9 admitido a memoria. Uso: 260MB.
+[22:03:47.929] Ciclo 225: Planificador selecciona Proceso ID 9 (FCFS).
+[22:03:48.040] Ciclo 226: Proceso ID 10 admitido a memoria. Uso: 477MB.
+[22:03:48.809] Ciclo 233: Proceso ID 8 fin de bloqueo (suspendido). Va a Listos-Suspendido.
+[22:03:51.438] Ciclo 258: Proceso ID 9 ha terminado.
+[22:03:51.548] Ciclo 258: Proceso ID 11 admitido a memoria. Uso: 338MB.
+[22:03:51.550] Ciclo 258: Planificador selecciona Proceso ID 10 (FCFS).
+[22:03:56.591] Ciclo 305: Proceso ID 10 ha terminado.
+[22:03:56.703] Ciclo 305: Proceso ID 12 admitido a memoria. Uso: 315MB.
+[22:03:56.703] Ciclo 305: Planificador selecciona Proceso ID 11 (FCFS).
+[22:03:56.815] Ciclo 306: Proceso ID 13 admitido a memoria. Uso: 421MB.
+[22:03:58.536] --- SIMULACIÓN PAUSADA ---
+[22:04:01.969] --- SIMULACIÓN REANUDADA ---
+[22:04:03.549] Ciclo 346: Proceso ID 11 se bloquea por E/S.
+[22:04:03.613] Ciclo 346: Planificador selecciona Proceso ID 12 (FCFS).
+[22:04:04.186] Ciclo 355: Proceso ID 11 fin de bloqueo. Va a Listos.
+[22:04:07.248] Ciclo 405: Proceso ID 12 ha terminado.
+[22:04:07.313] Ciclo 405: Proceso ID 14 admitido a memoria. Uso: 413MB.
+[22:04:07.313] Ciclo 405: Planificador selecciona Proceso ID 13 (FCFS).
+[22:04:08.042] Ciclo 418: Proceso ID 13 ha terminado.
+[22:04:08.105] Ciclo 418: Proceso ID 15 admitido a memoria. Uso: 398MB.
+[22:04:08.105] Ciclo 418: Planificador selecciona Proceso ID 11 (FCFS).
+[22:04:08.167] Ciclo 419: Proceso ID 16 admitido a memoria. Uso: 459MB.
+[22:04:08.667] Ciclo 428: Proceso ID 11 ha terminado.
+[22:04:08.730] Ciclo 428: Proceso ID 17 admitido a memoria. Uso: 498MB.
+[22:04:08.730] Ciclo 428: Planificador selecciona Proceso ID 14 (FCFS).
+[22:04:08.920] Ciclo 432: Proceso ID 14 se bloquea por E/S.
+[22:04:08.974] Ciclo 432: Planificador selecciona Proceso ID 15 (FCFS).
+[22:04:09.463] Ciclo 441: Proceso ID 15 se bloquea por E/S.
+[22:04:09.525] Ciclo 441: Proceso ID 14 fin de bloqueo. Va a Listos.
+[22:04:09.525] Ciclo 441: Planificador selecciona Proceso ID 16 (FCFS).
+[22:04:10.088] Ciclo 450: Proceso ID 15 fin de bloqueo. Va a Listos.
+[22:04:12.851] Ciclo 495: Proceso ID 16 ha terminado.
+[22:04:12.916] Ciclo 495: Planificador selecciona Proceso ID 17 (FCFS).
+[22:04:13.982] Ciclo 513: Proceso ID 17 ha terminado.
+[22:04:14.044] Ciclo 513: Proceso ID 18 admitido a memoria. Uso: 386MB.
+[22:04:14.044] Ciclo 513: Planificador selecciona Proceso ID 14 (FCFS).
+[22:04:14.671] Ciclo 524: Proceso ID 14 ha terminado.
+[22:04:14.734] Ciclo 524: Proceso ID 19 admitido a memoria. Uso: 481MB.
+[22:04:14.734] Ciclo 524: Planificador selecciona Proceso ID 15 (FCFS).
+[22:04:15.419] Ciclo 536: Proceso ID 15 ha terminado.
+[22:04:15.482] Ciclo 536: Planificador selecciona Proceso ID 18 (FCFS).
+[22:04:17.866] Ciclo 575: Proceso ID 18 ha terminado.
+[22:04:17.928] Ciclo 575: Proceso ID 20 admitido a memoria. Uso: 457MB.
+[22:04:17.928] Ciclo 575: Planificador selecciona Proceso ID 19 (FCFS).
+[22:04:18.672] Ciclo 588: Proceso ID 19 se bloquea por E/S.
+[22:04:18.735] Ciclo 588: Planificador selecciona Proceso ID 20 (FCFS).
+[22:04:19.295] Ciclo 597: Proceso ID 19 fin de bloqueo. Va a Listos.
+[22:04:19.358] Ciclo 599: Proceso ID 20 se bloquea por E/S.
+[22:04:19.420] Ciclo 599: Planificador selecciona Proceso ID 19 (FCFS).
+[22:04:19.970] Ciclo 608: Proceso ID 20 fin de bloqueo. Va a Listos.
+[22:04:20.655] Ciclo 620: Proceso ID 19 ha terminado.
+[22:04:20.718] Ciclo 620: Proceso ID 8 admitido a memoria. Uso: 461MB.
+[22:04:20.719] Ciclo 620: Planificador selecciona Proceso ID 20 (FCFS).
+[22:04:21.775] Ciclo 638: Proceso ID 20 ha terminado.
+[22:04:21.837] Ciclo 638: Planificador selecciona Proceso ID 8 (FCFS).
+[22:04:21.963] Ciclo 641: Proceso ID 8 ha terminado.
+[22:04:22.037] --- FIN DE LA SIMULACIÓN ---
