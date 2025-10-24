@@ -11,14 +11,14 @@ package proyecto_sp;
 
 public class PCB {
     private static int contadorId = 0; // Para generar IDs únicos
-    private int id;
+    private final int id;
     private EstadoProceso estado;
     private int programCounter;
     private int memoryAddressRegister;
-    private Proceso procesoInfo; // Referencia a la información del proceso
+    private final Proceso procesoInfo; // Referencia a la información del proceso
     private int tiempoRestanteBloqueo;
     private int quantumRestante;
-    private int tiempoDeLlegada;
+    private final int tiempoDeLlegada; // <-- Hecho 'final'
     private int tiempoDeFinalizacion;
     private int tiempoDeRetorno;
     private int tiempoDeEspera;
@@ -29,9 +29,11 @@ public class PCB {
         NUEVO, LISTO, EJECUCION, BLOQUEADO, TERMINADO, LISTO_SUSPENDIDO, BLOQUEADO_SUSPENDIDO
     }
 
-    public PCB(Proceso procesoInfo) {
+    // <-- CONSTRUCTOR MODIFICADO -->
+    public PCB(Proceso procesoInfo, int tiempoDeLlegada) {
         this.id = ++contadorId;
         this.procesoInfo = procesoInfo;
+        this.tiempoDeLlegada = tiempoDeLlegada; // Se asigna al crear
         this.tiempoEjecucionRestante = procesoInfo.getNumeroInstrucciones();
         this.estado = EstadoProceso.NUEVO;
         this.programCounter = 0;
@@ -49,36 +51,33 @@ public class PCB {
         this.tiempoEjecucionRestante = tiempoEjecucionRestante;
     }
     
+    // <-- GETTER PARA EL TIEMPO DE LLEGADA (EL SETTER SE ELIMINÓ) -->
     public int getTiempoDeLlegada() {
-    return tiempoDeLlegada;
-    }
-
-    public void setTiempoDeLlegada(int tiempoDeLlegada) {
-    this.tiempoDeLlegada = tiempoDeLlegada;
+        return tiempoDeLlegada;
     }
 
     public int getTiempoDeFinalizacion() {
-    return tiempoDeFinalizacion;
+        return tiempoDeFinalizacion;
     }
 
     public void setTiempoDeFinalizacion(int tiempoDeFinalizacion) {
-    this.tiempoDeFinalizacion = tiempoDeFinalizacion;
+        this.tiempoDeFinalizacion = tiempoDeFinalizacion;
     }
 
     public int getTiempoDeRetorno() {
-    return tiempoDeRetorno;
+        return tiempoDeRetorno;
     }
 
     public void setTiempoDeRetorno(int tiempoDeRetorno) {
-    this.tiempoDeRetorno = tiempoDeRetorno;
+        this.tiempoDeRetorno = tiempoDeRetorno;
     }
 
     public int getTiempoDeEspera() {
-    return tiempoDeEspera;
+        return tiempoDeEspera;
     }
 
     public void setTiempoDeEspera(int tiempoDeEspera) {
-    this.tiempoDeEspera = tiempoDeEspera;
+        this.tiempoDeEspera = tiempoDeEspera;
     }
     
     public int getQuantumRestante() {

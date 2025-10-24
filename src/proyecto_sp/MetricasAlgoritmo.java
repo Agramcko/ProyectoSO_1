@@ -11,4 +11,7 @@ package proyecto_sp;
 public class MetricasAlgoritmo {
     public int ciclosActivos = 0;
     public int procesosTerminados = 0;
+    public long sumaTiemposEspera = 0;    // <-- Línea añadida
+    public long sumaTiemposRetorno = 0;   // <-- Línea añadida
 }
+    
