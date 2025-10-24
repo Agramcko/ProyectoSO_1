@@ -805,8 +805,8 @@
         <Container class="javax.swing.JPanel" name="jPanel6">
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="Gr&#xe1;ficos Comparativos">
-                <Property name="tabTitle" type="java.lang.String" value="Gr&#xe1;ficos Comparativos"/>
+              <JTabbedPaneConstraints tabName="Comparaci&#xf3;n Throughputs">
+                <Property name="tabTitle" type="java.lang.String" value="Comparaci&#xf3;n Throughputs"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
@@ -816,7 +816,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="330" max="-2" attributes="0"/>
-                      <Component id="panelContenedorGrafico" min="-2" max="-2" attributes="0"/>
+                      <Component id="panelGraficoThroughputs" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="932" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -825,14 +825,50 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="163" max="-2" attributes="0"/>
-                      <Component id="panelContenedorGrafico" min="-2" max="-2" attributes="0"/>
+                      <Component id="panelGraficoThroughputs" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="648" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JPanel" name="panelContenedorGrafico">
+            <Container class="javax.swing.JPanel" name="panelGraficoThroughputs">
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
+            </Container>
+          </SubComponents>
+        </Container>
+        <Container class="javax.swing.JPanel" name="jPanel7">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Distribuci&#xf3;n I/O vs CPU">
+                <Property name="tabTitle" type="java.lang.String" value="Distribuci&#xf3;n I/O vs CPU"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="379" max="-2" attributes="0"/>
+                      <Component id="panelGraficoDistribucion" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="883" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
+                      <Component id="panelGraficoDistribucion" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="681" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JPanel" name="panelGraficoDistribucion">
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBorderLayout"/>
             </Container>

@@ -55,6 +55,7 @@ public class VentanaSimulador extends javax.swing.JFrame implements Runnable {
     private volatile boolean simulacionPausada = false;
     private final Random random = new Random();
     private final Map<String, MetricasAlgoritmo> metricasEnTiempoReal = new HashMap<>();
+    private final java.util.List<Proceso> listaMaestraProcesos = new java.util.ArrayList<>();
     
     
     
@@ -200,7 +201,9 @@ private void actualizarGUI() {
         jScrollPane7 = new javax.swing.JScrollPane();
         txtProcesosCreados = new javax.swing.JTextArea();
         jPanel6 = new javax.swing.JPanel();
-        panelContenedorGrafico = new javax.swing.JPanel();
+        panelGraficoThroughputs = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        panelGraficoDistribucion = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -628,7 +631,7 @@ private void actualizarGUI() {
 
         jTabbedPane1.addTab("Principal - Simulación", Pestaña1);
 
-        panelContenedorGrafico.setLayout(new java.awt.BorderLayout());
+        panelGraficoThroughputs.setLayout(new java.awt.BorderLayout());
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -636,18 +639,39 @@ private void actualizarGUI() {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(330, 330, 330)
-                .addComponent(panelContenedorGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelGraficoThroughputs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(932, Short.MAX_VALUE))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(163, 163, 163)
-                .addComponent(panelContenedorGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelGraficoThroughputs, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(648, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Gráficos Comparativos", jPanel6);
+        jTabbedPane1.addTab("Comparación Throughputs", jPanel6);
+
+        panelGraficoDistribucion.setLayout(new java.awt.BorderLayout());
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(379, 379, 379)
+                .addComponent(panelGraficoDistribucion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(883, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(130, 130, 130)
+                .addComponent(panelGraficoDistribucion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(681, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Distribución I/O vs CPU", jPanel7);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -824,6 +848,7 @@ private void actualizarGUI() {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -837,8 +862,9 @@ private void actualizarGUI() {
     private javax.swing.JLabel lblModoEjecucion;
     private javax.swing.JLabel lblProcesoCPU;
     private javax.swing.JLabel lblProgramCounter;
-    private javax.swing.JPanel panelContenedorGrafico;
     private javax.swing.JPanel panelGrafico;
+    private javax.swing.JPanel panelGraficoDistribucion;
+    private javax.swing.JPanel panelGraficoThroughputs;
     private javax.swing.JSpinner spnInstruccionIO;
     private javax.swing.JSpinner spnInstrucciones;
     private javax.swing.JSpinner spnPrioridad;
@@ -972,6 +998,7 @@ public void run() {
             actualizarGrafico();
             actualizarGraficoComparativo(); // <-- AÑADIDO: La llamada para actualizar el nuevo gráfico
             actualizarGraficoComparativo();
+            actualizarGraficoDistribucion();
         });
 
         try { 
@@ -1223,6 +1250,7 @@ private void cargarProcesosDesdeArchivo(File archivo) {
 private void crearYAnadirPCB(Proceso nuevoProceso) {
     PCB nuevoPcb = new PCB(nuevoProceso);
     nuevoPcb.setTiempoDeLlegada(cicloGlobal);
+    listaMaestraProcesos.add(nuevoProceso);
 
     // --- LÓGICA DE GESTIÓN DE MEMORIA (No cambia) ---
     if ((memoriaEnUso + nuevoProceso.getTamañoEnMemoria()) <= MEMORIA_TOTAL_MB) {
@@ -1292,9 +1320,41 @@ private void actualizarGraficoComparativo() {
     // <-- FIN: Bloque modificado -->
 
     ChartPanel chartPanel = new ChartPanel(barChart);
-    panelContenedorGrafico.removeAll();
-    panelContenedorGrafico.add(chartPanel, java.awt.BorderLayout.CENTER);
-    panelContenedorGrafico.revalidate();
-    panelContenedorGrafico.repaint();
+    panelGraficoThroughputs.removeAll();
+    panelGraficoThroughputs.add(chartPanel, java.awt.BorderLayout.CENTER);
+    panelGraficoThroughputs.revalidate();
+    panelGraficoThroughputs.repaint();
+    }
+private void actualizarGraficoDistribucion() {
+    // 1. Contamos los procesos de cada tipo
+    int cpuBoundCount = 0;
+    int ioBoundCount = 0;
+    for (Proceso p : listaMaestraProcesos) {
+        if (p.esIoBound()) {
+            ioBoundCount++;
+        } else {
+            cpuBoundCount++;
+        }
+    }
+
+    // 2. Creamos el conjunto de datos para el pastel
+    org.jfree.data.general.DefaultPieDataset dataset = new org.jfree.data.general.DefaultPieDataset();
+    dataset.setValue("CPU Bound", cpuBoundCount);
+    dataset.setValue("I/O Bound", ioBoundCount);
+
+    // 3. Creamos el gráfico
+    JFreeChart pieChart = ChartFactory.createPieChart("Distribución de Tipos de Procesos", dataset, true, true, false);
+    
+    // 4. Personalizamos los colores
+    org.jfree.chart.plot.PiePlot plot = (org.jfree.chart.plot.PiePlot) pieChart.getPlot();
+    plot.setSectionPaint("CPU Bound", new Color(255, 87, 87));
+    plot.setSectionPaint("I/O Bound", new Color(87, 117, 255));
+
+    // 5. Mostramos el gráfico en su panel dedicado
+    ChartPanel chartPanel = new ChartPanel(pieChart);
+    panelGraficoDistribucion.removeAll();
+    panelGraficoDistribucion.add(chartPanel, java.awt.BorderLayout.CENTER);
+    panelGraficoDistribucion.revalidate();
+    panelGraficoDistribucion.repaint();
     }
 }
