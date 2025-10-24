@@ -1,86 +1,191 @@
-[22:03:23.096] --- INICIO DE LA SIMULACIÓN ---
-[22:03:23.131] Ciclo 0: Planificador selecciona Proceso ID 1 (FCFS).
-[22:03:25.005] Ciclo 18: Proceso ID 1 se bloquea por E/S.
-[22:03:25.114] Ciclo 18: Planificador selecciona Proceso ID 2 (FCFS).
-[22:03:26.115] Ciclo 27: Proceso ID 1 fin de bloqueo. Va a Listos.
-[22:03:28.102] Ciclo 46: Proceso ID 2 ha terminado.
-[22:03:28.216] Ciclo 46: Planificador selecciona Proceso ID 3 (FCFS).
-[22:03:29.429] Ciclo 58: Proceso ID 3 ha terminado.
-[22:03:29.543] Ciclo 58: Proceso ID 4 admitido a memoria. Uso: 345MB.
-[22:03:29.543] Ciclo 58: Planificador selecciona Proceso ID 5 (FCFS).
-[22:03:31.417] Ciclo 76: Proceso ID 5 ha terminado.
-[22:03:31.526] Ciclo 76: Proceso ID 6 admitido a memoria. Uso: 495MB.
-[22:03:31.528] Ciclo 76: Planificador selecciona Proceso ID 1 (FCFS).
-[22:03:31.755] Ciclo 79: Proceso ID 1 ha terminado.
-[22:03:31.866] Ciclo 79: Planificador selecciona Proceso ID 4 (FCFS).
-[22:03:32.640] Ciclo 87: Proceso ID 4 se bloquea por E/S.
-[22:03:32.748] Ciclo 87: Planificador selecciona Proceso ID 6 (FCFS).
-[22:03:33.722] Ciclo 96: Proceso ID 4 fin de bloqueo. Va a Listos.
-[22:03:36.581] Ciclo 123: Proceso ID 6 ha terminado.
-[22:03:36.693] Ciclo 123: Proceso ID 7 admitido a memoria. Uso: 335MB.
-[22:03:36.700] Ciclo 123: Planificador selecciona Proceso ID 4 (FCFS).
-[22:03:42.087] Ciclo 173: Proceso ID 4 ha terminado.
-[22:03:42.199] Ciclo 173: Proceso ID 8 admitido a memoria. Uso: 447MB.
-[22:03:42.199] Ciclo 173: Planificador selecciona Proceso ID 7 (FCFS).
-[22:03:43.755] Ciclo 188: Proceso ID 7 ha terminado.
-[22:03:43.864] Ciclo 188: Planificador selecciona Proceso ID 8 (FCFS).
-[22:03:47.708] Ciclo 224: Proceso ID 8 se bloquea por E/S.
-[22:03:47.820] Ciclo 224: Swapping. Proceso ID 8 movido a Bloqueado-Suspendido para liberar memoria.
-[22:03:47.929] Ciclo 225: Proceso ID 9 admitido a memoria. Uso: 260MB.
-[22:03:47.929] Ciclo 225: Planificador selecciona Proceso ID 9 (FCFS).
-[22:03:48.040] Ciclo 226: Proceso ID 10 admitido a memoria. Uso: 477MB.
-[22:03:48.809] Ciclo 233: Proceso ID 8 fin de bloqueo (suspendido). Va a Listos-Suspendido.
-[22:03:51.438] Ciclo 258: Proceso ID 9 ha terminado.
-[22:03:51.548] Ciclo 258: Proceso ID 11 admitido a memoria. Uso: 338MB.
-[22:03:51.550] Ciclo 258: Planificador selecciona Proceso ID 10 (FCFS).
-[22:03:56.591] Ciclo 305: Proceso ID 10 ha terminado.
-[22:03:56.703] Ciclo 305: Proceso ID 12 admitido a memoria. Uso: 315MB.
-[22:03:56.703] Ciclo 305: Planificador selecciona Proceso ID 11 (FCFS).
-[22:03:56.815] Ciclo 306: Proceso ID 13 admitido a memoria. Uso: 421MB.
-[22:03:58.536] --- SIMULACIÓN PAUSADA ---
-[22:04:01.969] --- SIMULACIÓN REANUDADA ---
-[22:04:03.549] Ciclo 346: Proceso ID 11 se bloquea por E/S.
-[22:04:03.613] Ciclo 346: Planificador selecciona Proceso ID 12 (FCFS).
-[22:04:04.186] Ciclo 355: Proceso ID 11 fin de bloqueo. Va a Listos.
-[22:04:07.248] Ciclo 405: Proceso ID 12 ha terminado.
-[22:04:07.313] Ciclo 405: Proceso ID 14 admitido a memoria. Uso: 413MB.
-[22:04:07.313] Ciclo 405: Planificador selecciona Proceso ID 13 (FCFS).
-[22:04:08.042] Ciclo 418: Proceso ID 13 ha terminado.
-[22:04:08.105] Ciclo 418: Proceso ID 15 admitido a memoria. Uso: 398MB.
-[22:04:08.105] Ciclo 418: Planificador selecciona Proceso ID 11 (FCFS).
-[22:04:08.167] Ciclo 419: Proceso ID 16 admitido a memoria. Uso: 459MB.
-[22:04:08.667] Ciclo 428: Proceso ID 11 ha terminado.
-[22:04:08.730] Ciclo 428: Proceso ID 17 admitido a memoria. Uso: 498MB.
-[22:04:08.730] Ciclo 428: Planificador selecciona Proceso ID 14 (FCFS).
-[22:04:08.920] Ciclo 432: Proceso ID 14 se bloquea por E/S.
-[22:04:08.974] Ciclo 432: Planificador selecciona Proceso ID 15 (FCFS).
-[22:04:09.463] Ciclo 441: Proceso ID 15 se bloquea por E/S.
-[22:04:09.525] Ciclo 441: Proceso ID 14 fin de bloqueo. Va a Listos.
-[22:04:09.525] Ciclo 441: Planificador selecciona Proceso ID 16 (FCFS).
-[22:04:10.088] Ciclo 450: Proceso ID 15 fin de bloqueo. Va a Listos.
-[22:04:12.851] Ciclo 495: Proceso ID 16 ha terminado.
-[22:04:12.916] Ciclo 495: Planificador selecciona Proceso ID 17 (FCFS).
-[22:04:13.982] Ciclo 513: Proceso ID 17 ha terminado.
-[22:04:14.044] Ciclo 513: Proceso ID 18 admitido a memoria. Uso: 386MB.
-[22:04:14.044] Ciclo 513: Planificador selecciona Proceso ID 14 (FCFS).
-[22:04:14.671] Ciclo 524: Proceso ID 14 ha terminado.
-[22:04:14.734] Ciclo 524: Proceso ID 19 admitido a memoria. Uso: 481MB.
-[22:04:14.734] Ciclo 524: Planificador selecciona Proceso ID 15 (FCFS).
-[22:04:15.419] Ciclo 536: Proceso ID 15 ha terminado.
-[22:04:15.482] Ciclo 536: Planificador selecciona Proceso ID 18 (FCFS).
-[22:04:17.866] Ciclo 575: Proceso ID 18 ha terminado.
-[22:04:17.928] Ciclo 575: Proceso ID 20 admitido a memoria. Uso: 457MB.
-[22:04:17.928] Ciclo 575: Planificador selecciona Proceso ID 19 (FCFS).
-[22:04:18.672] Ciclo 588: Proceso ID 19 se bloquea por E/S.
-[22:04:18.735] Ciclo 588: Planificador selecciona Proceso ID 20 (FCFS).
-[22:04:19.295] Ciclo 597: Proceso ID 19 fin de bloqueo. Va a Listos.
-[22:04:19.358] Ciclo 599: Proceso ID 20 se bloquea por E/S.
-[22:04:19.420] Ciclo 599: Planificador selecciona Proceso ID 19 (FCFS).
-[22:04:19.970] Ciclo 608: Proceso ID 20 fin de bloqueo. Va a Listos.
-[22:04:20.655] Ciclo 620: Proceso ID 19 ha terminado.
-[22:04:20.718] Ciclo 620: Proceso ID 8 admitido a memoria. Uso: 461MB.
-[22:04:20.719] Ciclo 620: Planificador selecciona Proceso ID 20 (FCFS).
-[22:04:21.775] Ciclo 638: Proceso ID 20 ha terminado.
-[22:04:21.837] Ciclo 638: Planificador selecciona Proceso ID 8 (FCFS).
-[22:04:21.963] Ciclo 641: Proceso ID 8 ha terminado.
-[22:04:22.037] --- FIN DE LA SIMULACIÓN ---
+[20:12:10.384] --- INICIO DE LA SIMULACIÓN ---
+[20:12:10.414] Ciclo 0: Planificador selecciona Proceso ID 1 (FCFS).
+[20:12:12.919] Ciclo 24: Proceso ID 1 se bloquea por E/S.
+[20:12:13.028] Ciclo 24: Planificador selecciona Proceso ID 2 (FCFS).
+[20:12:14.012] Ciclo 33: Proceso ID 1 fin de bloqueo. Va a Listos.
+[20:12:15.993] Ciclo 52: Proceso ID 2 ha terminado.
+[20:12:16.104] Ciclo 52: Planificador selecciona Proceso ID 3 (FCFS).
+[20:12:18.072] Ciclo 71: Proceso ID 3 ha terminado.
+[20:12:18.186] Ciclo 71: Proceso ID 11 admitido a memoria. Uso: 1969MB.
+[20:12:18.186] Ciclo 71: Planificador selecciona Proceso ID 4 (FCFS).
+[20:12:21.681] Ciclo 104: Proceso ID 4 ha terminado.
+[20:12:21.790] Ciclo 104: Proceso ID 12 admitido a memoria. Uso: 1923MB.
+[20:12:21.790] Ciclo 104: Planificador selecciona Proceso ID 5 (FCFS).
+[20:12:23.227] Ciclo 118: Proceso ID 5 fin de quantum (Round Robin).
+[20:12:23.338] Ciclo 118: Planificador selecciona Proceso ID 6 (Round Robin).
+[20:12:23.669] Ciclo 122: Proceso ID 6 fin de quantum (Round Robin).
+[20:12:23.777] Ciclo 122: Planificador selecciona Proceso ID 7 (Round Robin).
+[20:12:23.996] Ciclo 125: Proceso ID 7 se bloquea por E/S.
+[20:12:24.103] Ciclo 125: Planificador selecciona Proceso ID 8 (Round Robin).
+[20:12:24.429] Ciclo 129: Proceso ID 8 fin de quantum (Round Robin).
+[20:12:24.539] Ciclo 129: Planificador selecciona Proceso ID 9 (Round Robin).
+[20:12:24.868] Ciclo 133: Proceso ID 9 fin de quantum (Round Robin).
+[20:12:24.979] Ciclo 133: Planificador selecciona Proceso ID 10 (Round Robin).
+[20:12:25.090] Ciclo 134: Proceso ID 7 fin de bloqueo. Va a Listos.
+[20:12:25.311] Ciclo 137: Proceso ID 10 fin de quantum (Round Robin).
+[20:12:25.419] Ciclo 137: Planificador selecciona Proceso ID 1 (Round Robin).
+[20:12:25.746] Ciclo 141: Proceso ID 1 fin de quantum (Round Robin).
+[20:12:25.857] Ciclo 141: Planificador selecciona Proceso ID 11 (Round Robin).
+[20:12:26.190] Ciclo 145: Proceso ID 11 fin de quantum (Round Robin).
+[20:12:26.299] Ciclo 145: Planificador selecciona Proceso ID 12 (Round Robin).
+[20:12:26.410] Ciclo 147: Proceso ID 12 se bloquea por E/S.
+[20:12:26.517] Ciclo 147: Planificador selecciona Proceso ID 5 (Round Robin).
+[20:12:26.843] Ciclo 151: Proceso ID 5 fin de quantum (Round Robin).
+[20:12:26.955] Ciclo 151: Planificador selecciona Proceso ID 6 (Round Robin).
+[20:12:27.283] Ciclo 155: Proceso ID 6 fin de quantum (Round Robin).
+[20:12:27.393] Ciclo 155: Planificador selecciona Proceso ID 8 (Round Robin).
+[20:12:27.500] Ciclo 156: Proceso ID 12 fin de bloqueo. Va a Listos.
+[20:12:27.722] Ciclo 159: Proceso ID 8 fin de quantum (Round Robin).
+[20:12:27.826] Ciclo 159: Planificador selecciona Proceso ID 9 (Round Robin).
+[20:12:28.153] Ciclo 163: Proceso ID 9 fin de quantum (Round Robin).
+[20:12:28.255] Ciclo 163: Planificador selecciona Proceso ID 7 (Round Robin).
+[20:12:28.581] Ciclo 167: Proceso ID 7 fin de quantum (Round Robin).
+[20:12:28.688] Ciclo 167: Planificador selecciona Proceso ID 10 (Round Robin).
+[20:12:29.015] Ciclo 171: Proceso ID 10 fin de quantum (Round Robin).
+[20:12:29.129] Ciclo 171: Planificador selecciona Proceso ID 1 (Round Robin).
+[20:12:29.461] Ciclo 175: Proceso ID 1 fin de quantum (Round Robin).
+[20:12:29.573] Ciclo 175: Planificador selecciona Proceso ID 11 (Round Robin).
+[20:12:29.909] Ciclo 179: Proceso ID 11 fin de quantum (Round Robin).
+[20:12:30.017] Ciclo 179: Planificador selecciona Proceso ID 5 (Round Robin).
+[20:12:30.127] Ciclo 181: Proceso ID 5 se bloquea por E/S.
+[20:12:30.237] Ciclo 181: Planificador selecciona Proceso ID 6 (Round Robin).
+[20:12:30.562] Ciclo 185: Proceso ID 6 fin de quantum (Round Robin).
+[20:12:30.671] Ciclo 185: Planificador selecciona Proceso ID 12 (Round Robin).
+[20:12:30.996] Ciclo 189: Proceso ID 12 fin de quantum (Round Robin).
+[20:12:31.106] Ciclo 189: Planificador selecciona Proceso ID 8 (Round Robin).
+[20:12:31.216] Ciclo 190: Proceso ID 5 fin de bloqueo. Va a Listos.
+[20:12:31.425] Ciclo 193: Proceso ID 8 fin de quantum (Round Robin).
+[20:12:31.534] Ciclo 193: Planificador selecciona Proceso ID 9 (Round Robin).
+[20:12:31.861] Ciclo 197: Proceso ID 9 fin de quantum (Round Robin).
+[20:12:31.970] Ciclo 197: Planificador selecciona Proceso ID 7 (Round Robin).
+[20:12:32.301] Ciclo 201: Proceso ID 7 fin de quantum (Round Robin).
+[20:12:32.414] Ciclo 201: Planificador selecciona Proceso ID 10 (Round Robin).
+[20:12:32.751] Ciclo 205: Proceso ID 10 fin de quantum (Round Robin).
+[20:12:32.859] Ciclo 205: Planificador selecciona Proceso ID 1 (Round Robin).
+[20:12:33.186] Ciclo 209: Proceso ID 1 fin de quantum (Round Robin).
+[20:12:33.295] Ciclo 209: Planificador selecciona Proceso ID 11 (Round Robin).
+[20:12:33.620] Ciclo 213: Proceso ID 11 fin de quantum (Round Robin).
+[20:12:33.731] Ciclo 213: Planificador selecciona Proceso ID 6 (Round Robin).
+[20:12:34.048] Ciclo 217: Proceso ID 6 fin de quantum (Round Robin).
+[20:12:34.157] Ciclo 217: Planificador selecciona Proceso ID 12 (Round Robin).
+[20:12:34.483] Ciclo 221: Proceso ID 12 fin de quantum (Round Robin).
+[20:12:34.593] Ciclo 221: Planificador selecciona Proceso ID 5 (Round Robin).
+[20:12:34.593] Ciclo 222: Proceso ID 5 ha terminado.
+[20:12:34.703] Ciclo 222: Planificador selecciona Proceso ID 8 (Round Robin).
+[20:12:35.035] Ciclo 226: Proceso ID 8 fin de quantum (Round Robin).
+[20:12:35.145] Ciclo 226: Planificador selecciona Proceso ID 9 (Round Robin).
+[20:12:35.476] Ciclo 230: Proceso ID 9 fin de quantum (Round Robin).
+[20:12:35.587] Ciclo 230: Planificador selecciona Proceso ID 7 (Round Robin).
+[20:12:35.907] Ciclo 234: Proceso ID 7 fin de quantum (Round Robin).
+[20:12:36.015] Ciclo 234: Planificador selecciona Proceso ID 10 (Round Robin).
+[20:12:36.347] Ciclo 238: Proceso ID 10 ha terminado.
+[20:12:36.455] Ciclo 238: Proceso ID 13 admitido a memoria. Uso: 1876MB.
+[20:12:36.455] Ciclo 238: Planificador selecciona Proceso ID 1 (Round Robin).
+[20:12:36.565] Ciclo 239: Proceso ID 14 admitido a memoria. Uso: 2046MB.
+[20:12:36.782] Ciclo 242: Proceso ID 1 fin de quantum (Round Robin).
+[20:12:36.890] Ciclo 242: Planificador selecciona Proceso ID 11 (Round Robin).
+[20:12:37.217] Ciclo 246: Proceso ID 11 fin de quantum (Round Robin).
+[20:12:37.326] Ciclo 246: Planificador selecciona Proceso ID 6 (Round Robin).
+[20:12:37.653] Ciclo 250: Proceso ID 6 ha terminado.
+[20:12:37.762] Ciclo 250: Proceso ID 15 admitido a memoria. Uso: 2007MB.
+[20:12:37.762] Ciclo 250: Planificador selecciona Proceso ID 12 (Round Robin).
+[20:12:38.087] Ciclo 254: Proceso ID 12 fin de quantum (Round Robin).
+[20:12:38.199] Ciclo 254: Planificador selecciona Proceso ID 8 (Round Robin).
+[20:12:38.529] Ciclo 258: Proceso ID 8 fin de quantum (Round Robin).
+[20:12:38.639] Ciclo 258: Planificador selecciona Proceso ID 9 (Round Robin).
+[20:12:38.969] Ciclo 262: Proceso ID 9 fin de quantum (Round Robin).
+[20:12:39.078] Ciclo 262: Planificador selecciona Proceso ID 7 (Round Robin).
+[20:12:39.422] Ciclo 266: Proceso ID 7 fin de quantum (Round Robin).
+[20:12:39.529] Ciclo 266: Planificador selecciona Proceso ID 13 (Round Robin).
+[20:12:39.863] Ciclo 270: Proceso ID 13 fin de quantum (Round Robin).
+[20:12:39.975] Ciclo 270: Planificador selecciona Proceso ID 14 (Round Robin).
+[20:12:40.302] Ciclo 274: Proceso ID 14 fin de quantum (Round Robin).
+[20:12:40.411] Ciclo 274: Planificador selecciona Proceso ID 1 (Round Robin).
+[20:12:40.742] Ciclo 278: Proceso ID 1 fin de quantum (Round Robin).
+[20:12:40.853] Ciclo 278: Planificador selecciona Proceso ID 11 (Round Robin).
+[20:12:41.181] Ciclo 282: Proceso ID 11 fin de quantum (Round Robin).
+[20:12:41.291] Ciclo 282: Planificador selecciona Proceso ID 15 (Round Robin).
+[20:12:41.627] Ciclo 286: Proceso ID 15 fin de quantum (Round Robin).
+[20:12:41.738] Ciclo 286: Planificador selecciona Proceso ID 12 (Round Robin).
+[20:12:41.961] Ciclo 289: Proceso ID 12 ha terminado.
+[20:12:42.071] Ciclo 289: Proceso ID 16 admitido a memoria. Uso: 2038MB.
+[20:12:42.072] Ciclo 289: Planificador selecciona Proceso ID 8 (Round Robin).
+[20:12:42.072] Ciclo 290: Proceso ID 8 ha terminado.
+[20:12:42.184] Ciclo 290: Proceso ID 17 admitido a memoria. Uso: 1947MB.
+[20:12:42.184] Ciclo 290: Planificador selecciona Proceso ID 9 (Round Robin).
+[20:12:42.518] Ciclo 294: Proceso ID 9 fin de quantum (Round Robin).
+[20:12:42.627] Ciclo 294: Planificador selecciona Proceso ID 7 (Round Robin).
+[20:12:42.956] Ciclo 298: Proceso ID 7 fin de quantum (Round Robin).
+[20:12:43.066] Ciclo 298: Planificador selecciona Proceso ID 13 (Round Robin).
+[20:12:43.284] Ciclo 301: Proceso ID 13 se bloquea por E/S.
+[20:12:43.397] Ciclo 301: Planificador selecciona Proceso ID 14 (Round Robin).
+[20:12:43.507] Ciclo 303: Proceso ID 14 se bloquea por E/S.
+[20:12:43.618] Ciclo 303: Planificador selecciona Proceso ID 1 (Round Robin).
+[20:12:43.943] Ciclo 307: Proceso ID 1 fin de quantum (Round Robin).
+[20:12:44.052] Ciclo 307: Planificador selecciona Proceso ID 11 (Round Robin).
+[20:12:44.380] Ciclo 310: Proceso ID 13 fin de bloqueo. Va a Listos.
+[20:12:44.380] Ciclo 311: Proceso ID 11 fin de quantum (Round Robin).
+[20:12:44.483] Ciclo 311: Planificador selecciona Proceso ID 15 (Round Robin).
+[20:12:44.594] Ciclo 312: Proceso ID 14 fin de bloqueo. Va a Listos.
+[20:12:44.805] Ciclo 315: Proceso ID 15 fin de quantum (Round Robin).
+[20:12:44.914] Ciclo 315: Planificador selecciona Proceso ID 16 (Round Robin).
+[20:12:45.242] Ciclo 319: Proceso ID 16 fin de quantum (Round Robin).
+[20:12:45.352] Ciclo 319: Planificador selecciona Proceso ID 17 (Round Robin).
+[20:12:45.685] Ciclo 323: Proceso ID 17 fin de quantum (Round Robin).
+[20:12:45.793] Ciclo 323: Planificador selecciona Proceso ID 9 (Round Robin).
+[20:12:46.122] Ciclo 327: Proceso ID 9 fin de quantum (Round Robin).
+[20:12:46.233] Ciclo 327: Planificador selecciona Proceso ID 7 (Round Robin).
+[20:12:46.559] Ciclo 331: Proceso ID 7 fin de quantum (Round Robin).
+[20:12:46.668] Ciclo 331: Planificador selecciona Proceso ID 1 (Round Robin).
+[20:12:46.776] Ciclo 333: Proceso ID 1 ha terminado.
+[20:12:46.886] Ciclo 333: Proceso ID 18 admitido a memoria. Uso: 1829MB.
+[20:12:46.886] Ciclo 333: Planificador selecciona Proceso ID 13 (SRT (Shortest Remaining Time)).
+[20:12:46.887] Ciclo 333: Proceso ID 13 interrumpido por Proceso ID 11 (SRT).
+[20:12:46.994] Ciclo 334: Proceso ID 19 admitido a memoria. Uso: 1881MB.
+[20:12:46.994] Ciclo 335: Proceso ID 11 ha terminado.
+[20:12:47.108] Ciclo 335: Proceso ID 20 admitido a memoria. Uso: 1788MB.
+[20:12:47.108] Ciclo 335: Planificador selecciona Proceso ID 14 (SRT (Shortest Remaining Time)).
+[20:12:47.108] Ciclo 335: Proceso ID 14 interrumpido por Proceso ID 9 (SRT).
+[20:12:47.216] Ciclo 336: Proceso ID 15 interrumpido por Proceso ID 9 (SRT).
+[20:12:47.326] Ciclo 337: Proceso ID 16 interrumpido por Proceso ID 9 (SRT).
+[20:12:47.435] Ciclo 338: Proceso ID 17 interrumpido por Proceso ID 9 (SRT).
+[20:12:47.654] Ciclo 341: Proceso ID 9 ha terminado.
+[20:12:47.765] Ciclo 341: Planificador selecciona Proceso ID 7 (SRT (Shortest Remaining Time)).
+[20:12:48.642] Ciclo 350: Proceso ID 7 ha terminado.
+[20:12:48.754] Ciclo 350: Planificador selecciona Proceso ID 18 (SRT (Shortest Remaining Time)).
+[20:12:48.754] Ciclo 350: Proceso ID 18 interrumpido por Proceso ID 13 (SRT).
+[20:12:49.636] Ciclo 359: Proceso ID 13 ha terminado.
+[20:12:49.745] Ciclo 359: Planificador selecciona Proceso ID 19 (SRT (Shortest Remaining Time)).
+[20:12:49.745] Ciclo 359: Proceso ID 19 interrumpido por Proceso ID 15 (SRT).
+[20:12:49.854] Ciclo 360: Proceso ID 20 interrumpido por Proceso ID 15 (SRT).
+[20:12:49.962] Ciclo 361: Proceso ID 14 interrumpido por Proceso ID 15 (SRT).
+[20:12:50.400] Ciclo 366: Proceso ID 15 se bloquea por E/S.
+[20:12:50.512] Ciclo 366: Planificador selecciona Proceso ID 16 (SRT (Shortest Remaining Time)).
+[20:12:51.513] Ciclo 375: Proceso ID 15 fin de bloqueo. Va a Listos.
+[20:12:51.849] Ciclo 379: Proceso ID 16 ha terminado.
+[20:12:51.961] Ciclo 379: Planificador selecciona Proceso ID 17 (SRT (Shortest Remaining Time)).
+[20:12:51.961] Ciclo 379: Proceso ID 17 interrumpido por Proceso ID 15 (SRT).
+[20:12:52.069] Ciclo 380: Proceso ID 18 interrumpido por Proceso ID 15 (SRT).
+[20:12:52.179] Ciclo 381: Proceso ID 19 interrumpido por Proceso ID 15 (SRT).
+[20:12:52.291] Ciclo 382: Proceso ID 20 interrumpido por Proceso ID 15 (SRT).
+[20:12:52.401] Ciclo 383: Proceso ID 14 interrumpido por Proceso ID 15 (SRT).
+[20:12:52.839] Ciclo 388: Proceso ID 15 ha terminado.
+[20:12:52.949] Ciclo 388: Planificador selecciona Proceso ID 17 (SRT (Shortest Remaining Time)).
+[20:12:52.949] Ciclo 388: Proceso ID 17 interrumpido por Proceso ID 14 (SRT).
+[20:12:53.054] Ciclo 389: Proceso ID 18 interrumpido por Proceso ID 14 (SRT).
+[20:12:53.162] Ciclo 390: Proceso ID 19 interrumpido por Proceso ID 14 (SRT).
+[20:12:53.274] Ciclo 391: Proceso ID 20 interrumpido por Proceso ID 14 (SRT).
+[20:12:54.826] Ciclo 406: Proceso ID 14 ha terminado.
+[20:12:54.939] Ciclo 406: Planificador selecciona Proceso ID 17 (SRT (Shortest Remaining Time)).
+[20:12:54.939] Ciclo 406: Proceso ID 17 interrumpido por Proceso ID 20 (SRT).
+[20:12:55.052] Ciclo 407: Proceso ID 18 interrumpido por Proceso ID 20 (SRT).
+[20:12:55.163] Ciclo 408: Proceso ID 19 interrumpido por Proceso ID 20 (SRT).
+[20:12:57.145] Ciclo 427: Proceso ID 20 ha terminado.
+[20:12:57.255] Ciclo 427: Planificador selecciona Proceso ID 17 (SRT (Shortest Remaining Time)).
+[20:12:59.884] Ciclo 452: Proceso ID 17 ha terminado.
+[20:12:59.994] Ciclo 452: Planificador selecciona Proceso ID 18 (SRT (Shortest Remaining Time)).
+[20:12:59.994] Ciclo 452: Proceso ID 18 interrumpido por Proceso ID 19 (SRT).
+[20:13:02.722] Ciclo 478: Proceso ID 19 ha terminado.
+[20:13:02.831] Ciclo 478: Planificador selecciona Proceso ID 18 (SRT (Shortest Remaining Time)).
+[20:13:07.449] Ciclo 521: Proceso ID 18 ha terminado.
+[20:13:07.572] --- FIN DE LA SIMULACIÓN ---

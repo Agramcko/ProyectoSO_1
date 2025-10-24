@@ -23,6 +23,14 @@ import java.io.File;
 import java.io.FileReader;
 import javax.swing.JFileChooser;
 import java.util.Random;
+import java.awt.Color;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JFrame;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.data.category.DefaultCategoryDataset;
 /**
  * @author Alessandro Gramcko
  * @author massimo Gramcko
@@ -46,11 +54,17 @@ public class VentanaSimulador extends javax.swing.JFrame implements Runnable {
     private final Semaphore mutex = new Semaphore(1); // Semáforo con 1 permiso (mutex)
     private volatile boolean simulacionPausada = false;
     private final Random random = new Random();
+    private final Map<String, MetricasAlgoritmo> metricasEnTiempoReal = new HashMap<>();
     
     
     
     public VentanaSimulador() {
     initComponents();
+    
+    for (int i = 0; i < cmbAlgoritmo.getItemCount(); i++) {
+    String algoritmo = cmbAlgoritmo.getItemAt(i);
+    metricasEnTiempoReal.put(algoritmo, new MetricasAlgoritmo());
+}
     
     // --- AÑADE ESTAS LÍNEAS ---
     this.colaListos = new Cola();
@@ -185,6 +199,8 @@ private void actualizarGUI() {
         jLabel17 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
         txtProcesosCreados = new javax.swing.JTextArea();
+        jPanel6 = new javax.swing.JPanel();
+        panelContenedorGrafico = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -612,6 +628,27 @@ private void actualizarGUI() {
 
         jTabbedPane1.addTab("Principal - Simulación", Pestaña1);
 
+        panelContenedorGrafico.setLayout(new java.awt.BorderLayout());
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(330, 330, 330)
+                .addComponent(panelContenedorGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(932, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(163, 163, 163)
+                .addComponent(panelContenedorGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(648, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Gráficos Comparativos", jPanel6);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -786,6 +823,7 @@ private void actualizarGUI() {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -799,6 +837,7 @@ private void actualizarGUI() {
     private javax.swing.JLabel lblModoEjecucion;
     private javax.swing.JLabel lblProcesoCPU;
     private javax.swing.JLabel lblProgramCounter;
+    private javax.swing.JPanel panelContenedorGrafico;
     private javax.swing.JPanel panelGrafico;
     private javax.swing.JSpinner spnInstruccionIO;
     private javax.swing.JSpinner spnInstrucciones;
@@ -831,21 +870,26 @@ public void run() {
         try {
             mutex.acquire();
 
-            String algoritmo = (String) cmbAlgoritmo.getSelectedItem();
+            // <-- INICIO: Bloque añadido para capturar métricas en vivo -->
+            String algoritmoActual = (String) cmbAlgoritmo.getSelectedItem();
+            MetricasAlgoritmo metricasActuales = metricasEnTiempoReal.get(algoritmoActual);
+            metricasActuales.ciclosActivos++; // Contamos un ciclo para el algoritmo activo
+            // <-- FIN: Bloque añadido -->
+
             gestionarColaBloqueados();
             gestionarColaSuspendidos();
             
             // =================================================================
-            // --- INICIO: LÓGICA DE PLANIFICACIÓN CORREGIDA ---
+            // --- LÓGICA DE PLANIFICACIÓN (Usa 'algoritmoActual') ---
             // =================================================================
 
             // 1. Si la CPU está libre, la llenamos con el mejor candidato.
             if (procesoEnCpu == null) {
-                procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmo);
+                procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmoActual);
                 if (procesoEnCpu != null) {
-                    Logger.log("Ciclo " + cicloGlobal + ": Planificador selecciona Proceso ID " + procesoEnCpu.getId() + " (" + algoritmo + ").");
+                    Logger.log("Ciclo " + cicloGlobal + ": Planificador selecciona Proceso ID " + procesoEnCpu.getId() + " (" + algoritmoActual + ").");
                     procesoEnCpu.setEstado(PCB.EstadoProceso.EJECUCION);
-                    if (algoritmo.equals("Round Robin")) {
+                    if (algoritmoActual.equals("Round Robin")) {
                         procesoEnCpu.setQuantumRestante(QUANTUM); 
                     }
                 }
@@ -853,39 +897,34 @@ public void run() {
 
             // 2. AHORA, con la CPU potencialmente ocupada, revisamos si hay que interrumpir.
             if (procesoEnCpu != null && !colaListos.estaVacia()) {
-                if (algoritmo.equals("Prioridad Apropiativo")) {
+                if (algoritmoActual.equals("Prioridad Apropiativo")) {
                     PCB masPrioritario = planificador.verProcesoMasPrioritario(colaListos);
                     if (masPrioritario.getProcesoInfo().getPrioridad() < procesoEnCpu.getProcesoInfo().getPrioridad()) {
                         Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " interrumpido por Proceso ID " + masPrioritario.getId() + " (Prioridad).");
                         procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
                         colaListos.encolar(procesoEnCpu);
-                        // Volvemos a seleccionar para asegurarnos de que el más prioritario entre a la CPU
-                        procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmo);
+                        procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmoActual);
                     }
-                } else if (algoritmo.equals("SRT (Shortest Remaining Time)")) {
+                } else if (algoritmoActual.equals("SRT (Shortest Remaining Time)")) {
                     PCB masCorto = planificador.verProcesoMasCortoRestante(colaListos);
                     if (masCorto.getTiempoEjecucionRestante() < procesoEnCpu.getTiempoEjecucionRestante()) {
                         Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " interrumpido por Proceso ID " + masCorto.getId() + " (SRT).");
                         procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
                         colaListos.encolar(procesoEnCpu);
-                        // Volvemos a seleccionar
-                        procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmo);
+
+                        procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmoActual);
                     }
                 }
             }
             
-            // =================================================================
-            // --- FIN: LÓGICA DE PLANIFICACIÓN CORREGIDA ---
-            // =================================================================
-            
             cicloGlobal++;
 
-            // --- LÓGICA DE EJECUCIÓN DEL CICLO (No cambia) ---
+            // --- LÓGICA DE EJECUCIÓN DEL CICLO ---
             if (procesoEnCpu != null) {
                 ciclosOcupado++; 
                 procesoEnCpu.setTiempoEjecucionRestante(procesoEnCpu.getTiempoEjecucionRestante() - 1);
 
-                if (algoritmo.equals("Round Robin")) {
+                if (algoritmoActual.equals("Round Robin")) {
                     procesoEnCpu.setQuantumRestante(procesoEnCpu.getQuantumRestante() - 1);
                 }
                 
@@ -905,9 +944,12 @@ public void run() {
                     procesoEnCpu.setTiempoDeFinalizacion(cicloGlobal);
                     memoriaEnUso -= procesoEnCpu.getProcesoInfo().getTamañoEnMemoria(); 
                     colaTerminados.encolar(procesoEnCpu);
+                    
+                    metricasActuales.procesosTerminados++; // <-- AÑADIDO: Contamos el proceso terminado
+                    
                     procesoEnCpu = null;
                     
-                } else if (algoritmo.equals("Round Robin") && procesoEnCpu.getQuantumRestante() <= 0) {
+                } else if (algoritmoActual.equals("Round Robin") && procesoEnCpu.getQuantumRestante() <= 0) {
                     Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " fin de quantum (Round Robin).");
                     procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
                     colaListos.encolar(procesoEnCpu);
@@ -928,6 +970,8 @@ public void run() {
         SwingUtilities.invokeLater(() -> {
             actualizarGUI();
             actualizarGrafico();
+            actualizarGraficoComparativo(); // <-- AÑADIDO: La llamada para actualizar el nuevo gráfico
+            actualizarGraficoComparativo();
         });
 
         try { 
@@ -1215,5 +1259,42 @@ private void crearYAnadirPCB(Proceso nuevoProceso) {
     
     txtProcesosCreados.append(infoProceso);
     // --- FIN: LÓGICA CORREGIDA ---
-}
+    }
+private void actualizarGraficoComparativo() {
+    DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+    for (Map.Entry<String, MetricasAlgoritmo> entry : metricasEnTiempoReal.entrySet()) {
+        String algoritmo = entry.getKey();
+        MetricasAlgoritmo metricas = entry.getValue();
+        double throughputActual = 0;
+        
+        if (metricas.ciclosActivos > 0) {
+            throughputActual = (double) metricas.procesosTerminados / metricas.ciclosActivos;
+        }
+        dataset.addValue(throughputActual, "Throughput", algoritmo);
+    }
+
+    JFreeChart barChart = ChartFactory.createBarChart(
+            "Comparación de Throughputs", "Algoritmo", "Throughput (procesos/ciclo)",
+            dataset, PlotOrientation.VERTICAL, false, true, false);
+
+    CategoryPlot plot = barChart.getCategoryPlot();
+    
+    // <-- INICIO: Bloque modificado -->
+    // 1. Usamos nuestro renderizador personalizado para los colores
+    plot.setRenderer(new CustomRenderer());
+    
+    // 2. Arreglamos el texto del eje X rotando las etiquetas
+    org.jfree.chart.axis.CategoryAxis domainAxis = plot.getDomainAxis();
+    domainAxis.setCategoryLabelPositions(
+        org.jfree.chart.axis.CategoryLabelPositions.createUpRotationLabelPositions(Math.PI / 6.0)
+    );
+    // <-- FIN: Bloque modificado -->
+
+    ChartPanel chartPanel = new ChartPanel(barChart);
+    panelContenedorGrafico.removeAll();
+    panelContenedorGrafico.add(chartPanel, java.awt.BorderLayout.CENTER);
+    panelContenedorGrafico.revalidate();
+    panelContenedorGrafico.repaint();
+    }
 }
