@@ -745,7 +745,7 @@ private void actualizarGUI() {
 
         jTabbedPane1.addTab("Comparación Tiempos de Politicas", jPanel8);
 
-        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Estadísticas Generales"));
+        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estadísticas Generales", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(51, 51, 255))); // NOI18N
 
         lblStatsCicloActual.setText("Ciclo Actual: 0");
 
@@ -765,8 +765,8 @@ private void actualizarGUI() {
                 .addContainerGap()
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblStatsCicloActual, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblStatsProcesosTerminados, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(93, 93, 93)
+                    .addComponent(lblStatsProcesosTerminados, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(63, 63, 63)
                 .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addComponent(lblStatsIoTerminados, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -790,7 +790,7 @@ private void actualizarGUI() {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder("Estadísticas FCFS"));
+        jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estadísticas FCFS", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(51, 51, 255))); // NOI18N
 
         lblStatsFcfsCiclos.setText("Ciclos ejecutando: 0");
 
@@ -834,7 +834,7 @@ private void actualizarGUI() {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder("Estadísticas Round Robin"));
+        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estadísticas Round Robin", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(51, 51, 255))); // NOI18N
 
         lblStatsRrCiclos.setText("Ciclos ejecutando: 0");
 
@@ -878,7 +878,7 @@ private void actualizarGUI() {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder("Estadísticas SJF No Apropiativo"));
+        jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estadísticas SJF No Apropiativo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(51, 51, 255))); // NOI18N
 
         lblStatsSjfCiclos.setText("Ciclos ejecutando: 0");
 
@@ -922,7 +922,7 @@ private void actualizarGUI() {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder("Estadísticas SRT"));
+        jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estadísticas SRT", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(51, 51, 255))); // NOI18N
 
         lblStatsSrtCiclos.setText("Ciclos ejecutando: 0");
 
@@ -967,7 +967,7 @@ private void actualizarGUI() {
                 .addContainerGap())
         );
 
-        jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder("Estadísticas Prio. No Apropiativo"));
+        jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estadísticas Prio. No Apropiativo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(51, 51, 255))); // NOI18N
 
         lblStatsPrioNoApCiclos.setText("Ciclos ejecutando: 0");
 
@@ -1011,7 +1011,7 @@ private void actualizarGUI() {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder("Estadísticas Prio. Apropiativo"));
+        jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estadísticas Prio. Apropiativo", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(51, 51, 255))); // NOI18N
 
         lblStatsPrioApCiclos.setText("Ciclos ejecutando: 0");
 
@@ -1056,7 +1056,7 @@ private void actualizarGUI() {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel17.setBorder(javax.swing.BorderFactory.createTitledBorder("Estadísticas HRRN"));
+        jPanel17.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Estadísticas HRRN", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(51, 51, 255))); // NOI18N
 
         lblStatsHrrnCiclos.setText("Ciclos ejecutando: 0");
 
