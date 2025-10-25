@@ -46,6 +46,7 @@ public class VentanaSimulador extends javax.swing.JFrame implements Runnable {
     private Cola colaBloqueadosSuspendidos;
     private int cicloGlobal;
     private int ciclosOcupado;
+    private Thread hiloSimulacion;
     private int memoriaEnUso;
     private PCB procesoEnCpu;
     private Planificador planificador;
@@ -61,13 +62,10 @@ public class VentanaSimulador extends javax.swing.JFrame implements Runnable {
     
     public VentanaSimulador() {
     initComponents();
-    
-    for (int i = 0; i < cmbAlgoritmo.getItemCount(); i++) {
-    String algoritmo = cmbAlgoritmo.getItemAt(i);
-    metricasEnTiempoReal.put(algoritmo, new MetricasAlgoritmo());
-}
-    
-    // --- AÑADE ESTAS LÍNEAS ---
+
+    inicializarMetricas(); // <-- ANTES AQUÍ ESTABA TU BUCLE
+
+    // El resto de tu constructor no cambia
     this.colaListos = new Cola();
     this.colaTerminados = new Cola();
     this.colaBloqueados = new Cola();
@@ -79,32 +77,13 @@ public class VentanaSimulador extends javax.swing.JFrame implements Runnable {
     this.planificador = new Planificador();
     inicializarGrafico();
     cargarConfiguracion();
-   
+
     addWindowListener(new java.awt.event.WindowAdapter() {
         @Override
         public void windowClosing(java.awt.event.WindowEvent windowEvent) {
             guardarConfiguracion();
         }
     });
-    // -------------------------
-
-    // Ahora el resto de tu código funcionará correctamente
-    //Proceso p1 = new Proceso("Navegador Web", 10);
-    //Proceso p2 = new Proceso("Editor de Texto", 7);
-   // Proceso p3 = new Proceso("Música", 12);
-
-    // Creamos su PCB (Process Control Block)
-   // PCB pcb1 = new PCB(p1);
-    //PCB pcb2 = new PCB(p2);
-   // PCB pcb3 = new PCB(p3);
-
-    // Los procesos "llegan" al sistema y se encolan en la lista de listos.
-   // pcb1.setEstado(PCB.EstadoProceso.LISTO);
-   // colaListos.encolar(pcb1);
-   // pcb2.setEstado(PCB.EstadoProceso.LISTO);
-   // colaListos.encolar(pcb2);
-   // pcb3.setEstado(PCB.EstadoProceso.LISTO);
-   // colaListos.encolar(pcb3);
 }
     
 private void actualizarGUI() {
@@ -191,6 +170,7 @@ private void actualizarGUI() {
         btnPausa = new javax.swing.JButton();
         jLabel15 = new javax.swing.JLabel();
         spnVelocidad = new javax.swing.JSpinner();
+        btnReiniciar = new javax.swing.JButton();
         panelGrafico = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -497,6 +477,13 @@ private void actualizarGUI() {
 
         spnVelocidad.setModel(new javax.swing.SpinnerNumberModel(500, null, null, 1));
 
+        btnReiniciar.setText("Reiniciar");
+        btnReiniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnReiniciarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -504,23 +491,6 @@ private void actualizarGUI() {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblProgramCounter, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnPausa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnIniciar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(lblProcesoCPU, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(lblModoEjecucion, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblMAR, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -536,7 +506,25 @@ private void actualizarGUI() {
                                 .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(spnVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnReiniciar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblProgramCounter, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnPausa, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnIniciar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lblProcesoCPU, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblModoEjecucion, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -565,11 +553,13 @@ private void actualizarGUI() {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
                     .addComponent(spnVelocidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(btnIniciar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(6, 6, 6)
                 .addComponent(btnPausa)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnReiniciar)
+                .addGap(19, 19, 19))
         );
 
         javax.swing.GroupLayout panelGraficoLayout = new javax.swing.GroupLayout(panelGrafico);
@@ -1277,6 +1267,10 @@ private void actualizarGUI() {
     Logger.log("--- 20 procesos aleatorios han sido creados ---");
     }//GEN-LAST:event_btnCrearRandomActionPerformed
 
+    private void btnReiniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReiniciarActionPerformed
+       reiniciarSimulador();
+    }//GEN-LAST:event_btnReiniciarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1289,6 +1283,7 @@ private void actualizarGUI() {
     private javax.swing.JButton btnCrearRandom;
     private javax.swing.JButton btnIniciar;
     private javax.swing.JButton btnPausa;
+    private javax.swing.JButton btnReiniciar;
     private javax.swing.JCheckBox chkIoBound;
     private javax.swing.JComboBox<String> cmbAlgoritmo;
     private javax.swing.JLabel jLabel1;
@@ -2023,5 +2018,73 @@ private void actualizarEstadisticas() {
                 break;
         }
     }
+}
+
+/**
+ * Limpia y reinicializa el mapa de métricas para todos los algoritmos
+ * listados en el JComboBox.
+ */
+private void inicializarMetricas() {
+    metricasEnTiempoReal.clear(); // Limpia cualquier métrica anterior
+
+    // Este es TU bucle inteligente, movido a este método
+    for (int i = 0; i < cmbAlgoritmo.getItemCount(); i++) {
+        String algoritmo = cmbAlgoritmo.getItemAt(i);
+        metricasEnTiempoReal.put(algoritmo, new MetricasAlgoritmo());
+    }
+}
+
+/**
+ * Detiene la simulación actual y reinicia todas las variables, colas
+ * y componentes de la GUI a su estado inicial.
+ */
+private void reiniciarSimulador() {
+    
+    // 1. Detener la simulación activa (si la hay)
+    if (hiloSimulacion != null) {
+        hiloSimulacion.interrupt(); // Detiene el hilo
+        hiloSimulacion = null;
+    }
+
+    // 2. Reiniciar variables de estado
+    cicloGlobal = 0;
+    ciclosOcupado = 0;
+    memoriaEnUso = 0;
+    procesoEnCpu = null;
+    simulacionPausada = false;
+
+    // 3. Reiniciar todas las colas (creando nuevas instancias limpias)
+    colaListos = new Cola();
+    colaBloqueados = new Cola();
+    colaTerminados = new Cola();
+    colaListosSuspendidos = new Cola();
+    colaBloqueadosSuspendidos = new Cola();
+    
+    // 4. Limpiar la lista maestra de procesos
+    listaMaestraProcesos.clear();
+    
+    // 5. Reiniciar las métricas
+    inicializarMetricas(); // Llama al método que creamos
+
+    // 6. Limpiar las áreas de texto (CORREGIDO)
+    txtProcesosCreados.setText("");
+    txtMetricas.setText("");        // <-- Corrección de antes
+
+    // 7. Actualizar/Limpiar toda la GUI
+    actualizarGUI();
+    actualizarGrafico();
+    actualizarGraficoComparativo();
+    actualizarGraficoDistribucion();
+    actualizarGraficoTiempos();
+    actualizarEstadisticas();
+
+    // 8. Reiniciar el estado de los botones
+    btnIniciar.setEnabled(true);
+    btnPausa.setEnabled(false);
+    btnPausa.setText("Pausar");
+
+    // 9. Escribir en el log
+    System.out.println("--- Simulador Reiniciado ---");
+    Logger.log("--- Simulador Reiniciado ---"); // <-- Esta es la línea correcta para el log
 }
 }

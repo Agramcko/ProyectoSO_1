@@ -1,65 +1,9 @@
-[17:12:27.638] --- INICIO DE LA SIMULACIÓN ---
-[17:12:27.668] Ciclo 0: Planificador selecciona Proceso ID 1 (HRRN (Highest Response Ratio Next)).
-[17:12:30.010] Ciclo 22: Proceso ID 1 se bloquea por E/S.
-[17:12:30.121] Ciclo 22: Planificador selecciona Proceso ID 9 (HRRN (Highest Response Ratio Next)).
-[17:12:31.109] Ciclo 31: Proceso ID 1 fin de bloqueo. Va a Listos.
-[17:12:31.541] Ciclo 36: Proceso ID 9 ha terminado.
-[17:12:31.651] Ciclo 36: Planificador selecciona Proceso ID 10 (HRRN (Highest Response Ratio Next)).
-[17:12:32.751] Ciclo 47: Proceso ID 10 se bloquea por E/S.
-[17:12:32.861] Ciclo 47: Planificador selecciona Proceso ID 4 (HRRN (Highest Response Ratio Next)).
-[17:12:33.848] Ciclo 56: Proceso ID 10 fin de bloqueo. Va a Listos.
-[17:12:35.385] Ciclo 71: Proceso ID 4 se bloquea por E/S.
-[17:12:35.497] Ciclo 71: Planificador selecciona Proceso ID 10 (HRRN (Highest Response Ratio Next)).
-[17:12:36.463] Ciclo 80: Proceso ID 4 fin de bloqueo. Va a Listos.
-[17:12:36.897] Ciclo 85: Proceso ID 10 ha terminado.
-[17:12:37.019] Ciclo 85: Proceso ID 11 admitido a memoria. Uso: 1990MB.
-[17:12:37.019] Ciclo 85: Planificador selecciona Proceso ID 4 (HRRN (Highest Response Ratio Next)).
-[17:12:37.130] Ciclo 87: Proceso ID 4 ha terminado.
-[17:12:37.239] Ciclo 87: Proceso ID 13 admitido a memoria. Uso: 2004MB.
-[17:12:37.239] Ciclo 87: Planificador selecciona Proceso ID 13 (HRRN (Highest Response Ratio Next)).
-[17:12:37.348] Ciclo 89: Proceso ID 13 se bloquea por E/S.
-[17:12:37.458] Ciclo 89: Planificador selecciona Proceso ID 11 (HRRN (Highest Response Ratio Next)).
-[17:12:38.432] Ciclo 98: Proceso ID 13 fin de bloqueo. Va a Listos.
-[17:12:40.519] Ciclo 118: Proceso ID 11 ha terminado.
-[17:12:40.629] Ciclo 118: Proceso ID 14 admitido a memoria. Uso: 1966MB.
-[17:12:40.629] Ciclo 118: Planificador selecciona Proceso ID 13 (HRRN (Highest Response Ratio Next)).
-[17:12:42.589] Ciclo 137: Proceso ID 13 ha terminado.
-[17:12:42.698] Ciclo 137: Proceso ID 15 admitido a memoria. Uso: 1863MB.
-[17:12:42.698] Ciclo 137: Planificador selecciona Proceso ID 15 (HRRN (Highest Response Ratio Next)).
-[17:12:43.778] Ciclo 148: Proceso ID 15 se bloquea por E/S.
-[17:12:43.887] Ciclo 148: Planificador selecciona Proceso ID 14 (HRRN (Highest Response Ratio Next)).
-[17:12:44.883] Ciclo 157: Proceso ID 15 fin de bloqueo. Va a Listos.
-[17:12:46.086] Ciclo 169: Proceso ID 14 ha terminado.
-[17:12:46.196] Ciclo 169: Proceso ID 16 admitido a memoria. Uso: 1821MB.
-[17:12:46.196] Ciclo 169: Planificador selecciona Proceso ID 16 (HRRN (Highest Response Ratio Next)).
-[17:12:47.486] Ciclo 182: Proceso ID 16 ha terminado.
-[17:12:47.596] Ciclo 182: Proceso ID 17 admitido a memoria. Uso: 1865MB.
-[17:12:47.597] Ciclo 182: Planificador selecciona Proceso ID 15 (HRRN (Highest Response Ratio Next)).
-[17:12:47.813] Ciclo 185: Proceso ID 15 ha terminado.
-[17:12:47.923] Ciclo 185: Proceso ID 18 admitido a memoria. Uso: 2014MB.
-[17:12:47.923] Ciclo 185: Planificador selecciona Proceso ID 18 (HRRN (Highest Response Ratio Next)).
-[17:12:50.441] Ciclo 209: Proceso ID 18 ha terminado.
-[17:12:50.544] Ciclo 209: Proceso ID 19 admitido a memoria. Uso: 2041MB.
-[17:12:50.544] Ciclo 209: Planificador selecciona Proceso ID 1 (HRRN (Highest Response Ratio Next)).
-[17:12:51.316] Ciclo 217: Proceso ID 1 ha terminado.
-[17:12:51.426] Ciclo 217: Proceso ID 20 admitido a memoria. Uso: 1848MB.
-[17:12:51.426] Ciclo 217: Planificador selecciona Proceso ID 2 (HRRN (Highest Response Ratio Next)).
-[17:12:51.644] Ciclo 220: Proceso ID 2 se bloquea por E/S.
-[17:12:51.753] Ciclo 220: Planificador selecciona Proceso ID 19 (HRRN (Highest Response Ratio Next)).
-[17:12:52.747] Ciclo 229: Proceso ID 2 fin de bloqueo. Va a Listos.
-[17:12:55.280] Ciclo 253: Proceso ID 19 ha terminado.
-[17:12:55.391] Ciclo 253: Planificador selecciona Proceso ID 2 (HRRN (Highest Response Ratio Next)).
-[17:12:58.602] Ciclo 283: Proceso ID 2 ha terminado.
-[17:12:58.713] Ciclo 283: Planificador selecciona Proceso ID 12 (HRRN (Highest Response Ratio Next)).
-[17:13:02.650] Ciclo 320: Proceso ID 12 ha terminado.
-[17:13:02.761] Ciclo 320: Planificador selecciona Proceso ID 20 (HRRN (Highest Response Ratio Next)).
-[17:13:03.300] Ciclo 326: Proceso ID 20 se bloquea por E/S.
-[17:13:03.412] Ciclo 326: Planificador selecciona Proceso ID 8 (HRRN (Highest Response Ratio Next)).
-[17:13:04.406] Ciclo 335: Proceso ID 20 fin de bloqueo. Va a Listos.
-[17:13:07.370] Ciclo 363: Proceso ID 8 se bloquea por E/S.
-[17:13:07.479] Ciclo 363: Planificador selecciona Proceso ID 20 (HRRN (Highest Response Ratio Next)).
-[17:13:08.471] Ciclo 372: Proceso ID 8 fin de bloqueo. Va a Listos.
-[17:13:10.805] Ciclo 394: Proceso ID 20 ha terminado.
-[17:13:10.916] Ciclo 394: Planificador selecciona Proceso ID 8 (HRRN (Highest Response Ratio Next)).
-[17:13:10.916] Ciclo 395: Proceso ID 8 ha terminado.
-[17:13:11.026] Ciclo 395: Planificador selecciona Proceso ID 3 (HRRN (Highest Response Ratio Next)).
+[18:21:35.612] --- INICIO DE LA SIMULACIÓN ---
+[18:21:35.627] Ciclo 0: Planificador selecciona Proceso ID 1 (SRT (Shortest Remaining Time)).
+[18:21:35.638] Ciclo 0: Proceso ID 1 interrumpido por Proceso ID 2 (SRT).
+[18:21:38.645] --- SIMULACIÓN PAUSADA ---
+[18:21:41.686] --- SIMULACIÓN REANUDADA ---
+[18:21:42.019] Ciclo 6: Proceso ID 2 ha terminado.
+[18:21:42.130] Ciclo 6: Planificador selecciona Proceso ID 1 (SRT (Shortest Remaining Time)).
+[18:21:44.358] Ciclo 27: Proceso ID 1 ha terminado.
+[18:21:44.480] --- FIN DE LA SIMULACIÓN ---

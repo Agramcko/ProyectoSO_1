@@ -12,8 +12,8 @@ public class Planificador {
 
     /**
      * Método principal de selección.
+     * Corregido: Se quitó <PCB> de los parámetros.
      */
-    // Firma corregida: Se quitó <PCB>
     public PCB seleccionarProceso(Cola colaListos, String algoritmo, int cicloGlobal) {
         if (colaListos.estaVacia()) {
             return null;
@@ -41,8 +41,8 @@ public class Planificador {
 
     /**
      * Lógica para SJF No Apropiativo.
+     * Corregido: Se quitó <PCB>
      */
-    // Firma corregida: Se quitó <PCB>
     private PCB seleccionarSJF(Cola colaListos) {
         Nodo actual = colaListos.getFrente();
         PCB procesoMasCorto = actual.getPcb();
@@ -75,8 +75,8 @@ public class Planificador {
 
     /**
      * Lógica para Prioridad No Apropiativo.
+     * Corregido: Se quitó <PCB>
      */
-    // Firma corregida: Se quitó <PCB>
     private PCB seleccionarPorPrioridad(Cola colaListos) {
         Nodo actual = colaListos.getFrente();
         PCB procesoMasPrioritario = actual.getPcb();
@@ -109,8 +109,8 @@ public class Planificador {
 
     /**
      * LÓGICA NUEVA PARA HRRN.
+     * Corregido: Se quitó <PCB>
      */
-    // Firma corregida: Se quitó <PCB>
     private PCB seleccionarHRRN(Cola colaListos, int cicloGlobal) {
         Nodo actual = colaListos.getFrente();
         PCB mejorProceso = actual.getPcb();
@@ -153,9 +153,9 @@ public class Planificador {
         return mejorProceso;
     }
 
-    // --- MÉTODOS DE "ESPIAR" (para algoritmos apropiativos) ---
+    // --- MÉTODOS DE "ESPIAR" ---
 
-    // Firma corregida: Se quitó <PCB>
+    /** Corregido: Se quitó <PCB> */
     public PCB verProcesoMasPrioritario(Cola colaListos) {
         if (colaListos.estaVacia()) {
             return null;
@@ -173,7 +173,7 @@ public class Planificador {
         return procesoMasPrioritario;
     }
     
-    // Firma corregida: Se quitó <PCB>
+    /** Corregido: Se quitó <PCB> */
     public PCB verProcesoMasCortoRestante(Cola colaListos) {
         if (colaListos.estaVacia()) {
             return null;
