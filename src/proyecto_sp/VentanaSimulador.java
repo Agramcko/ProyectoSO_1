@@ -427,7 +427,7 @@ private void actualizarGUI() {
 
         jLabel9.setText("Algoritmo:");
 
-        cmbAlgoritmo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FCFS", "SJF No Apropiativo", "Round Robin", "Prioridad No Apropiativo", "Prioridad Apropiativo", "SRT (Shortest Remaining Time)" }));
+        cmbAlgoritmo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FCFS", "SJF No Apropiativo", "Round Robin", "Prioridad No Apropiativo", "Prioridad Apropiativo", "SRT (Shortest Remaining Time)", "HRRN (Highest Response Ratio Next)" }));
 
         btnIniciar.setText("Iniciar Simulación");
         btnIniciar.addActionListener(new java.awt.event.ActionListener() {
@@ -929,9 +929,14 @@ public void run() {
             gestionarColaBloqueados();
             gestionarColaSuspendidos();
             
-            // --- LÓGICA DE PLANIFICACIÓN (No cambia) ---
+            // --- LÓGICA DE PLANIFICACIÓN (Línea actualizada) ---
             if (procesoEnCpu == null) {
-                procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmoActual);
+                
+                // <-- INICIO: LÍNEA MODIFICADA -->
+                // Ahora pasamos cicloGlobal para que HRRN pueda funcionar
+                procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmoActual, cicloGlobal);
+                // <-- FIN: LÍNEA MODIFICADA -->
+
                 if (procesoEnCpu != null) {
                     Logger.log("Ciclo " + cicloGlobal + ": Planificador selecciona Proceso ID " + procesoEnCpu.getId() + " (" + algoritmoActual + ").");
                     procesoEnCpu.setEstado(PCB.EstadoProceso.EJECUCION);
@@ -947,7 +952,10 @@ public void run() {
                         Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " interrumpido por Proceso ID " + masPrioritario.getId() + " (Prioridad).");
                         procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
                         colaListos.encolar(procesoEnCpu);
-                        procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmoActual);
+                        
+                        // <-- INICIO: LÍNEA MODIFICADA -->
+                        procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmoActual, cicloGlobal);
+                        // <-- FIN: LÍNEA MODIFICADA -->
                     }
                 } else if (algoritmoActual.equals("SRT (Shortest Remaining Time)")) {
                     PCB masCorto = planificador.verProcesoMasCortoRestante(colaListos);
@@ -955,7 +963,10 @@ public void run() {
                         Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " interrumpido por Proceso ID " + masCorto.getId() + " (SRT).");
                         procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
                         colaListos.encolar(procesoEnCpu);
-                        procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmoActual);
+                        
+                        // <-- INICIO: LÍNEA MODIFICADA -->
+                        procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmoActual, cicloGlobal);
+                        // <-- FIN: LÍNEA MODIFICADA -->
                     }
                 }
             }
@@ -981,7 +992,6 @@ public void run() {
                     procesoEnCpu.setProgramCounter(procesoEnCpu.getProgramCounter() + 1);
                     procesoEnCpu = null;
 
-                // <-- INICIO: Bloque de finalización de proceso ACTUALIZADO -->
                 } else if (procesoEnCpu.getProgramCounter() >= procesoEnCpu.getProcesoInfo().getNumeroInstrucciones()) {
                     Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " ha terminado.");
                     procesoEnCpu.setEstado(PCB.EstadoProceso.TERMINADO);
@@ -993,14 +1003,13 @@ public void run() {
                     metricasActuales.procesosTerminados++;
                     
                     long tiempoRetorno = procesoEnCpu.getTiempoDeFinalizacion() - procesoEnCpu.getTiempoDeLlegada();
-                    long tiempoEspera = tiempoRetorno - procesoEnCpu.getProcesoInfo().getNumeroInstrucciones();
+                    long tiempoEspera = tiempoRetorno - procesoEnCpu.getProcesoInfo().getNumeroInstrucciones(); // <-- Corrección de error tipográfico
                     
                     metricasActuales.sumaTiemposRetorno += tiempoRetorno;
                     metricasActuales.sumaTiemposEspera += tiempoEspera;
                     // --- Fin del bloque de cálculo ---
                     
                     procesoEnCpu = null;
-                // <-- FIN: Bloque de finalización de proceso ACTUALIZADO -->
 
                 } else if (algoritmoActual.equals("Round Robin") && procesoEnCpu.getQuantumRestante() <= 0) {
                     Logger.log("Ciclo " + cicloGlobal + ": Proceso ID " + procesoEnCpu.getId() + " fin de quantum (Round Robin).");
@@ -1020,15 +1029,14 @@ public void run() {
             mutex.release();
         }
 
-        // <-- INICIO: Bloque de actualización de GUI ACTUALIZADO -->
+        // --- Bloque de actualización de GUI (Corregido) ---
         SwingUtilities.invokeLater(() -> {
             actualizarGUI();
             actualizarGrafico();
-            actualizarGraficoComparativo();
+            actualizarGraficoComparativo(); // <-- Corrección de error tipográfico
             actualizarGraficoDistribucion();
-            actualizarGraficoTiempos(); // Asegúrate de que esta llamada también esté aquí
+            actualizarGraficoTiempos();
         });
-        // <-- FIN: Bloque de actualización de GUI ACTUALIZADO -->
 
         try { 
             int velocidad = (int) spnVelocidad.getValue();

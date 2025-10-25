@@ -10,98 +10,39 @@ package proyecto_sp;
  */
 public class Planificador {
 
-    public PCB seleccionarProceso(Cola colaListos, String algoritmo) {
+    /**
+     * Método principal de selección.
+     */
+    // Firma corregida: Se quitó <PCB>
+    public PCB seleccionarProceso(Cola colaListos, String algoritmo, int cicloGlobal) {
         if (colaListos.estaVacia()) {
             return null;
         }
 
         switch (algoritmo) {
-            case "Prioridad No Apropiativo": // <-- NUEVO CASO
-                return seleccionarPorPrioridad(colaListos);
-            
             case "SJF No Apropiativo":
                 return seleccionarSJF(colaListos);
+                
+            case "Prioridad No Apropiativo":
+                return seleccionarPorPrioridad(colaListos);
             
-            case "Round Robin": // <-- NOTA: Round Robin también usa FCFS para elegir al siguiente
+            case "HRRN (Highest Response Ratio Next)":
+                return seleccionarHRRN(colaListos, cicloGlobal);
+
+            // Algoritmos que simplemente sacan el primero de la cola
+            case "Round Robin":
+            case "Prioridad Apropiativo":
+            case "SRT (Shortest Remaining Time)":
             case "FCFS":
             default:
                 return colaListos.desencolar();
         }
     }
-    
-    public PCB verProcesoMasCortoRestante(Cola colaListos) {
-    if (colaListos.estaVacia()) {
-        return null;
-    }
 
-    Nodo iterador = colaListos.getFrente();
-    PCB procesoMasCorto = iterador.getPcb();
-
-    while (iterador != null) {
-        if (iterador.getPcb().getTiempoEjecucionRestante() < procesoMasCorto.getTiempoEjecucionRestante()) {
-            procesoMasCorto = iterador.getPcb();
-        }
-        iterador = iterador.getSiguiente();
-    }
-    return procesoMasCorto;
-}
-    
-    // --- MÉTODO NUEVO para "espiar" la prioridad más alta ---
-    public PCB verProcesoMasPrioritario(Cola colaListos) {
-        if (colaListos.estaVacia()) {
-            return null;
-        }
-        
-        Nodo iterador = colaListos.getFrente();
-        PCB procesoMasPrioritario = iterador.getPcb();
-
-        while (iterador != null) {
-            if (iterador.getPcb().getProcesoInfo().getPrioridad() < procesoMasPrioritario.getProcesoInfo().getPrioridad()) {
-                procesoMasPrioritario = iterador.getPcb();
-            }
-            iterador = iterador.getSiguiente();
-        }
-        return procesoMasPrioritario;
-    }
-
-    // --- MÉTODO COMPLETAMENTE NUEVO ---
-    // Busca en la cola el proceso con el número de prioridad más bajo (más prioritario).
-    private PCB seleccionarPorPrioridad(Cola colaListos) {
-        Nodo actual = colaListos.getFrente();
-        PCB procesoMasPrioritario = actual.getPcb();
-        Nodo nodoDelMasPrioritario = actual;
-        Nodo nodoAnteriorAlMasPrioritario = null;
-        
-        Nodo anterior = null;
-        Nodo iterador = actual;
-
-        // 1. Buscamos el proceso con el número de prioridad más bajo.
-        while (iterador != null) {
-            if (iterador.getPcb().getProcesoInfo().getPrioridad() < procesoMasPrioritario.getProcesoInfo().getPrioridad()) {
-                procesoMasPrioritario = iterador.getPcb();
-                nodoDelMasPrioritario = iterador;
-                nodoAnteriorAlMasPrioritario = anterior;
-            }
-            anterior = iterador;
-            iterador = iterador.getSiguiente();
-        }
-
-        // 2. Extraemos ese nodo de la cola.
-        if (nodoAnteriorAlMasPrioritario == null) {
-            // El proceso más prioritario era el primero de la cola.
-            return colaListos.desencolar();
-        } else {
-            // El proceso está en medio o al final de la cola.
-            nodoAnteriorAlMasPrioritario.setSiguiente(nodoDelMasPrioritario.getSiguiente());
-            if (nodoDelMasPrioritario.getSiguiente() == null) {
-                // Si era el último, actualizamos el 'fin' de la cola.
-                colaListos.setFin(nodoAnteriorAlMasPrioritario);
-            }
-        }
-        
-        return procesoMasPrioritario;
-    }
-
+    /**
+     * Lógica para SJF No Apropiativo.
+     */
+    // Firma corregida: Se quitó <PCB>
     private PCB seleccionarSJF(Cola colaListos) {
         Nodo actual = colaListos.getFrente();
         PCB procesoMasCorto = actual.getPcb();
@@ -129,7 +70,124 @@ public class Planificador {
                 colaListos.setFin(nodoAnteriorAlMasCorto);
             }
         }
+        return procesoMasCorto;
+    }
+
+    /**
+     * Lógica para Prioridad No Apropiativo.
+     */
+    // Firma corregida: Se quitó <PCB>
+    private PCB seleccionarPorPrioridad(Cola colaListos) {
+        Nodo actual = colaListos.getFrente();
+        PCB procesoMasPrioritario = actual.getPcb();
+        Nodo nodoDelMasPrioritario = actual;
+        Nodo nodoAnteriorAlMasPrioritario = null;
         
+        Nodo anterior = null;
+        Nodo iterador = actual;
+
+        while (iterador != null) {
+            if (iterador.getPcb().getProcesoInfo().getPrioridad() < procesoMasPrioritario.getProcesoInfo().getPrioridad()) {
+                procesoMasPrioritario = iterador.getPcb();
+                nodoDelMasPrioritario = iterador;
+                nodoAnteriorAlMasPrioritario = anterior;
+            }
+            anterior = iterador;
+            iterador = iterador.getSiguiente();
+        }
+
+        if (nodoAnteriorAlMasPrioritario == null) {
+            return colaListos.desencolar();
+        } else {
+            nodoAnteriorAlMasPrioritario.setSiguiente(nodoDelMasPrioritario.getSiguiente());
+            if (nodoDelMasPrioritario.getSiguiente() == null) {
+                colaListos.setFin(nodoAnteriorAlMasPrioritario);
+            }
+        }
+        return procesoMasPrioritario;
+    }
+
+    /**
+     * LÓGICA NUEVA PARA HRRN.
+     */
+    // Firma corregida: Se quitó <PCB>
+    private PCB seleccionarHRRN(Cola colaListos, int cicloGlobal) {
+        Nodo actual = colaListos.getFrente();
+        PCB mejorProceso = actual.getPcb();
+        Nodo nodoDelMejor = actual;
+        Nodo nodoAnteriorAlMejor = null;
+        
+        double maxRatio = -1.0;
+
+        Nodo anterior = null;
+        Nodo iterador = actual;
+
+        while (iterador != null) {
+            PCB pcbActual = iterador.getPcb();
+            int tiempoEnEspera = cicloGlobal - pcbActual.getTiempoDeLlegada();
+            int tiempoDeRafaga = pcbActual.getProcesoInfo().getNumeroInstrucciones();
+            
+            double ratioRespuesta = 1.0;
+            if (tiempoDeRafaga > 0) {
+                 ratioRespuesta = (double) (tiempoEnEspera + tiempoDeRafaga) / tiempoDeRafaga;
+            }
+
+            if (ratioRespuesta > maxRatio) {
+                maxRatio = ratioRespuesta;
+                mejorProceso = pcbActual;
+                nodoDelMejor = iterador;
+                nodoAnteriorAlMejor = anterior;
+            }
+            anterior = iterador;
+            iterador = iterador.getSiguiente();
+        }
+
+        if (nodoAnteriorAlMejor == null) {
+            return colaListos.desencolar();
+        } else {
+            nodoAnteriorAlMejor.setSiguiente(nodoDelMejor.getSiguiente());
+            if (nodoDelMejor.getSiguiente() == null) {
+                colaListos.setFin(nodoAnteriorAlMejor);
+            }
+        }
+        return mejorProceso;
+    }
+
+    // --- MÉTODOS DE "ESPIAR" (para algoritmos apropiativos) ---
+
+    // Firma corregida: Se quitó <PCB>
+    public PCB verProcesoMasPrioritario(Cola colaListos) {
+        if (colaListos.estaVacia()) {
+            return null;
+        }
+        
+        Nodo iterador = colaListos.getFrente();
+        PCB procesoMasPrioritario = iterador.getPcb();
+
+        while (iterador != null) {
+            if (iterador.getPcb().getProcesoInfo().getPrioridad() < procesoMasPrioritario.getProcesoInfo().getPrioridad()) {
+                procesoMasPrioritario = iterador.getPcb();
+            }
+            iterador = iterador.getSiguiente();
+        }
+        return procesoMasPrioritario;
+    }
+    
+    // Firma corregida: Se quitó <PCB>
+    public PCB verProcesoMasCortoRestante(Cola colaListos) {
+        if (colaListos.estaVacia()) {
+            return null;
+        }
+
+        Nodo iterador = colaListos.getFrente();
+        PCB procesoMasCorto = iterador.getPcb();
+
+        while (iterador != null) {
+            if (iterador.getPcb().getTiempoEjecucionRestante() < procesoMasCorto.getTiempoEjecucionRestante()) {
+                procesoMasCorto = iterador.getPcb();
+            }
+            iterador = iterador.getSiguiente();
+        }
         return procesoMasCorto;
     }
 }
