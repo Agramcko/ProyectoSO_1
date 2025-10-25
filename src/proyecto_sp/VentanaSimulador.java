@@ -206,6 +206,55 @@ private void actualizarGUI() {
         panelGraficoDistribucion = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         panelGraficoTiempos = new javax.swing.JPanel();
+        jPanel9 = new javax.swing.JPanel();
+        jPanel10 = new javax.swing.JPanel();
+        lblStatsCicloActual = new javax.swing.JLabel();
+        lblStatsProcesosTerminados = new javax.swing.JLabel();
+        lblStatsIoTerminados = new javax.swing.JLabel();
+        lblStatsCpuTerminados = new javax.swing.JLabel();
+        lblStatsThroughputGeneral = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
+        lblStatsFcfsCiclos = new javax.swing.JLabel();
+        lblStatsFcfsProcesos = new javax.swing.JLabel();
+        lblStatsFcfsIo = new javax.swing.JLabel();
+        lblStatsFcfsCpu = new javax.swing.JLabel();
+        lblStatsFcfsThroughput = new javax.swing.JLabel();
+        jPanel12 = new javax.swing.JPanel();
+        lblStatsRrCiclos = new javax.swing.JLabel();
+        lblStatsRrProcesos = new javax.swing.JLabel();
+        lblStatsRrIo = new javax.swing.JLabel();
+        lblStatsRrCpu = new javax.swing.JLabel();
+        lblStatsRrThroughput = new javax.swing.JLabel();
+        jPanel13 = new javax.swing.JPanel();
+        lblStatsSjfCiclos = new javax.swing.JLabel();
+        lblStatsSjfProcesos = new javax.swing.JLabel();
+        lblStatsSjfIo = new javax.swing.JLabel();
+        lblStatsSjfCpu = new javax.swing.JLabel();
+        lblStatsSjfThroughput = new javax.swing.JLabel();
+        jPanel14 = new javax.swing.JPanel();
+        lblStatsSrtCiclos = new javax.swing.JLabel();
+        lblStatsSrtProcesos = new javax.swing.JLabel();
+        lblStatsSrtIo = new javax.swing.JLabel();
+        lblStatsSrtCpu = new javax.swing.JLabel();
+        lblStatsSrtThroughput = new javax.swing.JLabel();
+        jPanel15 = new javax.swing.JPanel();
+        lblStatsPrioNoApCiclos = new javax.swing.JLabel();
+        lblStatsPrioNoApProcesos = new javax.swing.JLabel();
+        lblStatsPrioNoApIo = new javax.swing.JLabel();
+        lblStatsPrioNoApCpu = new javax.swing.JLabel();
+        lblStatsPrioNoApThroughput = new javax.swing.JLabel();
+        jPanel16 = new javax.swing.JPanel();
+        lblStatsPrioApCiclos = new javax.swing.JLabel();
+        lblStatsPrioApProcesos = new javax.swing.JLabel();
+        lblStatsPrioApIo = new javax.swing.JLabel();
+        lblStatsPrioApCpu = new javax.swing.JLabel();
+        lblStatsPrioApThroughput = new javax.swing.JLabel();
+        jPanel17 = new javax.swing.JPanel();
+        lblStatsHrrnCiclos = new javax.swing.JLabel();
+        lblStatsHrrnProcesos = new javax.swing.JLabel();
+        lblStatsHrrnIo = new javax.swing.JLabel();
+        lblStatsHrrnCpu = new javax.swing.JLabel();
+        lblStatsHrrnThroughput = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -696,6 +745,400 @@ private void actualizarGUI() {
 
         jTabbedPane1.addTab("Comparación Tiempos de Politicas", jPanel8);
 
+        jPanel10.setBorder(javax.swing.BorderFactory.createTitledBorder("Estadísticas Generales"));
+
+        lblStatsCicloActual.setText("Ciclo Actual: 0");
+
+        lblStatsProcesosTerminados.setText("Procesos Totales Terminados: 0");
+
+        lblStatsIoTerminados.setText("Procesos I/O bound Terminados: 0");
+
+        lblStatsCpuTerminados.setText("Procesos CPU bound Terminados: 0");
+
+        lblStatsThroughputGeneral.setText("Throughput General: 0.000");
+
+        javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
+        jPanel10.setLayout(jPanel10Layout);
+        jPanel10Layout.setHorizontalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblStatsCicloActual, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblStatsProcesosTerminados, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(93, 93, 93)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel10Layout.createSequentialGroup()
+                        .addComponent(lblStatsIoTerminados, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(113, 113, 113)
+                        .addComponent(lblStatsThroughputGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblStatsCpuTerminados, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(455, Short.MAX_VALUE))
+        );
+        jPanel10Layout.setVerticalGroup(
+            jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel10Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblStatsCicloActual)
+                    .addComponent(lblStatsIoTerminados)
+                    .addComponent(lblStatsThroughputGeneral))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblStatsProcesosTerminados)
+                    .addComponent(lblStatsCpuTerminados))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel11.setBorder(javax.swing.BorderFactory.createTitledBorder("Estadísticas FCFS"));
+
+        lblStatsFcfsCiclos.setText("Ciclos ejecutando: 0");
+
+        lblStatsFcfsProcesos.setText("Procesos totales: 0");
+
+        lblStatsFcfsIo.setText("Procesos I/O: 0");
+
+        lblStatsFcfsCpu.setText("Procesos CPU: 0");
+
+        lblStatsFcfsThroughput.setText("Throughput: 0.000");
+
+        javax.swing.GroupLayout jPanel11Layout = new javax.swing.GroupLayout(jPanel11);
+        jPanel11.setLayout(jPanel11Layout);
+        jPanel11Layout.setHorizontalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblStatsFcfsCiclos, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblStatsFcfsProcesos, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(144, 144, 144)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblStatsFcfsIo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblStatsFcfsCpu, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
+                .addGap(213, 213, 213)
+                .addComponent(lblStatsFcfsThroughput, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel11Layout.setVerticalGroup(
+            jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel11Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblStatsFcfsCiclos)
+                    .addComponent(lblStatsFcfsIo)
+                    .addComponent(lblStatsFcfsThroughput))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel11Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblStatsFcfsProcesos)
+                    .addComponent(lblStatsFcfsCpu))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel12.setBorder(javax.swing.BorderFactory.createTitledBorder("Estadísticas Round Robin"));
+
+        lblStatsRrCiclos.setText("Ciclos ejecutando: 0");
+
+        lblStatsRrProcesos.setText("Procesos totales: 0");
+
+        lblStatsRrIo.setText("Procesos I/O: 0");
+
+        lblStatsRrCpu.setText("Procesos CPU: 0");
+
+        lblStatsRrThroughput.setText("Throughput: 0.000");
+
+        javax.swing.GroupLayout jPanel12Layout = new javax.swing.GroupLayout(jPanel12);
+        jPanel12.setLayout(jPanel12Layout);
+        jPanel12Layout.setHorizontalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblStatsRrCiclos, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblStatsRrProcesos, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(148, 148, 148)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblStatsRrIo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblStatsRrCpu, javax.swing.GroupLayout.DEFAULT_SIZE, 98, Short.MAX_VALUE))
+                .addGap(213, 213, 213)
+                .addComponent(lblStatsRrThroughput, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel12Layout.setVerticalGroup(
+            jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel12Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblStatsRrCiclos)
+                    .addComponent(lblStatsRrIo)
+                    .addComponent(lblStatsRrThroughput))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel12Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblStatsRrProcesos)
+                    .addComponent(lblStatsRrCpu))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel13.setBorder(javax.swing.BorderFactory.createTitledBorder("Estadísticas SJF No Apropiativo"));
+
+        lblStatsSjfCiclos.setText("Ciclos ejecutando: 0");
+
+        lblStatsSjfProcesos.setText("Procesos totales: 0");
+
+        lblStatsSjfIo.setText("Procesos I/O: 0");
+
+        lblStatsSjfCpu.setText("Procesos CPU: 0");
+
+        lblStatsSjfThroughput.setText("Throughput: 0.000");
+
+        javax.swing.GroupLayout jPanel13Layout = new javax.swing.GroupLayout(jPanel13);
+        jPanel13.setLayout(jPanel13Layout);
+        jPanel13Layout.setHorizontalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblStatsSjfCiclos, javax.swing.GroupLayout.DEFAULT_SIZE, 144, Short.MAX_VALUE)
+                    .addComponent(lblStatsSjfProcesos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(137, 137, 137)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblStatsSjfIo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblStatsSjfCpu, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))
+                .addGap(186, 186, 186)
+                .addComponent(lblStatsSjfThroughput, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel13Layout.setVerticalGroup(
+            jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel13Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblStatsSjfCiclos)
+                    .addComponent(lblStatsSjfIo)
+                    .addComponent(lblStatsSjfThroughput))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel13Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblStatsSjfProcesos)
+                    .addComponent(lblStatsSjfCpu))
+                .addContainerGap(17, Short.MAX_VALUE))
+        );
+
+        jPanel14.setBorder(javax.swing.BorderFactory.createTitledBorder("Estadísticas SRT"));
+
+        lblStatsSrtCiclos.setText("Ciclos ejecutando: 0");
+
+        lblStatsSrtProcesos.setText("Procesos totales: 0");
+
+        lblStatsSrtIo.setText("Procesos I/O: 0");
+
+        lblStatsSrtCpu.setText("Procesos CPU: 0");
+
+        lblStatsSrtThroughput.setText("Throughput: 0.000");
+
+        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
+        jPanel14.setLayout(jPanel14Layout);
+        jPanel14Layout.setHorizontalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblStatsSrtCiclos, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                    .addComponent(lblStatsSrtProcesos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(147, 147, 147)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel14Layout.createSequentialGroup()
+                        .addComponent(lblStatsSrtIo, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(211, 211, 211)
+                        .addComponent(lblStatsSrtThroughput, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblStatsSrtCpu, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel14Layout.setVerticalGroup(
+            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel14Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblStatsSrtCiclos)
+                    .addComponent(lblStatsSrtIo)
+                    .addComponent(lblStatsSrtThroughput))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblStatsSrtProcesos)
+                    .addComponent(lblStatsSrtCpu))
+                .addContainerGap())
+        );
+
+        jPanel15.setBorder(javax.swing.BorderFactory.createTitledBorder("Estadísticas Prio. No Apropiativo"));
+
+        lblStatsPrioNoApCiclos.setText("Ciclos ejecutando: 0");
+
+        lblStatsPrioNoApProcesos.setText("Procesos totales: 0");
+
+        lblStatsPrioNoApIo.setText("Procesos I/O: 0");
+
+        lblStatsPrioNoApCpu.setText("Procesos CPU: 0");
+
+        lblStatsPrioNoApThroughput.setText("Throughput: 0.000");
+
+        javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
+        jPanel15.setLayout(jPanel15Layout);
+        jPanel15Layout.setHorizontalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblStatsPrioNoApCiclos, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                    .addComponent(lblStatsPrioNoApProcesos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(142, 142, 142)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblStatsPrioNoApIo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblStatsPrioNoApCpu, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE))
+                .addGap(196, 196, 196)
+                .addComponent(lblStatsPrioNoApThroughput, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel15Layout.setVerticalGroup(
+            jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel15Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblStatsPrioNoApCiclos)
+                    .addComponent(lblStatsPrioNoApIo)
+                    .addComponent(lblStatsPrioNoApThroughput))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblStatsPrioNoApProcesos)
+                    .addComponent(lblStatsPrioNoApCpu))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel16.setBorder(javax.swing.BorderFactory.createTitledBorder("Estadísticas Prio. Apropiativo"));
+
+        lblStatsPrioApCiclos.setText("Ciclos ejecutando: 0");
+
+        lblStatsPrioApProcesos.setText("Procesos totales: 0");
+
+        lblStatsPrioApIo.setText("Procesos I/O: 0");
+
+        lblStatsPrioApCpu.setText("Procesos CPU: 0");
+
+        lblStatsPrioApThroughput.setText("Throughput: 0.000");
+
+        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
+        jPanel16.setLayout(jPanel16Layout);
+        jPanel16Layout.setHorizontalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblStatsPrioApCiclos, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblStatsPrioApProcesos, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(143, 143, 143)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel16Layout.createSequentialGroup()
+                        .addComponent(lblStatsPrioApIo, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(202, 202, 202)
+                        .addComponent(lblStatsPrioApThroughput, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblStatsPrioApCpu, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel16Layout.setVerticalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblStatsPrioApCiclos)
+                    .addComponent(lblStatsPrioApIo)
+                    .addComponent(lblStatsPrioApThroughput))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblStatsPrioApProcesos)
+                    .addComponent(lblStatsPrioApCpu))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel17.setBorder(javax.swing.BorderFactory.createTitledBorder("Estadísticas HRRN"));
+
+        lblStatsHrrnCiclos.setText("Ciclos ejecutando: 0");
+
+        lblStatsHrrnProcesos.setText("Procesos totales: 0");
+
+        lblStatsHrrnIo.setText("Procesos I/O: 0");
+
+        lblStatsHrrnCpu.setText("Procesos CPU: 0");
+
+        lblStatsHrrnThroughput.setText("Throughput: 0.000");
+
+        javax.swing.GroupLayout jPanel17Layout = new javax.swing.GroupLayout(jPanel17);
+        jPanel17.setLayout(jPanel17Layout);
+        jPanel17Layout.setHorizontalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel17Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblStatsHrrnCiclos, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                    .addComponent(lblStatsHrrnProcesos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(137, 137, 137)
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblStatsHrrnIo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblStatsHrrnCpu, javax.swing.GroupLayout.DEFAULT_SIZE, 131, Short.MAX_VALUE))
+                .addGap(191, 191, 191)
+                .addComponent(lblStatsHrrnThroughput, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel17Layout.setVerticalGroup(
+            jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel17Layout.createSequentialGroup()
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel17Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblStatsHrrnCiclos)
+                            .addComponent(lblStatsHrrnIo)))
+                    .addGroup(jPanel17Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(lblStatsHrrnThroughput)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel17Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblStatsHrrnProcesos)
+                    .addComponent(lblStatsHrrnCpu))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Estadísticas", jPanel9);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -866,6 +1309,14 @@ private void actualizarGUI() {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -873,6 +1324,7 @@ private void actualizarGUI() {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -886,6 +1338,46 @@ private void actualizarGUI() {
     private javax.swing.JLabel lblModoEjecucion;
     private javax.swing.JLabel lblProcesoCPU;
     private javax.swing.JLabel lblProgramCounter;
+    private javax.swing.JLabel lblStatsCicloActual;
+    private javax.swing.JLabel lblStatsCpuTerminados;
+    private javax.swing.JLabel lblStatsFcfsCiclos;
+    private javax.swing.JLabel lblStatsFcfsCpu;
+    private javax.swing.JLabel lblStatsFcfsIo;
+    private javax.swing.JLabel lblStatsFcfsProcesos;
+    private javax.swing.JLabel lblStatsFcfsThroughput;
+    private javax.swing.JLabel lblStatsHrrnCiclos;
+    private javax.swing.JLabel lblStatsHrrnCpu;
+    private javax.swing.JLabel lblStatsHrrnIo;
+    private javax.swing.JLabel lblStatsHrrnProcesos;
+    private javax.swing.JLabel lblStatsHrrnThroughput;
+    private javax.swing.JLabel lblStatsIoTerminados;
+    private javax.swing.JLabel lblStatsPrioApCiclos;
+    private javax.swing.JLabel lblStatsPrioApCpu;
+    private javax.swing.JLabel lblStatsPrioApIo;
+    private javax.swing.JLabel lblStatsPrioApProcesos;
+    private javax.swing.JLabel lblStatsPrioApThroughput;
+    private javax.swing.JLabel lblStatsPrioNoApCiclos;
+    private javax.swing.JLabel lblStatsPrioNoApCpu;
+    private javax.swing.JLabel lblStatsPrioNoApIo;
+    private javax.swing.JLabel lblStatsPrioNoApProcesos;
+    private javax.swing.JLabel lblStatsPrioNoApThroughput;
+    private javax.swing.JLabel lblStatsProcesosTerminados;
+    private javax.swing.JLabel lblStatsRrCiclos;
+    private javax.swing.JLabel lblStatsRrCpu;
+    private javax.swing.JLabel lblStatsRrIo;
+    private javax.swing.JLabel lblStatsRrProcesos;
+    private javax.swing.JLabel lblStatsRrThroughput;
+    private javax.swing.JLabel lblStatsSjfCiclos;
+    private javax.swing.JLabel lblStatsSjfCpu;
+    private javax.swing.JLabel lblStatsSjfIo;
+    private javax.swing.JLabel lblStatsSjfProcesos;
+    private javax.swing.JLabel lblStatsSjfThroughput;
+    private javax.swing.JLabel lblStatsSrtCiclos;
+    private javax.swing.JLabel lblStatsSrtCpu;
+    private javax.swing.JLabel lblStatsSrtIo;
+    private javax.swing.JLabel lblStatsSrtProcesos;
+    private javax.swing.JLabel lblStatsSrtThroughput;
+    private javax.swing.JLabel lblStatsThroughputGeneral;
     private javax.swing.JPanel panelGrafico;
     private javax.swing.JPanel panelGraficoDistribucion;
     private javax.swing.JPanel panelGraficoThroughputs;
@@ -932,10 +1424,8 @@ public void run() {
             // --- LÓGICA DE PLANIFICACIÓN (Línea actualizada) ---
             if (procesoEnCpu == null) {
                 
-                // <-- INICIO: LÍNEA MODIFICADA -->
                 // Ahora pasamos cicloGlobal para que HRRN pueda funcionar
                 procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmoActual, cicloGlobal);
-                // <-- FIN: LÍNEA MODIFICADA -->
 
                 if (procesoEnCpu != null) {
                     Logger.log("Ciclo " + cicloGlobal + ": Planificador selecciona Proceso ID " + procesoEnCpu.getId() + " (" + algoritmoActual + ").");
@@ -953,9 +1443,7 @@ public void run() {
                         procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
                         colaListos.encolar(procesoEnCpu);
                         
-                        // <-- INICIO: LÍNEA MODIFICADA -->
                         procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmoActual, cicloGlobal);
-                        // <-- FIN: LÍNEA MODIFICADA -->
                     }
                 } else if (algoritmoActual.equals("SRT (Shortest Remaining Time)")) {
                     PCB masCorto = planificador.verProcesoMasCortoRestante(colaListos);
@@ -964,9 +1452,7 @@ public void run() {
                         procesoEnCpu.setEstado(PCB.EstadoProceso.LISTO);
                         colaListos.encolar(procesoEnCpu);
                         
-                        // <-- INICIO: LÍNEA MODIFICADA -->
                         procesoEnCpu = planificador.seleccionarProceso(colaListos, algoritmoActual, cicloGlobal);
-                        // <-- FIN: LÍNEA MODIFICADA -->
                     }
                 }
             }
@@ -999,15 +1485,21 @@ public void run() {
                     memoriaEnUso -= procesoEnCpu.getProcesoInfo().getTamañoEnMemoria(); 
                     colaTerminados.encolar(procesoEnCpu);
                     
-                    // --- Bloque de cálculo añadido ---
                     metricasActuales.procesosTerminados++;
                     
                     long tiempoRetorno = procesoEnCpu.getTiempoDeFinalizacion() - procesoEnCpu.getTiempoDeLlegada();
-                    long tiempoEspera = tiempoRetorno - procesoEnCpu.getProcesoInfo().getNumeroInstrucciones(); // <-- Corrección de error tipográfico
+                    long tiempoEspera = tiempoRetorno - procesoEnCpu.getProcesoInfo().getNumeroInstrucciones();
                     
                     metricasActuales.sumaTiemposRetorno += tiempoRetorno;
                     metricasActuales.sumaTiemposEspera += tiempoEspera;
-                    // --- Fin del bloque de cálculo ---
+
+                    // <-- INICIO: Bloque de código AÑADIDO (Paso 2) -->
+                    if (procesoEnCpu.getProcesoInfo().esIoBound()) {
+                        metricasActuales.ioTerminados++;
+                    } else {
+                        metricasActuales.cpuTerminados++;
+                    }
+                    // <-- FIN: Bloque de código AÑADIDO (Paso 2) -->
                     
                     procesoEnCpu = null;
 
@@ -1029,14 +1521,18 @@ public void run() {
             mutex.release();
         }
 
-        // --- Bloque de actualización de GUI (Corregido) ---
+        // <-- INICIO: Bloque de actualización de GUI (Paso 5) -->
+        // También he añadido la llamada a 'actualizarEstadisticas()'
+        // que necesitarás en el Paso 5.
         SwingUtilities.invokeLater(() -> {
             actualizarGUI();
             actualizarGrafico();
-            actualizarGraficoComparativo(); // <-- Corrección de error tipográfico
+            actualizarGraficoComparativo();
             actualizarGraficoDistribucion();
             actualizarGraficoTiempos();
+            actualizarEstadisticas(); 
         });
+        // <-- FIN: Bloque de actualización de GUI -->
 
         try { 
             int velocidad = (int) spnVelocidad.getValue();
@@ -1434,4 +1930,98 @@ private void actualizarGraficoTiempos() {
     panelGraficoTiempos.revalidate();
     panelGraficoTiempos.repaint();
  }
+private void actualizarEstadisticas() {
+    // --- 1. Estadísticas Generales ---
+    
+    // Inicializamos todos los contadores en 0
+    int totalTerminados = 0;
+    int totalIoTerminados = 0;
+    int totalCpuTerminados = 0;
+    
+    // Iteramos sobre la cola de terminados UNA SOLA VEZ
+    Nodo iterador = colaTerminados.getFrente();
+    while (iterador != null) {
+        
+        totalTerminados++; // <-- CONTAMOS EL TOTAL AQUÍ
+        
+        // Contamos por tipo
+        if (iterador.getPcb().getProcesoInfo().esIoBound()) {
+            totalIoTerminados++;
+        } else {
+            totalCpuTerminados++;
+        }
+        iterador = iterador.getSiguiente();
+    }
+    
+    // El resto del método es igual
+    double throughputGeneral = (cicloGlobal > 0) ? (double) totalTerminados / cicloGlobal : 0;
+    
+    lblStatsCicloActual.setText("Ciclo Actual: " + cicloGlobal);
+    lblStatsProcesosTerminados.setText("Procesos Totales Terminados: " + totalTerminados);
+    lblStatsIoTerminados.setText("Procesos I/O bound Terminados: " + totalIoTerminados);
+    lblStatsCpuTerminados.setText("Procesos CPU bound Terminados: " + totalCpuTerminados);
+    lblStatsThroughputGeneral.setText(String.format("Throughput General: %.4f", throughputGeneral));
+
+    // --- 2. Estadísticas por Política ---
+    for (Map.Entry<String, MetricasAlgoritmo> entry : metricasEnTiempoReal.entrySet()) {
+        String algoritmo = entry.getKey();
+        MetricasAlgoritmo metricas = entry.getValue();
+        
+        double throughputPolitica = (metricas.ciclosActivos > 0) ? (double) metricas.procesosTerminados / metricas.ciclosActivos : 0;
+        String throughputStr = String.format("%.4f", throughputPolitica);
+
+        // Usamos un 'switch' para asignar los valores a la etiqueta correcta
+        switch (algoritmo) {
+            case "FCFS":
+                lblStatsFcfsCiclos.setText("Ciclos ejecutando: " + metricas.ciclosActivos);
+                lblStatsFcfsProcesos.setText("Procesos totales: " + metricas.procesosTerminados);
+                lblStatsFcfsIo.setText("Procesos I/O: " + metricas.ioTerminados);
+                lblStatsFcfsCpu.setText("Procesos CPU: " + metricas.cpuTerminados);
+                lblStatsFcfsThroughput.setText("Throughput: " + throughputStr);
+                break;
+            case "Round Robin":
+                lblStatsRrCiclos.setText("Ciclos ejecutando: " + metricas.ciclosActivos);
+                lblStatsRrProcesos.setText("Procesos totales: " + metricas.procesosTerminados);
+                lblStatsRrIo.setText("Procesos I/O: " + metricas.ioTerminados);
+                lblStatsRrCpu.setText("Procesos CPU: " + metricas.cpuTerminados);
+                lblStatsRrThroughput.setText("Throughput: " + throughputStr);
+                break;
+            case "SJF No Apropiativo":
+                lblStatsSjfCiclos.setText("Ciclos ejecutando: " + metricas.ciclosActivos);
+                lblStatsSjfProcesos.setText("Procesos totales: " + metricas.procesosTerminados);
+                lblStatsSjfIo.setText("Procesos I/O: " + metricas.ioTerminados);
+                lblStatsSjfCpu.setText("Procesos CPU: " + metricas.cpuTerminados);
+                lblStatsSjfThroughput.setText("Throughput: " + throughputStr);
+                break;
+            case "SRT (Shortest Remaining Time)":
+                lblStatsSrtCiclos.setText("Ciclos ejecutando: " + metricas.ciclosActivos);
+                lblStatsSrtProcesos.setText("Procesos totales: " + metricas.procesosTerminados);
+                lblStatsSrtIo.setText("Procesos I/O: " + metricas.ioTerminados);
+                lblStatsSrtCpu.setText("Procesos CPU: " + metricas.cpuTerminados);
+                lblStatsSrtThroughput.setText("Throughput: " + throughputStr);
+                break;
+            case "Prioridad No Apropiativo":
+                lblStatsPrioNoApCiclos.setText("Ciclos ejecutando: " + metricas.ciclosActivos);
+                lblStatsPrioNoApProcesos.setText("Procesos totales: " + metricas.procesosTerminados);
+                lblStatsPrioNoApIo.setText("Procesos I/O: " + metricas.ioTerminados);
+                lblStatsPrioNoApCpu.setText("Procesos CPU: " + metricas.cpuTerminados);
+                lblStatsPrioNoApThroughput.setText("Throughput: " + throughputStr);
+                break;
+            case "Prioridad Apropiativo":
+                lblStatsPrioApCiclos.setText("Ciclos ejecutando: " + metricas.ciclosActivos);
+                lblStatsPrioApProcesos.setText("Procesos totales: " + metricas.procesosTerminados);
+                lblStatsPrioApIo.setText("Procesos I/O: " + metricas.ioTerminados);
+                lblStatsPrioApCpu.setText("Procesos CPU: " + metricas.cpuTerminados);
+                lblStatsPrioApThroughput.setText("Throughput: " + throughputStr);
+                break;
+            case "HRRN (Highest Response Ratio Next)":
+                lblStatsHrrnCiclos.setText("Ciclos ejecutando: " + metricas.ciclosActivos);
+                lblStatsHrrnProcesos.setText("Procesos totales: " + metricas.procesosTerminados);
+                lblStatsHrrnIo.setText("Procesos I/O: " + metricas.ioTerminados);
+                lblStatsHrrnCpu.setText("Procesos CPU: " + metricas.cpuTerminados);
+                lblStatsHrrnThroughput.setText("Throughput: " + throughputStr);
+                break;
+        }
+    }
+}
 }

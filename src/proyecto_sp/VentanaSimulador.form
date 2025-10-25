@@ -911,6 +911,674 @@
             </Container>
           </SubComponents>
         </Container>
+        <Container class="javax.swing.JPanel" name="jPanel9">
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+              <JTabbedPaneConstraints tabName="Estad&#xed;sticas">
+                <Property name="tabTitle" type="java.lang.String" value="Estad&#xed;sticas"/>
+              </JTabbedPaneConstraints>
+            </Constraint>
+          </Constraints>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="jPanel10" max="32767" attributes="0"/>
+                  <Component id="jPanel11" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jPanel12" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jPanel13" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jPanel14" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jPanel15" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jPanel16" alignment="0" max="32767" attributes="0"/>
+                  <Component id="jPanel17" alignment="0" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jPanel10" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel11" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel12" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel13" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel14" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel15" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel16" min="-2" pref="84" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jPanel17" max="32767" attributes="0"/>
+                  </Group>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+          <SubComponents>
+            <Container class="javax.swing.JPanel" name="jPanel10">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder title="Estad&#xed;sticas Generales"/>
+                  </Border>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblStatsCicloActual" alignment="0" min="-2" pref="107" max="-2" attributes="0"/>
+                              <Component id="lblStatsProcesosTerminados" alignment="0" min="-2" pref="188" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="lblStatsIoTerminados" min="-2" pref="196" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="113" max="-2" attributes="0"/>
+                                  <Component id="lblStatsThroughputGeneral" min="-2" pref="193" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="lblStatsCpuTerminados" min="-2" pref="208" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="455" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblStatsCicloActual" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStatsIoTerminados" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStatsThroughputGeneral" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblStatsProcesosTerminados" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStatsCpuTerminados" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="lblStatsCicloActual">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Ciclo Actual: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsProcesosTerminados">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos Totales Terminados: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsIoTerminados">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos I/O bound Terminados: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsCpuTerminados">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos CPU bound Terminados: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsThroughputGeneral">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Throughput General: 0.000"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="jPanel11">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder title="Estad&#xed;sticas FCFS"/>
+                  </Border>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblStatsFcfsCiclos" alignment="0" min="-2" pref="134" max="-2" attributes="0"/>
+                              <Component id="lblStatsFcfsProcesos" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="144" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="lblStatsFcfsIo" max="32767" attributes="0"/>
+                              <Component id="lblStatsFcfsCpu" pref="98" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="213" max="-2" attributes="0"/>
+                          <Component id="lblStatsFcfsThroughput" min="-2" pref="120" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblStatsFcfsCiclos" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStatsFcfsIo" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStatsFcfsThroughput" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblStatsFcfsProcesos" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStatsFcfsCpu" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="lblStatsFcfsCiclos">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Ciclos ejecutando: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsFcfsProcesos">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos totales: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsFcfsIo">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos I/O: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsFcfsCpu">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos CPU: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsFcfsThroughput">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Throughput: 0.000"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="jPanel12">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder title="Estad&#xed;sticas Round Robin"/>
+                  </Border>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblStatsRrCiclos" alignment="0" min="-2" pref="132" max="-2" attributes="0"/>
+                              <Component id="lblStatsRrProcesos" alignment="0" min="-2" pref="117" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="148" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="lblStatsRrIo" max="32767" attributes="0"/>
+                              <Component id="lblStatsRrCpu" pref="98" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="213" max="-2" attributes="0"/>
+                          <Component id="lblStatsRrThroughput" min="-2" pref="132" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblStatsRrCiclos" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStatsRrIo" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStatsRrThroughput" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblStatsRrProcesos" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStatsRrCpu" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="lblStatsRrCiclos">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Ciclos ejecutando: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsRrProcesos">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos totales: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsRrIo">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos I/O: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsRrCpu">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos CPU: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsRrThroughput">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Throughput: 0.000"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="jPanel13">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder title="Estad&#xed;sticas SJF No Apropiativo"/>
+                  </Border>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="lblStatsSjfCiclos" pref="144" max="32767" attributes="0"/>
+                              <Component id="lblStatsSjfProcesos" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="137" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="lblStatsSjfIo" max="32767" attributes="0"/>
+                              <Component id="lblStatsSjfCpu" pref="128" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="186" max="-2" attributes="0"/>
+                          <Component id="lblStatsSjfThroughput" min="-2" pref="143" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblStatsSjfCiclos" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStatsSjfIo" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStatsSjfThroughput" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblStatsSjfProcesos" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStatsSjfCpu" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="17" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="lblStatsSjfCiclos">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Ciclos ejecutando: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsSjfProcesos">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos totales: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsSjfIo">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos I/O: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsSjfCpu">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos CPU: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsSjfThroughput">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Throughput: 0.000"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="jPanel14">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder title="Estad&#xed;sticas SRT"/>
+                  </Border>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="lblStatsSrtCiclos" pref="133" max="32767" attributes="0"/>
+                              <Component id="lblStatsSrtProcesos" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="147" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="lblStatsSrtIo" min="-2" pref="112" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="211" max="-2" attributes="0"/>
+                                  <Component id="lblStatsSrtThroughput" min="-2" pref="145" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="lblStatsSrtCpu" min="-2" pref="125" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblStatsSrtCiclos" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStatsSrtIo" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStatsSrtThroughput" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace pref="20" max="32767" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblStatsSrtProcesos" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStatsSrtCpu" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="lblStatsSrtCiclos">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Ciclos ejecutando: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsSrtProcesos">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos totales: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsSrtIo">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos I/O: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsSrtCpu">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos CPU: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsSrtThroughput">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Throughput: 0.000"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="jPanel15">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder title="Estad&#xed;sticas Prio. No Apropiativo"/>
+                  </Border>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="lblStatsPrioNoApCiclos" pref="139" max="32767" attributes="0"/>
+                              <Component id="lblStatsPrioNoApProcesos" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="142" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="lblStatsPrioNoApIo" max="32767" attributes="0"/>
+                              <Component id="lblStatsPrioNoApCpu" pref="130" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="196" max="-2" attributes="0"/>
+                          <Component id="lblStatsPrioNoApThroughput" min="-2" pref="122" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblStatsPrioNoApCiclos" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStatsPrioNoApIo" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStatsPrioNoApThroughput" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblStatsPrioNoApProcesos" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStatsPrioNoApCpu" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="lblStatsPrioNoApCiclos">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Ciclos ejecutando: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsPrioNoApProcesos">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos totales: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsPrioNoApIo">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos I/O: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsPrioNoApCpu">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos CPU: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsPrioNoApThroughput">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Throughput: 0.000"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="jPanel16">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder title="Estad&#xed;sticas Prio. Apropiativo"/>
+                  </Border>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="lblStatsPrioApCiclos" alignment="0" min="-2" pref="139" max="-2" attributes="0"/>
+                              <Component id="lblStatsPrioApProcesos" alignment="0" min="-2" pref="125" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="143" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="lblStatsPrioApIo" min="-2" pref="121" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="202" max="-2" attributes="0"/>
+                                  <Component id="lblStatsPrioApThroughput" min="-2" pref="128" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="lblStatsPrioApCpu" min="-2" pref="150" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblStatsPrioApCiclos" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStatsPrioApIo" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStatsPrioApThroughput" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblStatsPrioApProcesos" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStatsPrioApCpu" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="lblStatsPrioApCiclos">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Ciclos ejecutando: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsPrioApProcesos">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos totales: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsPrioApIo">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos I/O: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsPrioApCpu">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos CPU: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsPrioApThroughput">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Throughput: 0.000"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="jPanel17">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder title="Estad&#xed;sticas HRRN"/>
+                  </Border>
+                </Property>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="lblStatsHrrnCiclos" pref="147" max="32767" attributes="0"/>
+                              <Component id="lblStatsHrrnProcesos" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="137" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                              <Component id="lblStatsHrrnIo" max="32767" attributes="0"/>
+                              <Component id="lblStatsHrrnCpu" pref="131" max="32767" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="191" max="-2" attributes="0"/>
+                          <Component id="lblStatsHrrnThroughput" min="-2" pref="130" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="lblStatsHrrnCiclos" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lblStatsHrrnIo" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                                  <Component id="lblStatsHrrnThroughput" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="lblStatsHrrnProcesos" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="lblStatsHrrnCpu" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="lblStatsHrrnCiclos">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Ciclos ejecutando: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsHrrnProcesos">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos totales: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsHrrnIo">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos I/O: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsHrrnCpu">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Procesos CPU: 0"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="lblStatsHrrnThroughput">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Throughput: 0.000"/>
+                  </Properties>
+                </Component>
+              </SubComponents>
+            </Container>
+          </SubComponents>
+        </Container>
       </SubComponents>
     </Container>
   </SubComponents>
